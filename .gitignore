@@ -4,6 +4,7 @@
 node_modules
 npm-debug.log
 node_modules/
+build/
 
 # dependencies
 /node_modules
