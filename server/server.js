@@ -1,22 +1,37 @@
 require("dotenv").config();
 const express = require("express");
 const app = express();
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
 const cors = require("cors");
+const passport = require('passport');
 const pool = require('./db');
 const PORT = process.env.PORT || 3333;
 
 const userRoutes = require('./routes/user');
 const postRoutes = require('./routes/post');
 
+// server set up
+app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 app.use(express.json());
-var options = { redirect:  false };
+app.use(cookieParser());
+app.use(session({
+    secret: 'sharkbait hoo haha',
+    resave: false,
+    saveUninitialized: true,
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 
+// client routes
+var options = { redirect:  false };
 app.use(express.static("./client/build", options));
 app.use("/login", express.static("./client/build", options));
 app.use("/register", express.static("./client/build", options));
 app.use("/404", express.static("./client/build", options));
 
+// server routes
 app.get("/blankboard", (req,res) => {
     res.status(200).send("Welcome to BlankBoard API!");
 })
