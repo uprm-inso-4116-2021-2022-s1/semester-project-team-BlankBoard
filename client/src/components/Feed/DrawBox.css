@@ -21,12 +21,6 @@
     border: none;
 }
 
-.drawBox__imageInput {
-    border: none;
-    padding: 10px;
-
-}
-
 .drawBox__drawButton {
     background-color: #51e5eb !important;
     border: none !important;
