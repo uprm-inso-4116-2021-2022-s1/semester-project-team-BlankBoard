@@ -1,0 +1,172 @@
+.modalWindow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modalBg {
+  background-color: navajowhite;
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  height: 90vh;
+  border-style: hidden;
+  border-radius: 24px;
+  z-index: -1;
+}
+
+.modalNavbar {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 10%;
+  padding-top: 16px;
+  border-style: hidden;
+  border-radius: 24px;
+}
+
+.navLeft {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: left;
+  width: 50%;
+  height: 100%;
+  border-style: hidden;
+  border-radius: 24px;
+}
+
+.navRight {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: right;
+  width: 50%;
+  height: 100%;
+  border-style: hidden;
+  border-radius: 24px;
+}
+
+.submitButton {
+  width: 96px;
+  cursor: pointer;
+}
+
+.modalContent {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 100%;
+  height: 100%;
+  border-style: hidden;
+  border-radius: 24px;
+  z-index: -1;
+}
+
+.optionText {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  font-size: xx-large;
+  padding-top: 64px;
+  cursor: default;
+}
+
+.firstOptions {
+  /* background-color: palegreen; */
+  width: 24%;
+  height: 100%;
+}
+
+.modalTools {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 8px;
+  font-size: 48px;
+  cursor: pointer;
+}
+
+.toolSelected {
+  border-style: solid;
+  border-color: dodgerblue;
+  background-color: rgba(30,144,255,0.4);
+  border-radius: 50%;
+  padding: 8px;
+}
+
+.toolNotSelected {
+  border-style: solid;
+  border-color: transparent;
+  border-radius: 50%;
+  padding: 8px;
+}
+
+.whiteboard {
+  background-color: whitesmoke;
+  border-style: hidden;
+  /* border-radius: 32px; */
+  cursor: pointer;
+}
+
+.modalSlider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 16px;
+  margin-right: 16px;
+  cursor: pointer;
+}
+
+.secOptions {
+  /* background-color: lightpink; */
+  width: 24%;
+  height: 100%;
+}
+
+.colorsGrid {
+  display: grid;
+  grid-template-columns: auto auto auto auto auto auto;
+  grid-template-rows: auto auto;
+  margin-left: 10px;
+  margin-top: 10px;
+}
+
+.colorButton {
+  cursor: pointer;
+}
+
+.colorButton:hover {
+  opacity: 0.7;
+}
+
+.colorSelected {
+  width: 32px;
+  height: 32px;
+  border-style: solid;
+  border-color: whitesmoke;
+  margin-bottom: 8px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 960px) {
+  .background {
+    background-color: lightskyblue;
+    flex-direction: column;
+  }
+
+  .firstOptions {
+    width: 100%;
+    height: 96px;
+    margin: 8%;
+  }
+
+  .secOptions {
+    width: 100%;
+    height: 96px;
+    margin: 8%;
+  }
+}
