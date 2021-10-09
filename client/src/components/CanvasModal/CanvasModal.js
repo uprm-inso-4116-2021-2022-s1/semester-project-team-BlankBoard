@@ -1,30 +1,17 @@
 import React from "react";
-import { Modal, Button, Fab, Slider } from "@material-ui/core";
+import { Modal, Button, Fab, Slider } from "@mui/material";
 import { BiUndo } from "react-icons/bi";
 import { BsDownload, BsEraserFill } from "react-icons/bs";
 import { RiPencilFill } from "react-icons/ri";
-// import { DownloadDrawing } from "./download";
 import "./CanvasModal.css";
 
-const CanvasModal = () => {
+export const CanvasModal = () => {
   const[showModal, setShowModal] = React.useState(false);
   const openModal = () => setShowModal(true);
   const closeModal = () => {
     setShowModal(false);
     setCanvasReady(false);
     setBgReady(false);
-  }
-
-  const downloadDrawing = () => {
-    const canvas = document.getElementById("canvas");
-    canvas.toBlob (
-      blob => {
-        const anchor = document.createElement("a");
-        anchor.download = "drawing.png";
-        anchor.href = URL.createObjectURL(blob);
-        anchor.click();
-        URL.revokeObjectURL(anchor.href);
-      }, "image/png");
   }
 
   const [tool, setTool] = React.useState("pencil");
@@ -124,11 +111,16 @@ const CanvasModal = () => {
   }
 
   const undoDrawing = () => {
+    // remove last path created
     const pathSizeRemoved = pathSizes.pop();
     const prevPathLen = paths.length - pathSizeRemoved;
     paths.splice(prevPathLen, pathSizeRemoved);
+
+    // clears all paths previously created on canvas
     contextRef.current.clearRect(0, 0, canvasDimensions, canvasDimensions);
     contextRef.current.fillRect(0, 0, canvasDimensions, canvasDimensions);
+
+    // redraw canvas
     let i = 0;
     let counter = 0;
     for(let pt = 0; pt < paths.length; pt++) {
@@ -158,6 +150,18 @@ const CanvasModal = () => {
     setBgReady(false);
     setPaths([]);
     setPathSizes([]);
+  }
+
+  const downloadDrawing = () => {
+    const canvas = document.getElementById("canvas");
+    canvas.toBlob (
+      blob => {
+        const anchor = document.createElement("a");
+        anchor.download = "drawing.png";
+        anchor.href = URL.createObjectURL(blob);
+        anchor.click();
+        URL.revokeObjectURL(anchor.href);
+      }, "image/png");
   }
 
   return (
@@ -204,5 +208,3 @@ const CanvasModal = () => {
     </div>
   );
 };
-
-export default CanvasModal;
