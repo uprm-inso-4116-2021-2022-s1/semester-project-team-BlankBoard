@@ -15,19 +15,19 @@ const Register = () => {
                 <br></br>
                 <input type="text" id="lname" name="lname" placeholder="Rosario" style={styles.input}></input>
                 <br></br>
-                <label for="email" style={styles.lable}>Email</label>
+                <lable for="email" style={styles.lable}>Email</lable>
                 <br></br>
                 <input type="emial" id="email" name="email" placeholder="bb@gmail.com" style={styles.input}></input>
                 <br></br>
-                <label for="emailConfirm" style={styles.lable}>Confirm Email</label>
+                <lable for="emailConfirm" style={styles.lable}>Confirm Email</lable>
                 <br></br>
                 <input type="emial" id="emailConfirm" name="emailConfirm" placeholder="bb@gmail.com" style={styles.input}></input>
                 <br></br>
-                <label for="pwd" style={styles.lable}>Create Password </label>
+                <lable for="pwd" style={styles.lable}>Create Password </lable>
                 <br></br>
                 <input type="password" id="pwd" name="pwd" placeholder="•••••••••" style={styles.input}></input>
                 <br></br>
-                <label for="pwdConfrim" style={styles.lable}>Confirm Password </label>
+                <lable for="pwdConfrim" style={styles.lable}>Confirm Password </lable>
                 <br></br>
                 <input type="password" id="pwdConfrim" name="pwdConfrim" placeholder="•••••••••" style={styles.input}></input>
                 <br></br>

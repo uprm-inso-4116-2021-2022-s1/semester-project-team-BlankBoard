@@ -9,11 +9,11 @@ const Login = () => {
                 <h3 style={styles.h3}>New to Blank Board? <a href="/Register">Create a new account!</a></h3>
                 
                 <form style={styles.form}> 
-                    <label for="email" style={styles.lable}>Email</label>
+                    <lable for="email" style={styles.lable}>Email</lable>
                     <br></br>
                     <input type="emial" id="email" name="email" placeholder="bb@gmail.com" style={styles.input}></input>
                     <br></br>
-                    <label for="pwd" style={styles.lable}>Password </label>
+                    <lable for="pwd" style={styles.lable}>Password </lable>
                     <br></br>
                     <input type="password" id="pwd" name="pwd" placeholder="•••••••••" style={styles.input}></input>
                     <button type="submit" style={styles.submitBtn}> Log In </button>
