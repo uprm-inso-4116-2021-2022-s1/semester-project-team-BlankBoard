@@ -3,6 +3,7 @@ import Home from './views/Home';
 import Login from './views/Login';
 import Register from './views/Register';
 import Error404 from './views/Error404';
+import Canvas from './components/Canvas/Canvas';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
           <Route exact path="/" component={Home} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/register" component={Register} />
+          <Route exact path="/canvas" component={Canvas} />
           <Route path="*" component={Error404} />
         </Switch>
       </Router>
