@@ -1,0 +1,28 @@
+.navbar {
+    border-right: 1px solid lightgray;
+    flex: 0.20;
+    min-width: 250px;
+    margin-top: 20px;
+    /* padding-left: 20px; */
+    padding-right: 20px;
+}
+
+.navbar > h1 {
+    font-size: 30px !important;
+    margin-left: 48px;
+    margin-bottom: 2px;
+    cursor: pointer;
+}
+
+.navbar__draw {
+    background-color: var(--sharedes-pinkDeep) !important;
+    border: none !important;
+    color: white !important;
+    font-size: 20px !important;
+    font-weight: 1000 !important;
+    text-transform: inherit !important;
+    border-radius: 30px !important;
+    height: 50px !important;
+    margin-top: 20px !important;
+    margin-left: auto !important;
+}
