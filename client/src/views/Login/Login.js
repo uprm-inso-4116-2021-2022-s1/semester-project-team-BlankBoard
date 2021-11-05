@@ -1,9 +1,11 @@
 /* eslint-disable no-undef */
-import React from "react";
+import { React, useState } from "react";
 import { useCookies } from "react-cookie";
 
 const Login = () => {
   const [cookies, setCookie] = useCookies(["user"]);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   return (
     <div style={styles.div0}>
       <div style={styles.div1}>
@@ -23,9 +25,14 @@ const Login = () => {
             name="email"
             placeholder="bb@gmail.com"
             style={styles.input}
+            onChange={(e) => setEmail(e.target.value)}
           ></input>
           <br></br>
-          <lable for="pwd" style={styles.lable}>
+          <lable
+            for="pwd"
+            style={styles.lable}
+            onChange={(e) => setPassword(e.target.value)}
+          >
             Password{" "}
           </lable>
           <br></br>
@@ -66,7 +73,7 @@ const Login = () => {
   );
 
   function handleCookies() {
-    setCookie("user", "userCookie2", { path: "/", maxAge: 3600 });
+    setCookie("user", email, { path: "/", maxAge: 3600 });
   }
 };
 
