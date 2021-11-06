@@ -45,7 +45,7 @@ const usersGetId = async (req, res, pool) => {
     try {
         const { id } = req.params;
 
-        const table = await pool.query('SELECT * FROM Users WHERE uid = $1', [id]);
+        const table = await pool.query('SELECT * FROM Users WHERE user_id = $1', [id]);
 
         if (table.rows.length === 0) {
             res.json({ error: "No user with this Id exists." })
@@ -70,7 +70,7 @@ const usersPutId = async (req, res, pool) => {
             if(i !== newValues.length - 1) queryString += ',';
         });
 
-        queryString += ` WHERE uid=$${newValues.length + 1}`;
+        queryString += ` WHERE user_id=$${newValues.length + 1}`;
 
         await pool.query(queryString, [...Object.values(req.body), id]);
 
@@ -85,9 +85,15 @@ const usersDelId = async (req, res, pool) => {
     try {
         const { id } = req.params;
 
-        await pool.query('DELETE FROM Users WHERE uid = $1', [id]);
+        const deletedUser = await pool.query('DELETE FROM Users WHERE user_id = $1 RETURNING *', [id]);
 
-        res.json(table.rows[0])
+        if(deletedUser.rows.length > 0){
+          console.log(deletedUser);
+          res.status(200).json("User succesfully deleted: " + deletedUser.rows[0].email);
+        }else{
+          res.status(400).json("No such user exists. Lucky you I guess.");
+        }
+        
     } catch (e) {
         console.log(e);
         res.status(400).send(e);
@@ -120,7 +126,7 @@ const unfollowID = async (req, res, pool) => {
           'DELETE FROM Follows WHERE follower_id=$1 AND followee_id=$2',
           [UserId, id],
         );
-        res.status(200).end();
+        res.status(200).send();
       } catch (e) {
         res.satus(400).send(e);
       }
@@ -131,7 +137,7 @@ const followedByID = async (req, res, pool) => {
         const { id } = req.params;
     
         const table = await pool.query(
-          'SELECT U.uid, U.username, U.password FROM Follows as F, Users as U WHERE F.followee_id = U.uid AND follower_id=$1',
+          'SELECT U.user_id, U.username, U.password FROM Follows as F, Users as U WHERE F.followee_id = U.user_id AND follower_id=$1',
           [id],
         );
         res.json(table.rows);
@@ -145,7 +151,7 @@ const followsID = async (req, res, pool) => {
         const { id } = req.params;
     
         const table = await pool.query(
-          'SELECT U.uid,U.username,U.password FROM Follows as F, Users as U WHERE F.follower_id = U.uid AND F.followee_id=$1',
+          'SELECT U.user_id,U.username,U.password FROM Follows as F, Users as U WHERE F.follower_id = U.user_id AND F.followee_id=$1',
           [id],
         );
         res.json(table.rows);
@@ -190,7 +196,7 @@ const blockedByID = async (req, res, pool) => {
         const { id } = req.params;
     
         const table = await pool.query(
-          'SELECT U.uid, U.username, U.password FROM Blocks as B, Users U WHERE B.blockee_id = U.uid AND B.blocker_id = $1',
+          'SELECT U.user_id, U.username, U.password FROM Blocks as B, Users U WHERE B.blockee_id = U.user_id AND B.blocker_id = $1',
           [id],
         );
         res.json(table.rows);
@@ -204,7 +210,7 @@ const blockingID = async (req, res, pool) => {
         const { id } = req.params;
     
         const table = await pool.query(
-          'SELECT U.uid, U.username, U.password FROM Blocks as B, Users U WHERE B.blocker_id = U.uid AND B.blockee_id = $1',
+          'SELECT U.user_id, U.username, U.password FROM Blocks as B, Users U WHERE B.blocker_id = U.user_id AND B.blockee_id = $1',
           [id],
         );
         res.json(table.rows);
