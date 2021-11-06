@@ -1,0 +1,79 @@
+@import url('https://fonts.googleapis.com/css2?family=Oregano&display=swap');
+
+.background {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffe3e3;
+  /* width: 100vw; */
+  /* height: 100vh; */
+}
+
+.userInfo {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  width: 95%;
+  justify-content: center;
+  align-items: center;
+  /* background-color: darkgrey; */
+  font-family: Oregano;
+}
+
+.pfp {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  cursor: pointer;
+  background-color: firebrick;
+}
+
+.modalWindow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.intro {
+  flex-grow: 1;
+  flex-shrink: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  /* padding-bottom: 16px; */
+}
+
+.username {
+  margin-bottom: 16px;
+  font-size: 36px;
+}
+
+.stats {
+  flex-grow: 1;
+  flex-shrink: 1;
+  justify-self: left;
+  display: grid;
+  grid-template-columns: auto auto auto;
+  grid-template-rows: auto auto;
+  place-items: center;
+}
+
+.number {
+  font-size: 64px;
+}
+
+.text {
+  font-size: 32px;
+}
+
+.posts {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 95%;
+  /* background-color:cadetblue; */
+}
