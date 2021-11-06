@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Oregano&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Caveat+Brush&display=swap');
 
 .background {
   display: flex;
@@ -14,11 +14,13 @@
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
-  width: 95%;
+  width: 100%;
+  margin: 24px 64px 16px 64px;
   justify-content: center;
   align-items: center;
   /* background-color: darkgrey; */
-  font-family: Oregano;
+  font-family: Caveat Brush;
+  font-weight: bolder;
 }
 
 .pfp {
@@ -42,30 +44,31 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  /* padding-bottom: 16px; */
 }
 
 .username {
-  margin-bottom: 16px;
-  font-size: 36px;
+  font-size: 56px;
+  margin-left: 32px;
 }
 
 .stats {
-  flex-grow: 1;
+  flex-grow: 2;
   flex-shrink: 1;
   justify-self: left;
   display: grid;
-  grid-template-columns: auto auto auto;
+  grid-template-columns: auto auto;
   grid-template-rows: auto auto;
   place-items: center;
+  margin: 0px 12px 0px 12px;
 }
 
 .number {
-  font-size: 64px;
+  font-size: 72px;
 }
 
 .text {
-  font-size: 32px;
+  font-size: 36px;
+  margin: 0px 24px 0px 24px;
 }
 
 .posts {
@@ -74,6 +77,8 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 95%;
+  width: 100%;
+  margin-left: 36px;
+  margin-right: 36px;
   /* background-color:cadetblue; */
 }

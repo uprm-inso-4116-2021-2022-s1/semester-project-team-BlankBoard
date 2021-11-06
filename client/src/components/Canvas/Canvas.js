@@ -167,10 +167,10 @@ function Canvas(modalOption, isModalVisible) {
       <div className="modalNavbar">
         <div className="navLeft">
           <BiUndo style={{fontSize:"36px", color:"#ffa7a7", marginLeft:"10%", cursor:"pointer"}} onClick={undoDrawing} />
-          <Button style={{backgroundColor: "#ffa7a7", color:"black", fontFamily: "Oregano", marginLeft:"32px", cursor:"pointer"}} onClick={clearDrawing}>CLEAR</Button>
+          <Button style={{backgroundColor: "#ffa7a7", color:"black", fontFamily: "Caveat Brush", marginLeft:"32px", cursor:"pointer"}} onClick={clearDrawing}>CLEAR</Button>
         </div>
         <div className="navRight">
-          <Button className="submitButton" style={{backgroundColor: "#ffa7a7", color:"black", fontFamily: "Oregano", marginRight:"10%"}} onClick={drawingToImage}>SUBMIT</Button>
+          <Button className="submitButton" style={{backgroundColor: "#ffa7a7", color:"black", fontFamily: "Caveat Brush", marginRight:"10%"}} onClick={drawingToImage}>SUBMIT</Button>
         </div>
       </div>
       <div className="modalContent">

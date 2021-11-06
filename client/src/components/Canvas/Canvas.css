@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Oregano&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Caveat+Brush&display=swap');
 
 .modalBg {
   display: flex;
@@ -63,8 +63,10 @@
 .optionText {
   display: flex;
   justify-content: center;
-  font-family: Oregano;
+  font-family: Caveat Brush;
   font-size: xx-large;
+  font-weight: bolder;
+  color: whitesmoke;
   cursor: default;
 }
 
