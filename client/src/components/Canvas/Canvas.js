@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 import { Button, Fab, Slider } from "@mui/material";
 import { BiUndo } from "react-icons/bi";
 import { BsEraserFill } from "react-icons/bs";
@@ -150,16 +151,21 @@ function Canvas(currUser, currThread, modalOption, isModalVisible) {
     setPathSizes([]);
   }
 
-  const drawingToImage = () => {
-    const canvas = document.getElementById("canvas");
-    canvas.toBlob (
-      blob => {
-        const anchor = document.createElement("DrawImg");
-        anchor.download = "drawing.png";
-        // anchor.href = URL.createObjectURL(blob);
-        // anchor.click();
-        // URL.revokeObjectURL(anchor.href);
-      }, "image/png");
+  const drawingToCloud = () => {
+    const canvas = document.querySelector("canvas");
+    console.log(canvas);
+    canvas.toBlob (blob => {
+      const file = new File([blob], "drawing.png");
+      console.log(file);
+      uploadDrawing(file);
+      });
+  }
+
+  const uploadDrawing = async (img) => {
+    const formData = new FormData();
+    formData.append('file', img);
+    formData.append('upload_preset', 'blankboard');
+    await axios.post('https://api.cloudinary.com/v1_1/dsunqodr1/image/upload', formData);
   }
 
   return (
@@ -170,7 +176,7 @@ function Canvas(currUser, currThread, modalOption, isModalVisible) {
           <Button style={{backgroundColor: "#ffa7a7", color:"black", fontFamily: "Caveat Brush", marginLeft:"32px", cursor:"pointer"}} onClick={clearDrawing}>CLEAR</Button>
         </div>
         <div className="navRight">
-          <Button className="submitButton" style={{backgroundColor: "#ffa7a7", color:"black", fontFamily: "Caveat Brush", marginRight:"10%"}} onClick={drawingToImage}>SUBMIT</Button>
+          <Button className="submitButton" style={{backgroundColor: "#ffa7a7", color:"black", fontFamily: "Caveat Brush", marginRight:"10%"}} onClick={drawingToCloud}>SUBMIT</Button>
         </div>
       </div>
       <div className="modalContent">

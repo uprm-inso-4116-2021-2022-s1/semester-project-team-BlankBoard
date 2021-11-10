@@ -36,21 +36,19 @@ function Profile() {
   const numOfComments = 48;
 
   const posts = [
-    'https://images.unsplash.com/photo-1551963831-b3b1ca40c98e',
-    'https://images.unsplash.com/photo-1551782450-a2132b4ba21d',
-    'https://images.unsplash.com/photo-1522770179533-24471fcdba45',
-    'https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c',
-    'https://images.unsplash.com/photo-1533827432537-70133748f5c8',
-    'https://images.unsplash.com/photo-1558642452-9d2a7deb7f62',
-    'https://images.unsplash.com/photo-1516802273409-68526ee1bdd6',
-    'https://images.unsplash.com/photo-1518756131217-31eb79b20e8f',
-    'https://images.unsplash.com/photo-1597645587822-e99fa5d45d25',
-    'https://images.unsplash.com/photo-1567306301408-9b74779a11af',
-    'https://images.unsplash.com/photo-1471357674240-e1a485acb3e1',
-    'https://images.unsplash.com/photo-1589118949245-7d38baf380d6'
+    'https://res.cloudinary.com/dsunqodr1/image/upload/v1636585376/blankboard/zhgxrirylenlghtrgi6m.png',
+    'https://res.cloudinary.com/dsunqodr1/image/upload/v1636584833/blankboard/fiewyhdxo7hb8xp9v6qj.png',
+    'https://res.cloudinary.com/dsunqodr1/image/upload/v1636585569/blankboard/jbmcsbvr2zbw982bpkd8.png',
+    'https://res.cloudinary.com/dsunqodr1/image/upload/v1636585796/blankboard/f5chxncquhdlo3z4e70v.png',
+    'https://res.cloudinary.com/dsunqodr1/image/upload/v1636585815/blankboard/nvezntg06oebio2ikzcf.png',
+    'https://res.cloudinary.com/dsunqodr1/image/upload/v1636586193/blankboard/xhzsb1sm5g7vf1nxqfij.png',
+    'https://res.cloudinary.com/dsunqodr1/image/upload/v1636585889/blankboard/oq2gieifmtmioygrfv26.png',
+    'https://res.cloudinary.com/dsunqodr1/image/upload/v1636586034/blankboard/xmygk1u9dhehijnv4zn7.png',
+    'https://res.cloudinary.com/dsunqodr1/image/upload/v1636585957/blankboard/jprpx4tmj6sqcda9xb7i.png',
+    'https://res.cloudinary.com/dsunqodr1/image/upload/v1636585973/blankboard/unokwhpi6posevnb1qct.png',
+    'https://res.cloudinary.com/dsunqodr1/image/upload/v1636586119/blankboard/tqlpetz0abv747fl0bam.png',
+    'https://res.cloudinary.com/dsunqodr1/image/upload/v1636586093/blankboard/q2mxykwhhohyixetl46g.png'
   ];
-
-  // const posts = [];
 
   const showPosts = () => {
     return (
