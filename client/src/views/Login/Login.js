@@ -18,32 +18,39 @@ const Login = () => {
           <lable for="email" style={styles.lable}>
             Email
           </lable>
+
           <br></br>
+
           <input
             type="email"
             id="email"
             name="email"
-            placeholder="bb@gmail.com"
+            placeholder="example@gmail.com"
             style={styles.input}
+            value={email}
             onChange={(e) => setEmail(e.target.value)}
           ></input>
+
           <br></br>
-          <lable
-            for="pwd"
-            style={styles.lable}
-            onChange={(e) => setPassword(e.target.value)}
-          >
+
+          <lable for="pwd" style={styles.lable}>
             Password{" "}
           </lable>
+
           <br></br>
+
           <input
             type="password"
             id="pwd"
             name="pwd"
-            placeholder="•••••••••"
+            placeholder="password"
             style={styles.input}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           ></input>
-          <button>{cookies.user}</button>
+
+          {/* <button>{cookies.user}</button> */}
+
           <button
             type="submit"
             style={styles.submitBtn}
@@ -52,6 +59,16 @@ const Login = () => {
             {" "}
             Log In
           </button>
+          {cookies.email && (
+            <div>
+              Email Cookie: <p>{cookies.email}</p>
+            </div>
+          )}
+          {cookies.password && (
+            <div>
+              Password Cookie: <p>{cookies.password}</p>
+            </div>
+          )}
         </form>
       </div>
       <div style={styles.div2}>
@@ -73,7 +90,8 @@ const Login = () => {
   );
 
   function handleCookies() {
-    setCookie("user", email, { path: "/", maxAge: 3600 });
+    setCookie("email", email, { path: "/", maxAge: 3600 });
+    setCookie("password", password, { path: "/", maxAge: 3600 });
   }
 };
 
