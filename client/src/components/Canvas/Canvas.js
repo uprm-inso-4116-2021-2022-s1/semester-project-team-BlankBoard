@@ -5,7 +5,7 @@ import { BsEraserFill } from "react-icons/bs";
 import { RiPencilFill } from "react-icons/ri";
 import "./Canvas.css";
 
-function Canvas(modalOption, isModalVisible) {
+function Canvas(currUser, currThread, modalOption, isModalVisible) {
   const [tool, setTool] = React.useState("pencil");
   const toolOptions = () => {
     if(tool === "pencil") {
@@ -34,10 +34,10 @@ function Canvas(modalOption, isModalVisible) {
       )));
   }
 
-  const [thickness, setThickness] = React.useState(4);
+  const [thickness, setThickness] = React.useState(8);
   const updateThickness = (e, thck) => setThickness(thck);
   const sliderOptions = () => {
-    return(<Slider style={{color:"#ffa7a7"}} min={0} max={50} value={thickness} onChange={updateThickness} />);
+    return(<Slider style={{color:"#ffa7a7"}} min={2} max={56} value={thickness} onChange={updateThickness} />);
   }
 
   const [paths, setPaths] = React.useState([]);
@@ -53,11 +53,11 @@ function Canvas(modalOption, isModalVisible) {
   const initCanvas = () => setCanvasReady(true);
   
   React.useEffect(() => {
-    console.log(modalOption, isModalVisible);
+    console.log(currUser, currThread, modalOption, isModalVisible);
     if(isModalVisible) return;
     setCanvasReady(false);
     setBgReady(false);
-  }, [modalOption, isModalVisible]);
+  }, [currUser, currThread, modalOption, isModalVisible]);
 
   React.useEffect(() => {
     if(!canvasReady) return;
@@ -154,11 +154,11 @@ function Canvas(modalOption, isModalVisible) {
     const canvas = document.getElementById("canvas");
     canvas.toBlob (
       blob => {
-        const anchor = document.createElement("a");
+        const anchor = document.createElement("DrawImg");
         anchor.download = "drawing.png";
-        anchor.href = URL.createObjectURL(blob);
-        anchor.click();
-        URL.revokeObjectURL(anchor.href);
+        // anchor.href = URL.createObjectURL(blob);
+        // anchor.click();
+        // URL.revokeObjectURL(anchor.href);
       }, "image/png");
   }
 

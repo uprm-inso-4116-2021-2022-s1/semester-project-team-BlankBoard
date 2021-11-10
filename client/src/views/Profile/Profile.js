@@ -32,8 +32,8 @@ function Profile() {
   const closeModal = () => setShowModal(false);
 
   const username = "carloseli21";
-  const numOfPosts = 0;
-  const numOfComments = 0;
+  const numOfPosts = 12;
+  const numOfComments = 48;
 
   const posts = [
     'https://images.unsplash.com/photo-1551963831-b3b1ca40c98e',
@@ -55,8 +55,8 @@ function Profile() {
   const showPosts = () => {
     return (
         <ImageList cols={3} gap={32}>
-          {posts.map((post) => (
-            <ImageListItem>
+          {posts.map((post, i) => (
+            <ImageListItem key={i}>
               <img alt="" src={`${post}?w=320&h=320&fit=crop&auto=format`} loading="lazy" />
             </ImageListItem>
           ))}
@@ -69,7 +69,7 @@ function Profile() {
       <div className="background">
         <div className="userInfo">
           <div className="pfp" onClick={openModal}></div>
-          <Modal className="modalWindow" open={showModal} onClose={closeModal}>{Canvas("pfp", showModal)}</Modal>
+          <Modal className="modalWindow" open={showModal} onClose={closeModal}>{Canvas(1, 0, "pfp", showModal)}</Modal>
             <div className="username">{username}</div>
           <div className="stats">
             <div className="number">{numOfPosts}</div>
