@@ -7,29 +7,46 @@ body {
   background-color: var(--sharedes-background);
 }
 
+.cred_page{
+  background: #eb01a5;
+  background-image: 
+  linear-gradient(
+    to top, 
+  rgba(255, 167, 167, 0.9),
+  rgba(255, 203, 203, 0.6)
+  ), 
+  url(./assets/img/cred_back.jpg) !important;
+  background-size: 100vw;
+  height: 100vh !important;
+  width: 100vw;
+}
+
 .cred_card{
   padding: 30px;
   margin: 50px;
   width: 26rem;
   height: 26rem;
-  border-radius: 20px;
+  border-radius: 20px !important; 
 }
 
 .cred_container{
-  padding: 10px;
+  padding: 10px !important;
 }
 
-.cred_input{
-  margin: 20px;
+.log_input{
+  margin: 20px !important;
+}
+
+.reg_input{
+  margin: 10px !important;
 }
 
 .cred_button{
-  margin: 20px;
-  border-radius: 200px;
+  border-radius: 200px !important;
 }
 
 .cred_title{
-  font-size: 28px;
+  font-size: 28px !important;
 }
 
 .cred_register{

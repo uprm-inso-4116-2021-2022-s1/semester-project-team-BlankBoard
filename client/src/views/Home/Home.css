@@ -4,5 +4,7 @@
     max-width: 1800px;
     margin-left: auto;
     margin-right: auto;
-    padding: 0 10px;
+}
+.navbar_container{
+    position:fixed;
 }

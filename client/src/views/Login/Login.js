@@ -43,7 +43,7 @@ const Login = () => {
 
     return (
       <>
-        <Grid container className="cred_container" justifyContent="center">
+        <Grid container className="cred_container cred_page" justifyContent="center">
           <Grid item>
             <Card className="cred_card">
               <Grid container className="cred_container" justifyContent="center">
@@ -57,7 +57,7 @@ const Login = () => {
                 <Grid item xs={12}>
                   <FormGroup>
                     <TextField
-                      className="cred_input"
+                      className="log_input"
                       label="Email"
                       variant="standard"
                       type="email"
@@ -68,7 +68,7 @@ const Login = () => {
                       onChange={(e) => setEmail(e.target.value)}
                     />
                     <TextField
-                      className="cred_input"
+                      className="log_input"
                       label="Password"
                       variant="standard"
                       type="password"
@@ -78,7 +78,7 @@ const Login = () => {
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                     />
-                    <Button className="cred_button" type="button" variant="contained" onClick={handleLogin}>Sign In</Button>
+                    <Button className="log_input cred_button" type="button" variant="contained" onClick={handleLogin}>Sign In</Button>
                     <Dialog
                       open={open}
                       onClose={handleClose}

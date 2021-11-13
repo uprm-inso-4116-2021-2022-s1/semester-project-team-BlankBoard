@@ -3,6 +3,7 @@ import { useCookies } from 'react-cookie';
 import { Redirect, useHistory } from 'react-router-dom';
 
 import jwt_decode from "jwt-decode";
+import { Grid } from '@mui/material';
 
 import isAuthenticated from '../../common/authentication'
 import userGetById from '../../requests/userGetById';
@@ -14,7 +15,7 @@ import "./Home.css";
 function Home() {
     let history = useHistory();
     const [loading, setLoading] = useState(true);
-    const [cookies, setCookie, removeCookie] = useCookies(['token']);
+    const [cookies, setCookie] = useCookies(['token']);
     const [authenticated, setAuthenticated] = useState(false);
     const [user, setUser] = useState({});
 
@@ -24,11 +25,11 @@ function Home() {
     }
 
     const check = async () => {
-  
+
         setAuthenticated(await isAuthenticated(cookies.token));
 
         authenticated && setUser(await userGetById(jwt_decode(cookies.token).user.user_id));
-    
+
         setLoading(false);
     }
 
@@ -38,23 +39,20 @@ function Home() {
     } else if (!authenticated) {
         return <Redirect to={'/login'} />
     } else {
-
         return (
-            <div className="home">
-
-                {/* Navbar */}
-
-                <Navbar/>
-
-                {/* Feed */}
-
-                <Feed user={user}/>
-
-                {/* Widgets */}
-
-                <Widgets user={user} signOut={signOut}/>
-
-            </div>
+            <>
+                <Grid container className="home">
+                    <Grid item xs={2}>
+                        <Navbar />
+                    </Grid>
+                    <Grid item xs={7}>
+                        <Feed user={user} />
+                    </Grid>
+                    <Grid item xs={3}>
+                        <Widgets user={user} signOut={signOut} />
+                    </Grid>
+                </Grid>
+            </>
         );
 
     }

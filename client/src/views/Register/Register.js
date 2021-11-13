@@ -45,13 +45,13 @@ const Register = () => {
 
         return (
             <>
-                <Grid container className="cred_container" justifyContent="center">
+                <Grid container className="cred_page cred_container" justifyContent="center">
                     <Grid item>
                         <Card className="cred_card">
-                            <Grid container className="cred_container" justifyContent="center">
+                            <Grid container className="cred_container" padding="0px !important" justifyContent="center">
                                 <Grid item xs={12}>
                                     <Typography className="cred_title" textAlign="center">
-                                        Just another day, in BlankBoard City
+                                        Welcome to BlankBoard!
                                     </Typography>
                                 </Grid>
                             </Grid>
@@ -59,7 +59,7 @@ const Register = () => {
                                 <Grid item xs={12}>
                                     <FormGroup>
                                         <TextField
-                                            className="cred_input"
+                                            className="reg_input"
                                             label="Username"
                                             variant="standard"
                                             type="name"
@@ -70,7 +70,7 @@ const Register = () => {
                                             onChange={(e) => setUsername(e.target.value)}
                                         />
                                         <TextField
-                                            className="cred_input"
+                                            className="reg_input"
                                             label="Email"
                                             variant="standard"
                                             type="email"
@@ -81,7 +81,7 @@ const Register = () => {
                                             onChange={(e) => setEmail(e.target.value)}
                                         />
                                         <TextField
-                                            className="cred_input"
+                                            className="reg_input"
                                             label="Password"
                                             variant="standard"
                                             type="password"
@@ -92,7 +92,7 @@ const Register = () => {
                                             onChange={(e) => setPassword(e.target.value)}
                                         />
                                         <TextField
-                                            className="cred_input"
+                                            className="reg_input"
                                             label="Confirm Password"
                                             variant="standard"
                                             type="cpassword"
@@ -102,7 +102,7 @@ const Register = () => {
                                             value={confirmPassword}
                                             onChange={(e) => setConfirmPassword(e.target.value)}
                                         />
-                                        <Button className="cred_button" type="button" variant="contained" onClick={handleRegister}>Sign Up</Button>
+                                        <Button className="reg_input cred_button" type="button" variant="contained" onClick={handleRegister}>Sign Up</Button>
                                         <Dialog
                                             open={open}
                                             onClose={handleClose}

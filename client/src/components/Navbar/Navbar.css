@@ -1,10 +1,9 @@
 .navbar {
     border-right: 1px solid lightgray;
-    flex: 0.20;
-    min-width: 250px;
-    margin-top: 20px;
-    /* padding-left: 20px; */
-    padding-right: 20px;
+    padding: 10px;
+    position: fixed;
+    width: 16.6% !important;
+    height: 100vh;
 }
 
 .navbar > h1 {
@@ -14,15 +13,20 @@
     cursor: pointer;
 }
 
-.navbar__draw {
-    background-color: var(--sharedes-pinkDeep) !important;
+.navbar_button {
     border: none !important;
-    color: white !important;
+    text-align: left !important;
+    color: black !important;
     font-size: 20px !important;
     font-weight: 1000 !important;
     text-transform: inherit !important;
     border-radius: 30px !important;
     height: 50px !important;
     margin-top: 20px !important;
-    margin-left: auto !important;
+}
+
+.navbar_draw{
+    color: white !important;
+    text-align: center !important;
+    background-color: var(--sharedes-pinkDeep) !important;
 }
