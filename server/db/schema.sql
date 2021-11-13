@@ -21,6 +21,8 @@ create table follows(followerid integer references users(uid),
 followeeid integer references users(uid),
 primary key (followerid,followeeid));
 
+drop table follows;
+
 /****************************************************************************/
 
 create table blocks (
@@ -28,6 +30,8 @@ blocker_id int references users (uid) on delete cascade,
 blockee_id int references users (uid) on delete cascade,
 primary key(blocker_id,blockee_id)
 );
+
+drop table blocks;
 
 /****************************************************************************/
 
