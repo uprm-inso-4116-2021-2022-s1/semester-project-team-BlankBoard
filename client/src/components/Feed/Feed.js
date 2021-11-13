@@ -3,7 +3,7 @@ import "./Feed.css";
 import DrawBox from './DrawBox';
 import Post from './Post';
 
-function Feed() {
+function Feed(props) {
     return (
         <div className="feed">
             {/* Header */}
@@ -13,7 +13,7 @@ function Feed() {
 
             {/* drawBox */}
 
-            <DrawBox />
+            <DrawBox user={props.user}/>
 
             {/* Posts */}
 

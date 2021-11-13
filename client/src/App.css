@@ -6,3 +6,32 @@ body {
   --sharedes-background: #fff4f4;
   background-color: var(--sharedes-background);
 }
+
+.cred_card{
+  padding: 30px;
+  margin: 50px;
+  width: 26rem;
+  height: 26rem;
+  border-radius: 20px;
+}
+
+.cred_container{
+  padding: 10px;
+}
+
+.cred_input{
+  margin: 20px;
+}
+
+.cred_button{
+  margin: 20px;
+  border-radius: 200px;
+}
+
+.cred_title{
+  font-size: 28px;
+}
+
+.cred_register{
+  color:gray;
+}

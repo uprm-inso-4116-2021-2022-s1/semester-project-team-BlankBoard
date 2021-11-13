@@ -2,12 +2,12 @@ import React from 'react'
 import "./DrawBox.css";
 import {Avatar, Button} from "@mui/material";
 
-function DrawBox() {
+function DrawBox(props) {
     return( 
     <div className="drawBox">
         <form>
             <div className="drawBox__input"> 
-                <Avatar src="https://media.wired.co.uk/photos/606d9c691e0ddb19555fb809/4:3/w_2664,h_1998,c_limit/dog-unsolicited.jpg"></Avatar>
+                <Avatar src={props.user.profile ? props.user.profile : ""}></Avatar>
                 <input placeholder="Drawing 'box' Location Placeholder"/>
             </div>
             <Button className="drawBox__drawButton">Draw</Button>

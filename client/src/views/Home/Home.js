@@ -1,27 +1,64 @@
-import React from 'react'
+import React, { useState } from 'react';
+import { useCookies } from 'react-cookie';
+import { Redirect, useHistory } from 'react-router-dom';
+
+import jwt_decode from "jwt-decode";
+
+import isAuthenticated from '../../common/authentication'
+import userGetById from '../../requests/userGetById';
 import Navbar from '../../components/Navbar/Navbar';
 import Feed from '../../components/Feed/Feed';
 import Widgets from '../../components/Widgets/Widgets';
 import "./Home.css";
 
 function Home() {
-    return (
-    <div className="home"> 
+    let history = useHistory();
+    const [loading, setLoading] = useState(true);
+    const [cookies, setCookie, removeCookie] = useCookies(['token']);
+    const [authenticated, setAuthenticated] = useState(false);
+    const [user, setUser] = useState({});
 
-        {/* Navbar */}
-            
-        <Navbar />
+    const signOut = () => {
+        setCookie("token", "");
+        history.push("/login");
+    }
 
-        {/* Feed */}
+    const check = async () => {
+  
+        setAuthenticated(await isAuthenticated(cookies.token));
 
-        <Feed />
+        authenticated && setUser(await userGetById(jwt_decode(cookies.token).user.user_id));
+    
+        setLoading(false);
+    }
 
-        {/* Widgets */}
+    if (loading) {
+        check();
+        return <h1>Loading...</h1>
+    } else if (!authenticated) {
+        return <Redirect to={'/login'} />
+    } else {
 
-        <Widgets />
+        return (
+            <div className="home">
 
-    </div>
-    );
+                {/* Navbar */}
+
+                <Navbar/>
+
+                {/* Feed */}
+
+                <Feed user={user}/>
+
+                {/* Widgets */}
+
+                <Widgets user={user} signOut={signOut}/>
+
+            </div>
+        );
+
+    }
+
 }
 
 export default Home;

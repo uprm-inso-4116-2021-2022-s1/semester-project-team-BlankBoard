@@ -1,141 +1,141 @@
-import React from 'react'
+import { React, useState } from "react";
+import { Redirect } from 'react-router-dom';
+import axios from 'axios';
+import { useCookies } from "react-cookie";
+import { useHistory } from 'react-router-dom';
+import {
+  Grid,
+  Card,
+  TextField,
+  Button,
+  FormGroup,
+  Typography,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText
+} from '@mui/material';
+import isAuthenticated from '../../common/authentication'
+
+
+
 
 const Login = () => {
+  let history = useHistory();
+  const [cookies, setCookie] = useCookies(["user"]);
+  const [open, setOpen] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [authenticated, setAuthenticated] = useState(false);
+
+  const check = async () => {
+    setAuthenticated(await isAuthenticated(cookies.token));
+    setLoading(false);
+  }
+
+  if (loading) {
+    check();
+    return <h1>Loading...</h1>
+  } else if (authenticated) {
+    return <Redirect to={'/'} />
+  } else {
+
     return (
-        <div style={styles.div0}> 
-            <div style={styles.div1}>
-                
-                <h1 style={styles.h1}>Log In</h1>
-                <h3 style={styles.h3}>New to Blank Board? <a href="/Register">Create a new account!</a></h3>
-                
-                <form style={styles.form}> 
-                    <lable for="email" style={styles.lable}>Email</lable>
-                    <br></br>
-                    <input type="emial" id="email" name="email" placeholder="bb@gmail.com" style={styles.input}></input>
-                    <br></br>
-                    <lable for="pwd" style={styles.lable}>Password </lable>
-                    <br></br>
-                    <input type="password" id="pwd" name="pwd" placeholder="•••••••••" style={styles.input}></input>
-                    <button type="submit" style={styles.submitBtn}> Log In </button>
-                </form>
-            </div>
+      <>
+        <Grid container className="cred_container" justifyContent="center">
+          <Grid item>
+            <Card className="cred_card">
+              <Grid container className="cred_container" justifyContent="center">
+                <Grid item xs={12}>
+                  <Typography className="cred_title" textAlign="center">
+                    Sign in to BlankBoard
+                  </Typography>
+                </Grid>
+              </Grid>
+              <Grid container className="cred_container" justifyContent="center">
+                <Grid item xs={12}>
+                  <FormGroup>
+                    <TextField
+                      className="cred_input"
+                      label="Email"
+                      variant="standard"
+                      type="email"
+                      id="email"
+                      name="email"
+                      placeholder="Email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                    />
+                    <TextField
+                      className="cred_input"
+                      label="Password"
+                      variant="standard"
+                      type="password"
+                      id="pwd"
+                      name="pwd"
+                      placeholder="password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                    />
+                    <Button className="cred_button" type="button" variant="contained" onClick={handleLogin}>Sign In</Button>
+                    <Dialog
+                      open={open}
+                      onClose={handleClose}
+                    >
+                      <DialogTitle>
+                        {"Invalid Credentials"}
+                      </DialogTitle>
+                      <DialogContent>
+                        <DialogContentText>
+                          It appears you have entered an incorrect email or password, please try again.
+                        </DialogContentText>
+                      </DialogContent>
+                    </Dialog>
+                  </FormGroup>
+                </Grid>
+              </Grid>
+              <Grid container className="cred_container" justifyContent="center">
+                <Grid item>
+                  <Typography className="cred_register">
+                    New to Blank Board? <a href="/register">Create a new account!</a>
+                  </Typography>
+                </Grid>
+              </Grid>
+            </Card>
+          </Grid>
+        </Grid>
+      </>
+    );
+  }
 
-            <div style={styles.div2}>
-                <h1>[LOGO]</h1>
-                <h1 style={styles.middleOR}>OR</h1>
-            </div>
+  function handleClose() {
+    setOpen(false);
+  }
 
-            <div style={styles.div3}>
-                <button type="button" style={styles.googlelBtn}>Continue with Google</button>
-                <button type="button" style={styles.linkeinBtn}>Continue with LinkedIn</button>
-                <button type="button" style={styles.facebookBtn}>Continue with Facebook</button>
-            </div>.
+  function handleLogin() {
+    const body = {
+      email,
+      password
+    };
+    const bodySend = JSON.stringify(body);
+    axios({
+      method: 'POST',
+      url: process.env.REACT_APP_API + "/auth/login",
+      data: bodySend,
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      json: true
+    }).then(res => {
+      setCookie("token", res.data.jwtToken);
+      console.log("Cookie right after setting", cookies.token);
+      history.push("/");
+    }).catch(e => {
+      setOpen(true);
+    });
+  }
 
-        </div>
-
-    )
-}
-
-const styles = StyleSheet.create = ({
-    googlelBtn: {
-        backgroundColor: 'red',
-        color: 'white',
-        fontSize: '26px',
-        width: '80%',
-        border: '0px solid',
-        borderRadius: '5px',
-        margin: '35% 0 10% 10%',
-        padding: '10px 30px'
-    },
-
-    linkeinBtn: {
-        backgroundColor: 'navy',
-        color: 'white',
-        fontSize: '26px',
-        width: '80%',
-        border: '0px solid',
-        borderRadius: '5px',
-        margin: '0 0 10% 10%',
-        padding: '10px 30px'
-    },    
-    
-    facebookBtn: {
-        backgroundColor: 'blue',
-        color: 'white',
-        fontSize: '26px',
-        width: '80%',
-        border: '0px solid',
-        borderRadius: '5px',
-        margin: '0% 0 10% 10%',
-        padding: '10px 30px'
-
-    },
-    
-    div0: {
-        backgroundColor: '#efb6b6'
-    },
-
-    div1: {
-        display: 'grid',
-        width: '45%',
-        float: 'left',
-        padding: '0 0 10% 0',
-    },
-
-    div2: {
-        display: 'grid',
-        width: '10%',
-        float: 'left',
-        padding: '0 0 10% 0',
-    },
-
-    div3: {
-        display: 'grid',
-        width: '45%',
-        float: 'left',
-        padding: '0 0 10% 0',
-    },
-
-    form: {
-        margin: '0 10% 0 20%', 
-    },
-
-    input: {
-        margin: '8px 0 28px 0',
-        borderRadius: '5px',
-        border: '1px solid black',
-        fontSize: '26px',
-        width: '100%'
-    },
-
-    lable: {
-        fontSize: '26px',
-    },
-
-    h1 : {
-        margin: '20% 0% 1% 20% ',
-        fontSize: '40px'
-    },
-
-    h3: {
-       margin: '0% 0% 10% 20% ',
-    },
-
-    middleOR: {
-        padding: '200% 0% 150% 0%',
-        textAlign: 'center'
-    },
-
-    submitBtn: {
-        backgroundColor: 'black',
-        color: '#eee',
-        borderRadius: '5px',
-        border: '0px solid',
-        fontSize: '26px',
-        width: '101%',
-        padding: '10px 0px',
-        margin: '5% 0'
-    }
-});
+};
 
 export default Login;
