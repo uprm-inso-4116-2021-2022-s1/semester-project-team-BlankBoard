@@ -10,6 +10,11 @@ function DrawBox(props) {
     const closeModal = () => setShowModal(false);
     const canvasCall = (newDrawing) => { setDrawing(newDrawing) };
 
+    const createPost = () => {
+        //make a post with the drawing state as it's "post_content" field, and make this post tied to 
+        // use whose id is props.user.user_id as "user_id"
+    }
+
     return (
         <>
             <Grid container className="dbox">
@@ -30,7 +35,7 @@ function DrawBox(props) {
                         </Typography>
                     </Grid>
                     <Grid item xs={12}>
-                        <Button>Post</Button>
+                        <Button onClick={createPost}>Post</Button> {/**/}
                     </Grid>
                 </Grid>
             </Grid>
