@@ -1,8 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat+Brush&display=swap');
+
 body {
   --sharedes-pinkLight: #ffcbcb;
   --sharedes-pinkDeep: #ffa7a7;
   --sharedes-blueDeep: #c9fdff;
   --sharedes-blueLight: #dffeff;
   --sharedes-background: #fff4f4;
-  background-color: var(--sharedes-background);
+  --sharedes-blueDark: #283861;
+  font-family: Caveat Brush !important;
+  font-weight: lighter !important;
+  background:
+  linear-gradient(
+    to top, 
+    #ffcbcb,
+    #fff4f4
+  ) 
+  !important;
+  background-attachment: fixed !important;
+}
+
+.cred_page{
+  background: #eb01a5;
+  background-image: 
+  linear-gradient(
+    to top, 
+  rgba(255, 167, 167, 0.9),
+  rgba(255, 203, 203, 0.6)
+  ), 
+  url(./assets/img/cred_back.jpg) !important;
+  background-size: 100vw;
+  height: 100vh !important;
+  width: 100vw;
+}
+
+.cred_card{
+  padding: 30px;
+  margin: 50px;
+  width: 26rem;
+  height: 26rem;
+  border-radius: 20px !important; 
+}
+
+.cred_container{
+  padding: 10px !important;
+}
+
+.log_input{
+  margin: 20px !important;
+}
+
+.reg_input{
+  margin: 10px !important;
+}
+
+.cred_button{
+  border-radius: 200px !important;
+}
+
+.cred_title{
+  font-size: 28px !important;
+}
+
+.cred_register{
+  color:gray;
 }

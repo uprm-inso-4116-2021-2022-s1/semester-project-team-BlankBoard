@@ -1,19 +1,12 @@
 import React from "react";
-import { Modal, Button, Fab, Slider } from "@mui/material";
+import axios from "axios";
+import { Button, Fab, Slider } from "@mui/material";
 import { BiUndo } from "react-icons/bi";
-import { BsDownload, BsEraserFill } from "react-icons/bs";
+import { BsEraserFill } from "react-icons/bs";
 import { RiPencilFill } from "react-icons/ri";
 import "./Canvas.css";
 
-const Canvas = () => {
-  const[showModal, setShowModal] = React.useState(false);
-  const openModal = () => setShowModal(true);
-  const closeModal = () => {
-    setShowModal(false);
-    setCanvasReady(false);
-    setBgReady(false);
-  }
-
+function Canvas(currUser, currThread, modalOption, isModalVisible) {
   const [tool, setTool] = React.useState("pencil");
   const toolOptions = () => {
     if(tool === "pencil") {
@@ -42,10 +35,10 @@ const Canvas = () => {
       )));
   }
 
-  const [thickness, setThickness] = React.useState(4);
+  const [thickness, setThickness] = React.useState(8);
   const updateThickness = (e, thck) => setThickness(thck);
   const sliderOptions = () => {
-    return(<Slider style={{color:"#ffa7a7"}} min={0} max={50} value={thickness} onChange={updateThickness} />);
+    return(<Slider style={{color:"#ffa7a7"}} min={2} max={56} value={thickness} onChange={updateThickness} />);
   }
 
   const [paths, setPaths] = React.useState([]);
@@ -55,16 +48,23 @@ const Canvas = () => {
   const [isDrawing, setIsDrawing] = React.useState(false);
   const contextRef = React.useRef(null);
 
-  const canvasDimensions = window.innerWidth/3;
+  const canvasDimensions = 320;
   const[canvasReady, setCanvasReady] = React.useState(false);
   const [bgReady, setBgReady] = React.useState(false);
   const initCanvas = () => setCanvasReady(true);
+  
+  React.useEffect(() => {
+    console.log(currUser, currThread, modalOption, isModalVisible);
+    if(isModalVisible) return;
+    setCanvasReady(false);
+    setBgReady(false);
+  }, [currUser, currThread, modalOption, isModalVisible]);
 
   React.useEffect(() => {
     if(!canvasReady) return;
     const canvas = document.getElementById("canvas");
     const ctx = canvas.getContext("2d");
-    ctx.globalCompositeOperation = "source-over"
+    ctx.globalCompositeOperation = "source-over";
     ctx.fillStyle = "whitesmoke";
     ctx.lineCap = "round";
     ctx.lineJoin = "round";
@@ -151,59 +151,58 @@ const Canvas = () => {
     setPathSizes([]);
   }
 
-  const downloadDrawing = () => {
-    const canvas = document.getElementById("canvas");
-    canvas.toBlob (
-      blob => {
-        const anchor = document.createElement("a");
-        anchor.download = "drawing.png";
-        anchor.href = URL.createObjectURL(blob);
-        anchor.click();
-        URL.revokeObjectURL(anchor.href);
-      }, "image/png");
+  const drawingToCloud = () => {
+    const canvas = document.querySelector("canvas");
+    console.log(canvas);
+    canvas.toBlob (blob => {
+      const file = new File([blob], "drawing.png");
+      console.log(file);
+      uploadDrawing(file);
+      });
+  }
+
+  const uploadDrawing = async (img) => {
+    const formData = new FormData();
+    formData.append('file', img);
+    formData.append('upload_preset', 'blankboard');
+    await axios.post('https://api.cloudinary.com/v1_1/dsunqodr1/image/upload', formData);
   }
 
   return (
-    <div>
-      <Button onClick={openModal}>WHITEBOARD</Button>
-      <Modal className="modalWindow" open={showModal} onClose={closeModal}>
-        <div className="modalBg" onMouseEnter={initCanvas}>
-          <div className="modalNavbar">
-            <div className="navLeft">
-              <BiUndo style={{fontSize:"36px", color:"#ffa7a7", marginLeft:"10%", cursor:"pointer"}} onClick={undoDrawing} />
-              <Button style={{backgroundColor: "#ffa7a7", color:"black", fontFamily: "Gill Sans MT", marginLeft:"32px", cursor:"pointer"}} onClick={clearDrawing}>CLEAR</Button>
-            </div>
-            <div className="navRight">
-              <BsDownload style={{fontSize:"28px", color:"#ffa7a7", marginRight:"32px", cursor:"pointer"}} onClick={downloadDrawing} />
-              <Button className="submitButton" style={{backgroundColor: "#ffa7a7", color:"black", fontFamily: "Gill Sans MT", marginRight:"10%"}}>SUBMIT</Button>
-            </div>
-          </div>
-          <div className="modalContent">
-            <div className="firstOptions">
-              <div className="optionText">TOOLS</div>
-              <div className="modalTools">{toolOptions()}</div>
-            </div>
-            <div>
-              <canvas
-                id="canvas"
-                className="whiteboard"
-                width={canvasDimensions}
-                height={canvasDimensions}
-                onMouseDown={startDrawing}
-                onMouseMove={draw}
-                onMouseUp={endDrawing}
-                onMouseLeave={endDrawing}
-              />
-            </div>
-            <div className="secOptions">
-              <div className="optionText">COLORS</div>
-              <div className="colorsGrid">{colorOptions()}</div>
-              <div className="optionText">THICKNESS</div>
-              <div className="modalSlider">{sliderOptions()} </div>
-            </div>
-          </div>
+    <div className="modalBg" onMouseEnter={initCanvas}>
+      <div className="modalNavbar">
+        <div className="navLeft">
+          <BiUndo style={{fontSize:"36px", color:"#ffa7a7", marginLeft:"10%", cursor:"pointer"}} onClick={undoDrawing} />
+          <Button style={{backgroundColor: "#ffa7a7", color:"black", fontFamily: "Caveat Brush", marginLeft:"32px", cursor:"pointer"}} onClick={clearDrawing}>CLEAR</Button>
         </div>
-      </Modal>
+        <div className="navRight">
+          <Button className="submitButton" style={{backgroundColor: "#ffa7a7", color:"black", fontFamily: "Caveat Brush", marginRight:"10%"}} onClick={drawingToCloud}>SUBMIT</Button>
+        </div>
+      </div>
+      <div className="modalContent">
+        <div className="options">
+          <div className="optionText">TOOLS</div>
+          <div className="modalTools">{toolOptions()}</div>
+        </div>
+        <div>
+          <canvas
+            id="canvas"
+            className="whiteboard"
+            width={canvasDimensions}
+            height={canvasDimensions}
+            onMouseDown={startDrawing}
+            onMouseMove={draw}
+            onMouseUp={endDrawing}
+            onMouseLeave={endDrawing}
+          />
+        </div>
+        <div className="options">
+          <div className="optionText">COLORS</div>
+          <div className="colorsGrid">{colorOptions()}</div>
+          <div className="optionText">THICKNESS</div>
+          <div className="modalSlider">{sliderOptions()} </div>
+        </div>
+      </div>
     </div>
   );
 };

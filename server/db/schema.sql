@@ -15,11 +15,15 @@ drop column uid, add column uid serial primary key;
 
 ALTER TABLE Users ALTER COLUMN followers SET DEFAULT 0;
 
+ALTER TABLE users ADD COLUMN screen_name varchar(255);
+
 /****************************************************************************/
 
 create table follows(followerid integer references users(uid),
 followeeid integer references users(uid),
 primary key (followerid,followeeid));
+
+drop table follows;
 
 /****************************************************************************/
 
@@ -28,6 +32,8 @@ blocker_id int references users (uid) on delete cascade,
 blockee_id int references users (uid) on delete cascade,
 primary key(blocker_id,blockee_id)
 );
+
+drop table blocks;
 
 /****************************************************************************/
 

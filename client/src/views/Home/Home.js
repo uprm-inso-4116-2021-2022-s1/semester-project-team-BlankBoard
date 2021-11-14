@@ -1,27 +1,71 @@
-import React from 'react'
+import React, { useState } from 'react';
+import { useCookies } from 'react-cookie';
+import { Redirect, useHistory } from 'react-router-dom';
+
+import jwt_decode from "jwt-decode";
+import { Grid } from '@mui/material';
+
+import isAuthenticated from '../../common/authentication'
+import userGetById from '../../requests/userGetById';
 import Navbar from '../../components/Navbar/Navbar';
 import Feed from '../../components/Feed/Feed';
-import Widgets from '../../components/Widgets/Widgets';
+import Profile from '../../components/Profile/Profile'
 import "./Home.css";
 
 function Home() {
-    return (
-    <div className="home"> 
+    let history = useHistory();
+    const [loading, setLoading] = useState(true);
+    const [cookies, setCookie] = useCookies(['token']);
+    const [authenticated, setAuthenticated] = useState(false);
+    const [tab, setTab] = useState("feed");
+    const [user, setUser] = useState({});
 
-        {/* Navbar */}
-            
-        <Navbar />
+    // <Modal className="modalWindow" open={showModal} onClose={closeModal}>{Canvas(1, 0, "pfp", showModal)}</Modal>
+    
+    const check = async () => {
 
-        {/* Feed */}
+        setAuthenticated(await isAuthenticated(cookies.token));
 
-        <Feed />
+        if (authenticated) {
+            setUser(await userGetById(jwt_decode(cookies.token).user.user_id));
+        }
 
-        {/* Widgets */}
+        setLoading(false);
+    }
 
-        <Widgets />
+    const signOut = () => {
+        setCookie("token", "");
+        history.push("/login");
+    }
 
-    </div>
-    );
+    if (loading) {
+        check();
+        return <h1>Loading...</h1>
+    } else if (!authenticated) {
+        return <Redirect to={'/login'} />
+    } else {
+        return (
+            <>
+                <Navbar 
+                user={user} 
+                history={history} 
+                signOut={signOut} 
+                setTab={setTab} />
+                {console.log("user:", user)}
+                <Grid container className="home" justifyContent="center">
+                    <Grid item xs={6}  className={tab === "feed" ? "show" : "hide"} >
+                        <Feed user={user}/>
+                    </Grid>
+                    <Grid item xs={6}  className={tab === "profile" ? "show" : "hide"} >
+                        <Profile user={user} />
+                    </Grid>
+                </Grid>
+            </>
+        );
+
+    }
+
+
 }
 
 export default Home;

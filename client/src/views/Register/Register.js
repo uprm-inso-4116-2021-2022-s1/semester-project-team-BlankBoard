@@ -1,88 +1,166 @@
-import React from 'react'
+import { React, useState } from "react";
+import { Redirect } from 'react-router-dom';
+import axios from 'axios';
+import { useCookies } from "react-cookie";
+import { useHistory } from 'react-router-dom';
+import {
+    Grid,
+    Card,
+    TextField,
+    Button,
+    FormGroup,
+    Typography,
+    Dialog,
+    DialogTitle,
+    DialogContent,
+    DialogContentText
+} from '@mui/material';
+import isAuthenticated from '../../common/authentication'
+
+
+
 
 const Register = () => {
-    return (
-        <div style={styles.div0}>
-            <h1 style={styles.h1}>[LOGO] Welcome to the world of drawing!</h1>
-            <h3 style={styles.h3}>Already have an account? <a href="/Login">Log in</a></h3>
-            
-            <form style={styles.form}>
-                <lable for="fname" style={styles.lable}> Name</lable>
-                <br></br>
-                <input type="text" id="fname" name="fname" placeholder="Margarita" style={styles.input}></input>
-                <br></br>
-                <lable for="lname" style={styles.lable}> Last Name</lable>
-                <br></br>
-                <input type="text" id="lname" name="lname" placeholder="Rosario" style={styles.input}></input>
-                <br></br>
-                <lable for="email" style={styles.lable}>Email</lable>
-                <br></br>
-                <input type="emial" id="email" name="email" placeholder="bb@gmail.com" style={styles.input}></input>
-                <br></br>
-                <lable for="emailConfirm" style={styles.lable}>Confirm Email</lable>
-                <br></br>
-                <input type="emial" id="emailConfirm" name="emailConfirm" placeholder="bb@gmail.com" style={styles.input}></input>
-                <br></br>
-                <lable for="pwd" style={styles.lable}>Create Password </lable>
-                <br></br>
-                <input type="password" id="pwd" name="pwd" placeholder="•••••••••" style={styles.input}></input>
-                <br></br>
-                <lable for="pwdConfrim" style={styles.lable}>Confirm Password </lable>
-                <br></br>
-                <input type="password" id="pwdConfrim" name="pwdConfrim" placeholder="•••••••••" style={styles.input}></input>
-                <br></br>
-                <button type="submit" style={styles.registerBtn}> Register </button>
-            </form>
+    let history = useHistory();
+    const [cookies, setCookie] = useCookies(["user"]);
+    const [open, setOpen] = useState(false);
+    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+    const [password, setPassword] = useState("");
+    const [loading, setLoading] = useState(true);
+    const [authenticated, setAuthenticated] = useState(false);
 
-        </div>
-    )
-}
+    const check = async () => {
+        setAuthenticated(await isAuthenticated(cookies.token));
+        setLoading(false);
+    }
 
-const styles = StyleSheet.create = ({
-    div0: {
-        backgroundColor: '#efb6b6',
-        display: 'grid',
-       // padding: '0% 5% 5% 5%',
-    },
+    if (loading) {
+        check();
+        return <h1>Loading...</h1>
+    } else if (authenticated) {
+        return <Redirect to={'/'} />
+    } else {
 
-    form: {
-        margin: '0 20% 0 20%', 
-    },
+        return (
+            <>
+                <Grid container className="cred_page cred_container" justifyContent="center">
+                    <Grid item>
+                        <Card className="cred_card">
+                            <Grid container className="cred_container" padding="0px !important" justifyContent="center">
+                                <Grid item xs={12}>
+                                    <Typography className="cred_title" textAlign="center">
+                                        Welcome to BlankBoard!
+                                    </Typography>
+                                </Grid>
+                            </Grid>
+                            <Grid container className="cred_container" justifyContent="center">
+                                <Grid item xs={12}>
+                                    <FormGroup>
+                                        <TextField
+                                            className="reg_input"
+                                            label="Username"
+                                            variant="standard"
+                                            type="name"
+                                            id="username"
+                                            name="username"
+                                            placeholder="Username"
+                                            value={username}
+                                            onChange={(e) => setUsername(e.target.value)}
+                                        />
+                                        <TextField
+                                            className="reg_input"
+                                            label="Email"
+                                            variant="standard"
+                                            type="email"
+                                            id="email"
+                                            name="email"
+                                            placeholder="Email"
+                                            value={email}
+                                            onChange={(e) => setEmail(e.target.value)}
+                                        />
+                                        <TextField
+                                            className="reg_input"
+                                            label="Password"
+                                            variant="standard"
+                                            type="password"
+                                            id="pwd"
+                                            name="pwd"
+                                            placeholder="password"
+                                            value={password}
+                                            onChange={(e) => setPassword(e.target.value)}
+                                        />
+                                        <TextField
+                                            className="reg_input"
+                                            label="Confirm Password"
+                                            variant="standard"
+                                            type="cpassword"
+                                            id="cpwd"
+                                            name="cpwd"
+                                            placeholder="Password"
+                                            value={confirmPassword}
+                                            onChange={(e) => setConfirmPassword(e.target.value)}
+                                        />
+                                        <Button className="reg_input cred_button" type="button" variant="contained" onClick={handleRegister}>Sign Up</Button>
+                                        <Dialog
+                                            open={open}
+                                            onClose={handleClose}
+                                        >
+                                            <DialogTitle>
+                                                {"Invalid Credentials"}
+                                            </DialogTitle>
+                                            <DialogContent>
+                                                <DialogContentText>
+                                                    It appears you have entered an incorrect email or password, please try again.
+                                                </DialogContentText>
+                                            </DialogContent>
+                                        </Dialog>
+                                    </FormGroup>
+                                </Grid>
+                            </Grid>
+                            <Grid container className="cred_container" justifyContent="center">
+                                <Grid item>
+                                    <Typography className="cred_register">
+                                        Already have an account? <a href="/login">Log in</a>
+                                    </Typography>
+                                </Grid>
+                            </Grid>
+                        </Card>
+                    </Grid>
+                </Grid>
+            </>
+        );
+    }
 
-    input: {
-        margin: '8px 0 28px 0',
-        borderRadius: '5px',
-        border: '1px solid black',
-        fontSize: '26px',
-        width: '100%'
-    },
+    function handleClose() {
+        setOpen(false);
+    }
 
-    lable: {
-        fontSize: '26px',
-    },
+    function handleRegister() {
+        const body = {
+            username,
+            email,
+            password
+        };
+        const bodySend = JSON.stringify(body);
+        axios({
+            method: 'POST',
+            url: process.env.REACT_APP_API + "/auth/register",
+            data: bodySend,
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            json: true
+        }).then(res => {
+            setCookie("token", res.data.jwtToken);
+            console.log("Cookie right after setting", cookies.token);
+            history.push("/");
+        }).catch(e => {
+            setOpen(true);
+        });
+    }
 
-    h1 : {
-        margin: '5% 10% 1% 20% ',
-        fontSize: '40px'
-    },
-
-    h3: {
-       margin: '0% 10% 5% 20% ',
-    },
-
-    registerBtn: {
-        backgroundColor: 'black',
-        color: '#eee',
-        borderRadius: '5px',
-        border: '0px solid',
-        fontSize: '26px',
-        width: '101%',
-        padding: '10px 0px',
-        margin: '5% 0',
-    },
-
-})
-
-
+};
 
 export default Register;
