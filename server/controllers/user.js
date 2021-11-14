@@ -57,6 +57,7 @@ const usersGetId = async (req, res, pool) => {
     console.log(e);
     res.status(400).send(e);
   }
+  res.json(table.rows[0]);
 };
 
 const usersPutId = async (req, res, pool) => {
@@ -87,10 +88,19 @@ const usersDelId = async (req, res, pool) => {
   try {
     const { id } = req.params;
 
-    await pool.query("DELETE FROM Users WHERE user_id = $1", [id]);
+    const deletedUser = await pool.query(
+      "DELETE FROM Users WHERE user_id = $1 RETURNING *",
+      [id]
+    );
 
-    //res.json(table.rows[0]);
-    res.status(200).send();
+    if (deletedUser.rows.length > 0) {
+      console.log(deletedUser);
+      res
+        .status(200)
+        .json("User succesfully deleted: " + deletedUser.rows[0].email);
+    } else {
+      res.status(400).json("No such user exists. Lucky you I guess.");
+    }
   } catch (e) {
     console.log(e);
     res.status(400).send(e);
@@ -117,13 +127,13 @@ const followID = async (req, res, pool) => {
 const unfollowID = async (req, res, pool) => {
   try {
     const { id } = req.params;
-    const { user_id } = req.body;
+    const { UserId } = req.body;
 
     await pool.query(
       "DELETE FROM Follows WHERE follower_id=$1 AND followee_id=$2",
-      [user_id, id]
+      [UserId, id]
     );
-    res.status(200).end();
+    res.status(200).send();
   } catch (e) {
     res.satus(400).send(e);
   }
