@@ -1,6 +1,6 @@
 import React from 'react'
 import "./Feed.css";
-// import DrawBox from './DrawBox';
+import DrawBox from './DrawBox';
 import Post from './Post';
 import { Card } from "@mui/material";
 
@@ -9,6 +9,7 @@ function Feed(props) {
             <Card className="feed">
                   
                   {/* Posts */}
+                  <DrawBox user={props.user}/>
 
                   <Post displayName="Kevin"
                         verified username="bugg"

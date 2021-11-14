@@ -1,7 +1,27 @@
-.drawBox {
-    padding-bottom: 10px;
-    border-bottom: 8px solid lightgray;
-    padding-right: 10px;
+.dbox {
+    border-bottom: 4px solid lightgray;
+    padding: 20px;
+}
+
+.dbox_drawing_cont{
+    border-radius: 20px !important;
+    height:20rem !important;
+}
+
+.dbox_drawing{
+    border-radius: 20px !important;
+}
+
+.dbox_profile{
+    height: 5rem !important;
+    width: 5rem !important;
+}
+
+#dbd{
+    height: auto; 
+    width: auto; 
+    max-width: 15rem !important; 
+    max-height: 15rem !important;
 }
 
 .drawBox > form {
