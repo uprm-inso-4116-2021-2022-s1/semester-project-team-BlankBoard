@@ -48,7 +48,7 @@ const Login = () => {
             <Card className="cred_card">
               <Grid container className="cred_container" justifyContent="center">
                 <Grid item xs={12}>
-                  <Typography className="cred_title" textAlign="center">
+                  <Typography className="bb_f1 cred_title" textAlign="center">
                     Sign in to BlankBoard
                   </Typography>
                 </Grid>

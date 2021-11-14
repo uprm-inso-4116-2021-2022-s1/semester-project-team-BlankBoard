@@ -7,7 +7,7 @@ const authRoutes = (pool) => {
   const router = Router();
 
   router.post('/register', validInfo, async (req, res) => {
-    const { email, username, screen_name, password } = req.body;
+    const { profile, username, screen_name, email, password } = req.body;
     const passwordHash = await bcrypt.hash(password, 10);
 
     try {
@@ -20,8 +20,8 @@ const authRoutes = (pool) => {
       }
 
       let newUser = await pool.query(
-        'INSERT INTO Users(username, screen_name, password, email) VALUES ($1, $2, $3, $4) RETURNING *',
-        [username, screen_name, passwordHash, email]
+        'INSERT INTO Users(profile, username, screen_name, password, email) VALUES ($1, $2, $3, $4, $5) RETURNING *',
+        [profile, username, screen_name, passwordHash, email]
       )
 
       const jwtToken = jwtGenerator(newUser.rows[0].user_id);

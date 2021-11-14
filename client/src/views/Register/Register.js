@@ -1,9 +1,11 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 import { useCookies } from "react-cookie";
 import { useHistory } from 'react-router-dom';
 import {
+    Avatar,
+    Modal,
     Grid,
     Card,
     TextField,
@@ -13,33 +15,42 @@ import {
     Dialog,
     DialogTitle,
     DialogContent,
-    DialogContentText
+    DialogContentText,
+    IconButton
 } from '@mui/material';
-import isAuthenticated from '../../common/authentication'
-
-
-
+import Canvas from "../../components/Canvas/Canvas";
+import isAuthenticated from '../../common/authentication';
 
 const Register = () => {
     let history = useHistory();
     const [cookies, setCookie] = useCookies(["user"]);
     const [open, setOpen] = useState(false);
+    const [profile, setProfile] = useState("");
     const [username, setUsername] = useState("");
     const [screen_name, setScreenName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [loading, setLoading] = useState(true);
-    const [authenticated, setAuthenticated] = useState(false);
+    const [confirmPassword, setConfirmPassword] = useState("");
+    // const [loading, setLoading] = useState(true);
+    const [authentication, setAuthentication] = useState({ loading: true, authenticated: false })
+    // const [authenticated, setAuthenticated] = useState(false);
+    const [showModal, setShowModal] = useState(false);
+    const openModal = () => setShowModal(true);
+    const closeModal = () => setShowModal(false);
+    const canvasCall = (newPic) => { setProfile(newPic) };
+    const [warning, setWarning] = useState(["Invalid Credentials", "You have entered invalid information."]);
 
-    const check = async () => {
-        setAuthenticated(await isAuthenticated(cookies.token));
-        setLoading(false);
-    }
+    useEffect(() => {
+        async function authenticate() {
+            let flag = await isAuthenticated(cookies.token);
+            setAuthentication({ loading: false, authenticated: flag })
+        }
+        authenticate();
+    }, [cookies.token]);
 
-    if (loading) {
-        check();
+    if (authentication.loading) {
         return <h1>Loading...</h1>
-    } else if (authenticated) {
+    } else if (authentication.authenticated) {
         return <Redirect to={'/'} />
     } else {
 
@@ -50,12 +61,17 @@ const Register = () => {
                         <Card className="cred_card">
                             <Grid container className="cred_container" padding="0px !important" justifyContent="center">
                                 <Grid item xs={12}>
-                                    <Typography className="cred_title" textAlign="center">
+                                    <Typography className="bb_f1 cred_title" textAlign="center">
                                         Welcome to BlankBoard!
                                     </Typography>
                                 </Grid>
                             </Grid>
                             <Grid container className="cred_container" justifyContent="center">
+                                <Grid container item xs={12} justifyContent="center">
+                                    <IconButton onClick={openModal}>
+                                        <Avatar className="cred_pic" src={profile} />
+                                    </IconButton>
+                                </Grid>
                                 <Grid item xs={12}>
                                     <FormGroup>
                                         <TextField
@@ -69,7 +85,7 @@ const Register = () => {
                                             value={username}
                                             onChange={(e) => setUsername(e.target.value)}
                                         />
-                                         <TextField
+                                        <TextField
                                             className="reg_input"
                                             label="Screen Name"
                                             variant="standard"
@@ -102,20 +118,18 @@ const Register = () => {
                                             value={password}
                                             onChange={(e) => setPassword(e.target.value)}
                                         />
+                                        <TextField
+                                            className="reg_input"
+                                            label="Confirm Password"
+                                            variant="standard"
+                                            type="cPassword"
+                                            id="cpwd"
+                                            name="cpwd"
+                                            placeholder="Confirm Password"
+                                            value={confirmPassword}
+                                            onChange={(e) => setConfirmPassword(e.target.value)}
+                                        />
                                         <Button className="reg_input cred_button" type="button" variant="contained" onClick={handleRegister}>Sign Up</Button>
-                                        <Dialog
-                                            open={open}
-                                            onClose={handleClose}
-                                        >
-                                            <DialogTitle>
-                                                {"Invalid Credentials"}
-                                            </DialogTitle>
-                                            <DialogContent>
-                                                <DialogContentText>
-                                                    It appears you have entered an incorrect email or password, please try again.
-                                                </DialogContentText>
-                                            </DialogContent>
-                                        </Dialog>
                                     </FormGroup>
                                 </Grid>
                             </Grid>
@@ -129,6 +143,22 @@ const Register = () => {
                         </Card>
                     </Grid>
                 </Grid>
+                <Modal className="modalWindow" open={showModal} onClose={closeModal}>
+                    <Canvas canvasCall={canvasCall} user={1} thread={0} options={"pfp"} visible={showModal}/>
+                </Modal>
+                <Dialog
+                    open={open}
+                    onClose={handleClose}
+                >
+                    <DialogTitle>
+                        {warning[0]}
+                    </DialogTitle>
+                    <DialogContent>
+                        <DialogContentText>
+                            {warning[1]}
+                        </DialogContentText>
+                    </DialogContent>
+                </Dialog>
             </>
         );
     }
@@ -139,11 +169,15 @@ const Register = () => {
 
     function handleRegister() {
         const body = {
+            profile,
             username,
             screen_name,
             email,
             password
         };
+        if (password !== confirmPassword) {
+            setWarning(["Password Mismatch","The passwords you entered are not identical, please try again."]);
+        }
         const bodySend = JSON.stringify(body);
         axios({
             method: 'POST',
