@@ -7,7 +7,7 @@ const post = async (req, res, pool) => {
       "INSERT INTO Posts (user_id, post_content) VALUES ($1, $2)",
       [user_id, post_content]
     );
-    res.status(201).end();
+    res.status(201).send();
   } catch (e) {
     console.log(e);
     res.status(400).send(e);
@@ -23,7 +23,7 @@ const replyID = async (req, res, pool) => {
       "INSERT INTO Replies (user_id, post_id, post_content) VALUES ($1, $2, $3)",
       [user_id, post_id, post_content]
     );
-    res.status(201).end();
+    res.status(201).send();
   } catch (e) {
     res.status(400).send(e);
   }
