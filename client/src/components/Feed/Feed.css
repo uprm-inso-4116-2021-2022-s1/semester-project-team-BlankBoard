@@ -1,0 +1,33 @@
+.feed {
+    border-right: 1px solid lightgray;
+    flex: 0.6;
+    min-width: fit-content;
+    overflow-y: scroll;
+    background-color: rgb(250, 255, 253);
+    margin: 30px;
+}
+
+.feed::-webkit-scrollbar {
+    display: none;
+}
+
+.feed {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    border-radius: 10px !important;
+    top: 40px;
+}
+
+.feed__header {
+    position: sticky;
+    top: 0;
+    background-color: var(--sharedes-blueDeep);
+    z-index: 100;
+    border: 1px solid lightgray;
+    padding: 15px 20px;
+} 
+
+.feed__header > h2 {
+    font-size: 30px;
+    font-weight: 800;
+}    

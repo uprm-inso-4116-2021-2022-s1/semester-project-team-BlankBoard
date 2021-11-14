@@ -1,0 +1,32 @@
+.nav {
+    background: 
+    linear-gradient(
+        to right, 
+        rgb(201, 253, 255, 1),
+        rgb(223, 254, 255, 1)
+      ) !important;
+}
+
+.nav_text{
+    font-family: Caveat Brush !important;
+    color: var(--sharedes-blueDark);
+}
+
+.nav_title{
+    font-weight: bolder !important;
+    font-size: 40px !important;
+}
+
+.nav_logo{
+    width:100%;
+    float: right;
+}
+
+.nav_name{
+    font-weight: normal !important;
+    font-size: 25px !important;
+}
+
+.nav_btn{
+    color: var(--sharedes-blueDark);
+}
