@@ -88,7 +88,6 @@ const usersDelId = async (req, res, pool) => {
     const deletedUser = await pool.query('DELETE FROM Users WHERE user_id = $1 RETURNING *', [id]);
 
     if (deletedUser.rows.length > 0) {
-      console.log(deletedUser);
       res.status(200).json("User succesfully deleted: " + deletedUser.rows[0].email);
     } else {
       res.status(400).json("No such user exists. Lucky you I guess.");

@@ -19,12 +19,6 @@ app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
 
-//cookie
-app.get("/", function (req, res) {
-  res.cookie("name", "express", { maxAge: 360000 }).send("cookie set"); //Sets name = express
-  console.log("Cookies: ", req.cookies);
-});
-
 // client routes
 var options = { redirect: false };
 app.use(express.static("./client/build", options));

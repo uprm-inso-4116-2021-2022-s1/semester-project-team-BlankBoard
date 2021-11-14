@@ -25,8 +25,8 @@ const Register = () => {
     const [cookies, setCookie] = useCookies(["user"]);
     const [open, setOpen] = useState(false);
     const [username, setUsername] = useState("");
+    const [screen_name, setScreenName] = useState("");
     const [email, setEmail] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(true);
     const [authenticated, setAuthenticated] = useState(false);
@@ -69,6 +69,17 @@ const Register = () => {
                                             value={username}
                                             onChange={(e) => setUsername(e.target.value)}
                                         />
+                                         <TextField
+                                            className="reg_input"
+                                            label="Screen Name"
+                                            variant="standard"
+                                            type="name"
+                                            id="screen_name"
+                                            name="screen_name"
+                                            placeholder="Screen Name"
+                                            value={screen_name}
+                                            onChange={(e) => setScreenName(e.target.value)}
+                                        />
                                         <TextField
                                             className="reg_input"
                                             label="Email"
@@ -90,17 +101,6 @@ const Register = () => {
                                             placeholder="password"
                                             value={password}
                                             onChange={(e) => setPassword(e.target.value)}
-                                        />
-                                        <TextField
-                                            className="reg_input"
-                                            label="Confirm Password"
-                                            variant="standard"
-                                            type="cpassword"
-                                            id="cpwd"
-                                            name="cpwd"
-                                            placeholder="Password"
-                                            value={confirmPassword}
-                                            onChange={(e) => setConfirmPassword(e.target.value)}
                                         />
                                         <Button className="reg_input cred_button" type="button" variant="contained" onClick={handleRegister}>Sign Up</Button>
                                         <Dialog
@@ -140,6 +140,7 @@ const Register = () => {
     function handleRegister() {
         const body = {
             username,
+            screen_name,
             email,
             password
         };
@@ -154,7 +155,6 @@ const Register = () => {
             json: true
         }).then(res => {
             setCookie("token", res.data.jwtToken);
-            console.log("Cookie right after setting", cookies.token);
             history.push("/");
         }).catch(e => {
             setOpen(true);
