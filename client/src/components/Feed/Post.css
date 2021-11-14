@@ -1,34 +1,15 @@
 .post {
-    display: flex;
-    align-items: flex-start;
     border-bottom: 1px solid lightgray;
-    padding-bottom: 10px;
-}
-
-.post__body {
-    flex: 1;
     padding: 10px;
 }
 
-.post__body > img{
-    border-radius: 25px;
-}
-
-.post__headerDescription {
-    margin-bottom: 10px;
-    font-size: 22px;
-}
-
-.post__footer {
-    display: flex;
-    justify-content: space-evenly;
+.post_footer {
     margin-top: 20px;
-    cursor: pointer;
 }
 
-.post__headerText > h3 {
-    font-size: 26px;
-    margin-bottom: 5px;
+.post_text{
+    font-family: Caveat Brush !important;
+    color: var(--sharedes-blueDark);
 }
 
 .post__badge {
@@ -36,17 +17,26 @@
     color: #ff6f6f;
 }
 
-.post__headerSpecial {
+.post_avatar{
+    margin-top:10px !important;
+    height: 5rem !important;
+    width: 5rem !important;
+}
+
+.post_screen{
+    font-size: 26px !important;
+}
+
+.post_user {
     font-weight: 600;
-    font-size: 22px;
+    font-size: 22px !important;
     color: gray;
 }
 
-.post__avatar {
-    padding: 20px;
+.post_picture{
+    border-radius: 20px;
 }
 
-.post_profile{
-    height: 5rem !important;
-    width: 5rem !important;
+.post_btns{
+    margin-top:10px !important;
 }

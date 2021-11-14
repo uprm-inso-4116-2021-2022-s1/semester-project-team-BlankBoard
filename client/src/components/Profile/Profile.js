@@ -1,14 +1,10 @@
 import React from "react";
-import { ImageList, ImageListItem, Modal, Card, Avatar, Grid, Typography } from "@mui/material";
-import Canvas from "../Canvas/Canvas";
+import { ImageList, ImageListItem, Card, Avatar, Grid, Typography } from "@mui/material";
+
 // import { withRouter } from "react-router-dom";
 import "./Profile.css";
 
 function Profile(props) {
-
-  const [showModal, setShowModal] = React.useState(false);
-  const openModal = () => setShowModal(true);
-  const closeModal = () => setShowModal(false);
 
   const numOfPosts = 3;
   const numOfComments = 7;
@@ -26,7 +22,7 @@ function Profile(props) {
     'https://res.cloudinary.com/dsunqodr1/image/upload/v1636585973/blankboard/unokwhpi6posevnb1qct.png',
     'https://res.cloudinary.com/dsunqodr1/image/upload/v1636586119/blankboard/tqlpetz0abv747fl0bam.png',
     'https://res.cloudinary.com/dsunqodr1/image/upload/v1636586093/blankboard/q2mxykwhhohyixetl46g.png'
-  ];
+  ]; 
 
   const showPosts = () => {
     return (

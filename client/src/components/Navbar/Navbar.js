@@ -30,7 +30,7 @@ function Navbar(props) {
                         </Grid>
                         <Grid container item xs={1} justifyContent="center" alignItems="center">
                             <Typography className="nav_text nav_name" textAlign="left" component="div" sx={{ flexGrow: 1 }}>
-                                {props.user.screen_name ? props.user.screen_name : ""}
+                                {props.user.screen_name ? props.user.screen_name : props.user.username ? props.user.username : ""}
                             </Typography>
                         </Grid>
                         <Grid container item xs={1} justifyContent="center" alignItems="center">

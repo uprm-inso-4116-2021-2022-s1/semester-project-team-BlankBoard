@@ -1,4 +1,4 @@
-import React from "react";
+import {React, useState, useRef, useEffect} from "react";
 import axios from "axios";
 import { Button, Fab, Slider } from "@mui/material";
 import { BiUndo } from "react-icons/bi";
@@ -6,8 +6,8 @@ import { BsEraserFill } from "react-icons/bs";
 import { RiPencilFill } from "react-icons/ri";
 import "./Canvas.css";
 
-function Canvas(currUser, currThread, modalOption, isModalVisible) {
-  const [tool, setTool] = React.useState("pencil");
+function Canvas(props) {
+  const [tool, setTool] = useState("pencil");
   const toolOptions = () => {
     if(tool === "pencil") {
       return(
@@ -27,7 +27,7 @@ function Canvas(currUser, currThread, modalOption, isModalVisible) {
     }
   }
 
-  const [color, setColor] = React.useState("black");
+  const [color, setColor] = useState("black");
   const colors = ["black", "red", "blue", "deepskyblue", "darkorange", "gold", "sienna", "forestgreen", "limegreen", "darkorchid", "violet", "pink"];
   const colorOptions = () => {
     return (colors.map((color, i) => (
@@ -35,32 +35,32 @@ function Canvas(currUser, currThread, modalOption, isModalVisible) {
       )));
   }
 
-  const [thickness, setThickness] = React.useState(8);
+  const [thickness, setThickness] = useState(8);
   const updateThickness = (e, thck) => setThickness(thck);
   const sliderOptions = () => {
     return(<Slider style={{color:"#ffa7a7"}} min={2} max={56} value={thickness} onChange={updateThickness} />);
   }
 
-  const [paths, setPaths] = React.useState([]);
-  const [pathSizes, setPathSizes] = React.useState([]);
-  const [prevLen, setPrevLen] = React.useState(0);
+  const [paths, setPaths] = useState([]);
+  const [pathSizes, setPathSizes] = useState([]);
+  const [prevLen, setPrevLen] = useState(0);
 
-  const [isDrawing, setIsDrawing] = React.useState(false);
-  const contextRef = React.useRef(null);
+  const [isDrawing, setIsDrawing] = useState(false);
+  const contextRef = useRef(null);
 
   const canvasDimensions = 320;
-  const[canvasReady, setCanvasReady] = React.useState(false);
-  const [bgReady, setBgReady] = React.useState(false);
+  const[canvasReady, setCanvasReady] = useState(false);
+  const [bgReady, setBgReady] = useState(false);
   const initCanvas = () => setCanvasReady(true);
   
-  React.useEffect(() => {
-    console.log(currUser, currThread, modalOption, isModalVisible);
-    if(isModalVisible) return;
+  useEffect(() => {
+    console.log(props.user, props.thread, props.options, props.visible);
+    if(props.visible) return;
     setCanvasReady(false);
     setBgReady(false);
-  }, [currUser, currThread, modalOption, isModalVisible]);
+  }, [props]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if(!canvasReady) return;
     const canvas = document.getElementById("canvas");
     const ctx = canvas.getContext("2d");
@@ -165,7 +165,11 @@ function Canvas(currUser, currThread, modalOption, isModalVisible) {
     const formData = new FormData();
     formData.append('file', img);
     formData.append('upload_preset', 'blankboard');
-    await axios.post('https://api.cloudinary.com/v1_1/dsunqodr1/image/upload', formData);
+    await axios.post('https://api.cloudinary.com/v1_1/dsunqodr1/image/upload', formData)
+    .then(res=>{ props.canvasCall(res.data.url) })
+    .catch(e=>{
+      console.log(e);
+    });
   }
 
   return (

@@ -19,7 +19,12 @@ body {
   background-attachment: fixed !important;
 }
 
-.cred_page{
+.bb_f1{
+  font-family: Caveat Brush !important;
+  color: var(--sharedes-blueDark);
+}
+
+/* .cred_page{
   background: #eb01a5;
   background-image: 
   linear-gradient(
@@ -31,18 +36,27 @@ body {
   background-size: 100vw;
   height: 100vh !important;
   width: 100vw;
-}
+} */
 
 .cred_card{
   padding: 30px;
   margin: 50px;
   width: 26rem;
-  height: 26rem;
   border-radius: 20px !important; 
+}
+
+.reg_card{
+  width: 32rem;
 }
 
 .cred_container{
   padding: 10px !important;
+}
+
+.cred_pic{
+  height: 10rem !important;
+  width: 10rem !important;
+  margin: 20px;
 }
 
 .log_input{
@@ -50,7 +64,7 @@ body {
 }
 
 .reg_input{
-  margin: 10px !important;
+  margin: 20px !important;
 }
 
 .cred_button{
@@ -58,7 +72,7 @@ body {
 }
 
 .cred_title{
-  font-size: 28px !important;
+  font-size: 36px !important;
 }
 
 .cred_register{
