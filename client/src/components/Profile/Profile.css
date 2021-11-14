@@ -1,0 +1,102 @@
+
+.background {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px !important;
+  margin: 30px;
+}
+.prf_post{
+  border-radius: 20px !important;
+}
+
+.userInfo {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  width: 100%;
+  margin: 24px 144px 8px 144px;
+  justify-content: center;
+  align-items: center;
+  font-weight: bolder;
+}
+
+.pfp {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  margin-left: 32px;
+  margin-right: 32px;
+  cursor: pointer;
+  background-color: firebrick;
+}
+
+.modalWindow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pf_picture{
+  height: 10rem !important;
+  width: 10rem !important;
+  margin: 30px;
+}
+
+.pf_text {
+  font-family: Caveat Brush !important;
+}
+
+.pf_screen_name {
+  font-size: 46px !important;
+  margin: 10px !important;
+}
+
+.pf_username {
+  font-size: 46px !important;
+  margin: 10px !important;
+  color: gray;
+}
+
+.pf_stats{
+  font-size: 40px !important;
+}
+
+.pf_posts{
+  margin: 20px !important;
+}
+
+.stats {
+  flex-grow: 2;
+  flex-shrink: 1;
+  justify-self: left;
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-template-rows: auto auto;
+  place-items: center;
+  margin: 0px 12px 0px 12px;
+}
+
+.number {
+  font-size: 72px;
+}
+
+.text {
+  font-size: 36px;
+  margin: 0px 24px 0px 24px;
+}
+
+.pfp{
+  width: 75%;
+}
+
+.posts {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-evenly;
+  width: 100%;
+  margin: 8px 24px 32px 24px;
+  padding-top: 16px;
+}

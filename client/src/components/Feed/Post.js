@@ -10,7 +10,7 @@ function Post ({ displayName, username, verified, text, image, avatar}) {
   return (
   <div className="post">
     <div className="post__avatar">
-      <Avatar src={avatar}/>
+      <Avatar className="post_profile" src={avatar}/>
     </div>
     <div className="post__body">
       <div className="post__header">

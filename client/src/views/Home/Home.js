@@ -9,7 +9,7 @@ import isAuthenticated from '../../common/authentication'
 import userGetById from '../../requests/userGetById';
 import Navbar from '../../components/Navbar/Navbar';
 import Feed from '../../components/Feed/Feed';
-import Widgets from '../../components/Widgets/Widgets';
+import Profile from '../../components/Profile/Profile'
 import "./Home.css";
 
 function Home() {
@@ -17,20 +17,25 @@ function Home() {
     const [loading, setLoading] = useState(true);
     const [cookies, setCookie] = useCookies(['token']);
     const [authenticated, setAuthenticated] = useState(false);
+    const [tab, setTab] = useState("feed");
     const [user, setUser] = useState({});
 
-    const signOut = () => {
-        setCookie("token", "");
-        history.push("/login");
-    }
-
+    // <Modal className="modalWindow" open={showModal} onClose={closeModal}>{Canvas(1, 0, "pfp", showModal)}</Modal>
+    
     const check = async () => {
 
         setAuthenticated(await isAuthenticated(cookies.token));
 
-        authenticated && setUser(await userGetById(jwt_decode(cookies.token).user.user_id));
+        if (authenticated) {
+            setUser(await userGetById(jwt_decode(cookies.token).user.user_id));
+        }
 
         setLoading(false);
+    }
+
+    const signOut = () => {
+        setCookie("token", "");
+        history.push("/login");
     }
 
     if (loading) {
@@ -41,21 +46,25 @@ function Home() {
     } else {
         return (
             <>
-                <Grid container className="home">
-                    <Grid item xs={2}>
-                        <Navbar />
+                <Navbar 
+                user={user} 
+                history={history} 
+                signOut={signOut} 
+                setTab={setTab} />
+                {console.log("user:", user)}
+                <Grid container className="home" justifyContent="center">
+                    <Grid item xs={6}  className={tab === "feed" ? "show" : "hide"} >
+                        <Feed user={user}/>
                     </Grid>
-                    <Grid item xs={7}>
-                        <Feed user={user} />
-                    </Grid>
-                    <Grid item xs={3}>
-                        <Widgets user={user} signOut={signOut} />
+                    <Grid item xs={6}  className={tab === "profile" ? "show" : "hide"} >
+                        <Profile user={user} />
                     </Grid>
                 </Grid>
             </>
         );
 
     }
+
 
 }
 

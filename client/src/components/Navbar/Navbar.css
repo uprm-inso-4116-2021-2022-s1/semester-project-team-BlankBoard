@@ -1,32 +1,32 @@
-.navbar {
-    border-right: 1px solid lightgray;
-    padding: 10px;
-    position: fixed;
-    width: 16.6% !important;
-    height: 100vh;
+.nav {
+    background: 
+    linear-gradient(
+        to right, 
+        rgb(201, 253, 255, 1),
+        rgb(223, 254, 255, 1)
+      ) !important;
 }
 
-.navbar > h1 {
-    font-size: 30px !important;
-    margin-left: 48px;
-    margin-bottom: 2px;
-    cursor: pointer;
+.nav_text{
+    font-family: Caveat Brush !important;
+    color: var(--sharedes-blueDark);
 }
 
-.navbar_button {
-    border: none !important;
-    text-align: left !important;
-    color: black !important;
-    font-size: 20px !important;
-    font-weight: 1000 !important;
-    text-transform: inherit !important;
-    border-radius: 30px !important;
-    height: 50px !important;
-    margin-top: 20px !important;
+.nav_title{
+    font-weight: bolder !important;
+    font-size: 40px !important;
 }
 
-.navbar_draw{
-    color: white !important;
-    text-align: center !important;
-    background-color: var(--sharedes-pinkDeep) !important;
+.nav_logo{
+    width:100%;
+    float: right;
+}
+
+.nav_name{
+    font-weight: normal !important;
+    font-size: 25px !important;
+}
+
+.nav_btn{
+    color: var(--sharedes-blueDark);
 }

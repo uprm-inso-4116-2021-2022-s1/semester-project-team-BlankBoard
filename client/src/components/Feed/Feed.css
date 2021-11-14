@@ -4,6 +4,7 @@
     min-width: fit-content;
     overflow-y: scroll;
     background-color: rgb(250, 255, 253);
+    margin: 30px;
 }
 
 .feed::-webkit-scrollbar {
@@ -13,6 +14,8 @@
 .feed {
     -ms-overflow-style: none;
     scrollbar-width: none;
+    border-radius: 10px !important;
+    top: 40px;
 }
 
 .feed__header {

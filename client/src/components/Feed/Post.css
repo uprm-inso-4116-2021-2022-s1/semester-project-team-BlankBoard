@@ -16,7 +16,7 @@
 
 .post__headerDescription {
     margin-bottom: 10px;
-    font-size: 15px;
+    font-size: 22px;
 }
 
 .post__footer {
@@ -27,21 +27,26 @@
 }
 
 .post__headerText > h3 {
-    font-size: 15px;
+    font-size: 26px;
     margin-bottom: 5px;
 }
 
 .post__badge {
-    font-size: 18px !important;
+    font-size: 22px !important;
     color: #ff6f6f;
 }
 
 .post__headerSpecial {
     font-weight: 600;
-    font-size: 12px;
+    font-size: 22px;
     color: gray;
 }
 
 .post__avatar {
     padding: 20px;
+}
+
+.post_profile{
+    height: 5rem !important;
+    width: 5rem !important;
 }

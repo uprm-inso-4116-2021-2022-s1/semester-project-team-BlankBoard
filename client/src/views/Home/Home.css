@@ -5,6 +5,7 @@
     margin-left: auto;
     margin-right: auto;
 }
-.navbar_container{
-    position:fixed;
+
+.hide{
+    display: none !important;
 }

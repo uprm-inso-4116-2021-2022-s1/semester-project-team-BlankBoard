@@ -8,7 +8,7 @@ function Widgets(props) {
     return (
         <>
             <Grid container>
-                <Grid container xs={12}>
+                <Grid container item xs={12}>
                     <Grid item xs={6}>
                         <Typography>{props.user.username ? props.user.username : "Nanashi"}</Typography>
                     </Grid>
@@ -19,7 +19,7 @@ function Widgets(props) {
                         <IconButton onClick={props.signOut}><ExitToAppIcon></ExitToAppIcon></IconButton>
                     </Grid>
                 </Grid>
-                <Grid container xs={12}>
+                <Grid container item xs={12}>
                     <div className="widgets">
                         <div className="widgets__input">
                             <SearchIcon className="widgets__searchIcon" />

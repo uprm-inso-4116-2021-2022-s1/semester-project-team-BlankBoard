@@ -1,68 +1,53 @@
 import React from 'react'
 import "./Feed.css";
-import DrawBox from './DrawBox';
+// import DrawBox from './DrawBox';
 import Post from './Post';
+import { Card } from "@mui/material";
 
 function Feed(props) {
-    return (
-        <div className="feed">
-            {/* Header */}
-            <div className="feed__header">
-                <h2> Home </h2>
-            </div>
+      return (
+            <Card className="feed">
+                  
+                  {/* Posts */}
 
-            {/* drawBox */}
+                  <Post displayName="Kevin"
+                        verified username="bugg"
+                        avatar="https://res.cloudinary.com/dsunqodr1/image/upload/v1636847144/blankboard/l97wzc55qyrsdc5dwesd.png"
+                        image="https://res.cloudinary.com/dsunqodr1/image/upload/v1636847713/blankboard/cwtjqkvat2pgz4rljfoi.png"
+                  />
 
-            <DrawBox user={props.user}/>
+                  <Post displayName="Nat"
+                        username="pepper"
+                        avatar="https://res.cloudinary.com/dsunqodr1/image/upload/v1636846822/blankboard/vufoky3nucihrjoc6zfl.png"
+                        image="https://res.cloudinary.com/dsunqodr1/image/upload/v1636847791/blankboard/vy9wx7omqrowvv71c0k7.png"
+                  />
 
-            {/* Posts */}
+                  <Post displayName="Berm"
+                        verified username="akuga"
+                        avatar="https://res.cloudinary.com/dsunqodr1/image/upload/v1636846672/blankboard/mkubnpvbpimpseoj5pse.png"
+                        image="https://res.cloudinary.com/dsunqodr1/image/upload/v1636847971/blankboard/fa70r2oje5zfjjwgicoy.png"
+                  />
 
-            {/* <Post displayName= ""
-                  verified username=""
-                  avatar = ""
-                  image = ""
-                  text = ""
-            /> */}
+                  <Post displayName="Lewis"
+                        verified username="water_kami"
+                        avatar="https://res.cloudinary.com/dsunqodr1/image/upload/v1636846987/blankboard/oofc4liznkfgazygkttf.png"
+                        image="https://res.cloudinary.com/dsunqodr1/image/upload/v1636848088/blankboard/he8a4w2to0a9wjzalf15.png"
+                  />
 
-            <Post displayName="Anthony Mendez" 
-                  verified username="Water_Kami" 
-                  avatar = "http://images6.fanpop.com/image/photos/43100000/so-cute-puppy-mans-best-friend-43117523-736-736.jpg"
-                  image="https://i.pinimg.com/originals/4b/10/53/4b1053201e9a572a700afc1981a6419b.jpg"
-                  text = "Testing the inks"
-            />
+                  <Post displayName="Jesus"
+                        username="sleepless"
+                        avatar="https://res.cloudinary.com/dsunqodr1/image/upload/v1636847078/blankboard/bbgoq0wq4nvsydufbrpj.png"
+                        image="https://res.cloudinary.com/dsunqodr1/image/upload/v1636848464/blankboard/hrs2qd2pzivaqgttyl18.png"
+                  />
 
-            <Post displayName= "Nat"
-                  username="RelatableNatalia"
-                  avatar = "https://i.pinimg.com/736x/33/32/6d/33326dcddbf15c56d631e374b62338dc.jpg"
-                  image = "https://res.cloudinary.com/dsunqodr1/image/upload/v1636585758/blankboard/baipcld1vn0z9trwl2cq.png"
-            />
+                  <Post displayName="Carlos"
+                        verified username="bobby_ross"
+                        avatar="https://res.cloudinary.com/dsunqodr1/image/upload/v1636585758/blankboard/baipcld1vn0z9trwl2cq.png"
+                        image="https://res.cloudinary.com/dsunqodr1/image/upload/v1636585376/blankboard/zhgxrirylenlghtrgi6m.png"
+                  />
 
-            <Post displayName= "Akuga"
-                  verified username="JB"
-                  avatar = "https://i.pinimg.com/564x/dc/d4/56/dcd4560b69738552600d4b98ae3192bf.jpg"
-                  image = "https://i.pinimg.com/736x/cc/c7/6a/ccc76a5288deaa55f053f13ea4859b11.jpg"
-            />
-
-            <Post displayName= "Kev"
-                  verified username="Kurcell"
-                  avatar = "https://i1.sndcdn.com/artworks-7Zc6h0hOyAzwkB14-SSs0eQ-t500x500.jpg"
-                  image = "https://i.pinimg.com/originals/a1/e3/6b/a1e36bcb8ce179bd8cc8db28ff4ef6fb.jpg"
-            />
-
-            <Post displayName= "Jesus"
-                  username="RodzAla2"
-                  avatar = "https://tse3.mm.bing.net/th?id=OIP.d3xNmsPdaoaFG-YRdkOhEgHaEK&pid=15.1"
-                  image = "https://cdn.drawception.com/images/panels/2017/12-24/kxYfEeOfQ8-2.png"
-            />
-
-            <Post displayName= "Carlos"
-                  verified username="BobRossEnthusiast"
-                  avatar = "https://images.fineartamerica.com/images/artworkimages/mediumlarge/1/energized--abstract-art-by-fidostudio-tom-fedro--fidostudio.jpg"
-                  image = "https://i.pinimg.com/originals/c0/46/72/c04672c6ba605b150e71a02ccf1185c0.jpg"
-            />
-
-        </div>
-    )
+            </Card>
+      )
 }
 
 export default Feed

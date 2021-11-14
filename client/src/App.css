@@ -1,10 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat+Brush&display=swap');
+
 body {
   --sharedes-pinkLight: #ffcbcb;
   --sharedes-pinkDeep: #ffa7a7;
   --sharedes-blueDeep: #c9fdff;
   --sharedes-blueLight: #dffeff;
   --sharedes-background: #fff4f4;
-  background-color: var(--sharedes-background);
+  --sharedes-blueDark: #283861;
+  font-family: Caveat Brush !important;
+  font-weight: lighter !important;
+  background:
+  linear-gradient(
+    to top, 
+    #ffcbcb,
+    #fff4f4
+  ) 
+  !important;
+  background-attachment: fixed !important;
 }
 
 .cred_page{

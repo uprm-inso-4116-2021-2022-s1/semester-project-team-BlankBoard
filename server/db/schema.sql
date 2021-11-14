@@ -15,6 +15,8 @@ drop column uid, add column uid serial primary key;
 
 ALTER TABLE Users ALTER COLUMN followers SET DEFAULT 0;
 
+ALTER TABLE users ADD COLUMN screen_name varchar(255);
+
 /****************************************************************************/
 
 create table follows(followerid integer references users(uid),
