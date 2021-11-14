@@ -12,7 +12,8 @@ function DrawBox(props) {
 
     const createPost = () => {
         //make a post with the drawing state as it's "post_content" field, and make this post tied to 
-        // use whose id is props.user.user_id as "user_id"
+        // use whose id is props.user.user_id as 
+        return;
     }
 
     return (
@@ -35,7 +36,7 @@ function DrawBox(props) {
                         </Typography>
                     </Grid>
                     <Grid item xs={12}>
-                        <Button onClick={createPost}>Post</Button> {/**/}
+                        <Button onClick={createPost}>Post</Button> 
                     </Grid>
                 </Grid>
             </Grid>

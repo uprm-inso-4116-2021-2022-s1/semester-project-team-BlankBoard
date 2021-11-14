@@ -129,7 +129,7 @@ const Register = () => {
                                             value={confirmPassword}
                                             onChange={(e) => setConfirmPassword(e.target.value)}
                                         />
-                                        <Button className="reg_input cred_button" type="button" variant="contained" onClick={handleRegister}>Sign Up</Button>
+                                        <Button className="log_input cred_button bb_f1" type="button" variant="contained" onClick={handleRegister}>Sign Up</Button>
                                     </FormGroup>
                                 </Grid>
                             </Grid>

@@ -74,6 +74,7 @@
     #ffcbcb
   )  !important;
   background-color: #ffa7a7 !important;
+  border-radius: 10px !important;
   color: var(--sharedes-pinkDark) !important;
   height: 60% !important;
   width: 60% !important;

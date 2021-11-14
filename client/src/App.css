@@ -70,6 +70,14 @@ body {
 
 .cred_button{
   border-radius: 200px !important;
+  font-size: 20px !important;
+  color: var(--sharedes-blueDark) !important;
+  background: 
+  linear-gradient(
+      to right, 
+      rgb(201, 253, 255, 1),
+      rgb(223, 254, 255, 1)
+    ) !important;
 }
 
 .cred_title{

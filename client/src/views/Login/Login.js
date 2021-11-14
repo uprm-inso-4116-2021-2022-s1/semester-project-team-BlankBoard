@@ -78,7 +78,7 @@ const Login = () => {
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                     />
-                    <Button className="log_input cred_button" type="button" variant="contained" onClick={handleLogin}>Sign In</Button>
+                    <Button className="log_input cred_button bb_f1" type="button" variant="contained" onClick={handleLogin}>Sign In</Button>
                     <Dialog
                       open={open}
                       onClose={handleClose}
