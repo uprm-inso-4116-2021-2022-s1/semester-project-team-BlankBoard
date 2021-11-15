@@ -12,34 +12,78 @@ function Canvas(props) {
     if (tool === "pencil") {
       return (
         <div>
-          <RiPencilFill className="toolSelected" style={{ color: color }} onClick={() => setTool("pencil")} />
-          <BsEraserFill className="toolNotSelected" style={{ color: "whitesmoke" }} onClick={() => setTool("eraser")} />
+          <RiPencilFill
+            className="toolSelected"
+            style={{ color: color }}
+            onClick={() => setTool("pencil")}
+          />
+          <BsEraserFill
+            className="toolNotSelected"
+            style={{ color: "whitesmoke" }}
+            onClick={() => setTool("eraser")}
+          />
         </div>
       );
-    }
-    else if (tool === "eraser") {
+    } else if (tool === "eraser") {
       return (
         <div>
-          <RiPencilFill className="toolNotSelected" style={{ color: color }} onClick={() => setTool("pencil")} />
-          <BsEraserFill className="toolSelected" style={{ color: "whitesmoke" }} onClick={() => setTool("eraser")} />
+          <RiPencilFill
+            className="toolNotSelected"
+            style={{ color: color }}
+            onClick={() => setTool("pencil")}
+          />
+          <BsEraserFill
+            className="toolSelected"
+            style={{ color: "whitesmoke" }}
+            onClick={() => setTool("eraser")}
+          />
         </div>
       );
     }
-  }
+  };
 
   const [color, setColor] = useState("black");
-  const colors = ["black", "red", "blue", "deepskyblue", "darkorange", "gold", "sienna", "forestgreen", "limegreen", "darkorchid", "violet", "pink"];
+  const colors = [
+    "black",
+    "red",
+    "blue",
+    "deepskyblue",
+    "darkorange",
+    "gold",
+    "sienna",
+    "forestgreen",
+    "limegreen",
+    "darkorchid",
+    "violet",
+    "pink",
+  ];
   const colorOptions = () => {
-    return (colors.map((color, i) => (
-      <Fab className="colorButton" children="" size="small" style={{ backgroundColor: color}} key={i} value={color} onClick={() => setColor(color)} />
-    )));
-  }
+    return colors.map((color, i) => (
+      <Fab
+        className="colorButton"
+        children=""
+        size="small"
+        style={{ backgroundColor: color }}
+        key={i}
+        value={color}
+        onClick={() => setColor(color)}
+      />
+    ));
+  };
 
   const [thickness, setThickness] = useState(8);
   const updateThickness = (e, thck) => setThickness(thck);
   const sliderOptions = () => {
-    return (<Slider style={{ color: "#ffa7a7" }} min={2} max={56} value={thickness} onChange={updateThickness} />);
-  }
+    return (
+      <Slider
+        style={{ color: "#ffa7a7" }}
+        min={2}
+        max={56}
+        value={thickness}
+        onChange={updateThickness}
+      />
+    );
+  };
 
   const [paths, setPaths] = useState([]);
   const [pathSizes, setPathSizes] = useState([]);
@@ -82,21 +126,27 @@ function Canvas(props) {
   const startDrawing = ({ nativeEvent }) => {
     const { offsetX, offsetY } = nativeEvent;
     setPrevLen(paths.length);
-    setPaths((state) => [...state, { offsetX, offsetY, tool, color, thickness }]);
+    setPaths((state) => [
+      ...state,
+      { offsetX, offsetY, tool, color, thickness },
+    ]);
     contextRef.current.beginPath();
     contextRef.current.moveTo(offsetX, offsetY);
     contextRef.current.lineTo(offsetX, offsetY);
     contextRef.current.stroke();
     setIsDrawing(true);
-  }
+  };
 
   const draw = ({ nativeEvent }) => {
     if (!isDrawing) return;
     const { offsetX, offsetY } = nativeEvent;
-    setPaths((state) => [...state, { offsetX, offsetY, tool, color, thickness }]);
+    setPaths((state) => [
+      ...state,
+      { offsetX, offsetY, tool, color, thickness },
+    ]);
     contextRef.current.lineTo(offsetX, offsetY);
     contextRef.current.stroke();
-  }
+  };
 
   const lastTool = tool;
   const lastColor = color;
@@ -107,7 +157,7 @@ function Canvas(props) {
     var lineLen = paths.length - prevLen;
     setPathSizes((state) => [...state, lineLen]);
     setIsDrawing(false);
-  }
+  };
 
   const undoDrawing = () => {
     // remove last path created
@@ -124,8 +174,10 @@ function Canvas(props) {
     let counter = 0;
     for (let pt = 0; pt < paths.length; pt++) {
       if (counter === 0) {
-        if (paths[pt].tool === "pencil") contextRef.current.strokeStyle = paths[pt].color;
-        else if (paths[pt].tool === "eraser") contextRef.current.strokeStyle = "whitesmoke";
+        if (paths[pt].tool === "pencil")
+          contextRef.current.strokeStyle = paths[pt].color;
+        else if (paths[pt].tool === "eraser")
+          contextRef.current.strokeStyle = "whitesmoke";
         contextRef.current.lineWidth = paths[pt].thickness;
         contextRef.current.beginPath();
         contextRef.current.moveTo(paths[pt].offsetX, paths[pt].offsetY);
@@ -142,34 +194,37 @@ function Canvas(props) {
     setTool(lastTool);
     contextRef.current.strokeStyle = lastColor;
     contextRef.current.lineWidth = lastThck;
-  }
+  };
 
   const clearDrawing = () => {
     contextRef.current.clearRect(0, 0, canvasDimensions, canvasDimensions);
     setBgReady(false);
     setPaths([]);
     setPathSizes([]);
-  }
+  };
 
   const drawingToCloud = () => {
     const canvas = document.querySelector("canvas");
-    canvas.toBlob(blob => {
+    canvas.toBlob((blob) => {
       const file = new File([blob], "drawing.png");
       console.log(file);
       uploadDrawing(file);
     });
-  }
+  };
 
   const uploadDrawing = async (img) => {
     const formData = new FormData();
-    formData.append('file', img);
-    formData.append('upload_preset', 'blankboard');
-    await axios.post('https://api.cloudinary.com/v1_1/dsunqodr1/image/upload', formData)
-      .then(res => { props.canvasCall(res.data.url) })
-      .catch(e => {
+    formData.append("file", img);
+    formData.append("upload_preset", "blankboard");
+    await axios
+      .post("https://api.cloudinary.com/v1_1/dsunqodr1/image/upload", formData)
+      .then((res) => {
+        props.canvasCall(res.data.url);
+      })
+      .catch((e) => {
         console.log(e);
       });
-  }
+  };
 
   return (
     <>
@@ -188,7 +243,13 @@ function Canvas(props) {
                 onMouseLeave={endDrawing}
               />
             </Grid>
-            <Grid className="colors" container item xs={12} justifyContent="center">
+            <Grid
+              className="colors"
+              container
+              item
+              xs={12}
+              justifyContent="center"
+            >
               <Grid item xs={1}>
                 <BiUndo className="bi_btn" onClick={undoDrawing} />
                 <BiTrash className="bi_btn" onClick={clearDrawing} />
@@ -208,7 +269,11 @@ function Canvas(props) {
               <div className="modalSlider">{sliderOptions()} </div>
             </Grid>
             <Grid container item xs={12} justifyContent="center">
-              <Button variant="filled" className="submitButton" onClick={drawingToCloud}>
+              <Button
+                variant="filled"
+                className="submitButton"
+                onClick={drawingToCloud}
+              >
                 SAVE
               </Button>
             </Grid>
@@ -252,6 +317,6 @@ function Canvas(props) {
       </div> */}
     </>
   );
-};
+}
 
 export default Canvas;
