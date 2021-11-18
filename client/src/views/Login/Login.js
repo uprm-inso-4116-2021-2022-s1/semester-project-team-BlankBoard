@@ -1,8 +1,8 @@
 import { React, useState } from "react";
-import { Redirect } from 'react-router-dom';
-import axios from 'axios';
+import { Redirect } from "react-router-dom";
+import axios from "axios";
 import { useCookies } from "react-cookie";
-import { useHistory } from 'react-router-dom';
+import { useHistory } from "react-router-dom";
 import {
   Grid,
   Card,
@@ -13,12 +13,9 @@ import {
   Dialog,
   DialogTitle,
   DialogContent,
-  DialogContentText
-} from '@mui/material';
-import isAuthenticated from '../../common/authentication'
-
-
-
+  DialogContentText,
+} from "@mui/material";
+import isAuthenticated from "../../common/authentication";
 
 const Login = () => {
   let history = useHistory();
@@ -32,28 +29,39 @@ const Login = () => {
   const check = async () => {
     setAuthenticated(await isAuthenticated(cookies.token));
     setLoading(false);
-  }
+  };
 
   if (loading) {
     check();
-    return <h1>Loading...</h1>
+    return <h1>Loading...</h1>;
   } else if (authenticated) {
-    return <Redirect to={'/'} />
+    return <Redirect to={"/"} />;
   } else {
-
     return (
       <>
-        <Grid container className="cred_container cred_page" justifyContent="center">
-          <Grid item>
+        <Grid
+          container
+          className="cred_container cred_page"
+          justifyContent="center"
+        >
+          <Grid item xs={12}>
             <Card className="cred_card">
-              <Grid container className="cred_container" justifyContent="center">
+              <Grid
+                container
+                className="cred_container"
+                justifyContent="center"
+              >
                 <Grid item xs={12}>
                   <Typography className="bb_f1 cred_title" textAlign="center">
                     Sign in to BlankBoard
                   </Typography>
                 </Grid>
               </Grid>
-              <Grid container className="cred_container" justifyContent="center">
+              <Grid
+                container
+                className="cred_container"
+                justifyContent="center"
+              >
                 <Grid item xs={12}>
                   <FormGroup>
                     <TextField
@@ -78,27 +86,35 @@ const Login = () => {
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                     />
-                    <Button className="log_input cred_button bb_f1" type="button" variant="contained" onClick={handleLogin}>Sign In</Button>
-                    <Dialog
-                      open={open}
-                      onClose={handleClose}
+                    <Button
+                      className="log_input cred_button bb_f1"
+                      type="button"
+                      variant="contained"
+                      onClick={handleLogin}
                     >
-                      <DialogTitle>
-                        {"Invalid Credentials"}
-                      </DialogTitle>
+                      Sign In
+                    </Button>
+                    <Dialog open={open} onClose={handleClose}>
+                      <DialogTitle>{"Invalid Credentials"}</DialogTitle>
                       <DialogContent>
                         <DialogContentText>
-                          It appears you have entered an incorrect email or password, please try again.
+                          It appears you have entered an incorrect email or
+                          password, please try again.
                         </DialogContentText>
                       </DialogContent>
                     </Dialog>
                   </FormGroup>
                 </Grid>
               </Grid>
-              <Grid container className="cred_container" justifyContent="center">
-                <Grid item>
+              <Grid
+                container
+                className="cred_container"
+                justifyContent="center"
+              >
+                <Grid item xs={12}>
                   <Typography className="cred_register">
-                    New to Blank Board? <a href="/register">Create a new account!</a>
+                    New to Blank Board?{" "}
+                    <a href="/register">Create a new account!</a>
                   </Typography>
                 </Grid>
               </Grid>
@@ -116,26 +132,27 @@ const Login = () => {
   function handleLogin() {
     const body = {
       email,
-      password
+      password,
     };
     const bodySend = JSON.stringify(body);
     axios({
-      method: 'POST',
+      method: "POST",
       url: process.env.REACT_APP_API + "/auth/login",
       data: bodySend,
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
       },
-      json: true
-    }).then(res => {
-      setCookie("token", res.data.jwtToken);
-      console.log("Cookie right after setting", cookies.token);
-      history.push("/");
-    }).catch(e => {
-      setOpen(true);
-    });
+      json: true,
+    })
+      .then((res) => {
+        setCookie("token", res.data.jwtToken);
+        console.log("Cookie right after setting", cookies.token);
+        history.push("/");
+      })
+      .catch((e) => {
+        setOpen(true);
+      });
   }
-
 };
 
 export default Login;
