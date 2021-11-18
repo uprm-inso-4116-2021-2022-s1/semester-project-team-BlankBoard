@@ -1,40 +1,68 @@
-import React from 'react'
-import { Avatar, Grid, Typography, IconButton } from "@mui/material";
+import React, { useState } from 'react';
+import axios from 'axios';
+import { Avatar, Grid, Typography, IconButton, Modal } from "@mui/material";
 import VerifiedUserIcon from '@mui/icons-material/VerifiedUser';
 import ChatBubbleOutlineRoundedIcon from '@mui/icons-material/ChatBubbleOutlineRounded';
 import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined';
+import Canvas from '../Canvas/Canvas';
 import "./Post.css";
 
-function Post({ displayName, username, verified, text, image, avatar }) {
+function Post(props) {
+
+  const [showModal, setShowModal] = useState(false);
+  const openModal = () => setShowModal(true);
+  const closeModal = () => setShowModal(false);
+  const canvasCall = async (replyLink) => {
+    let body = {
+      user_id: props.user.user_id,
+      post_id: props.post_id,
+      replies_content: replyLink
+    }
+    let bodySend = JSON.stringify(body)
+    await axios({
+      method: 'POST',
+      url: process.env.REACT_APP_API + `/reply`,
+      data: bodySend,
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      json: true
+    }).then()
+    .catch(e => {
+      console.log(e);
+    });
+    closeModal();
+  };
+
   return (
     <>
       <Grid container className="post">
         <Grid container item xs={12}>
           <Grid container item xs={2.5} alignItems="top" justifyContent="center">
-            <Avatar className="post_avatar" src={avatar} />
+            <Avatar className="post_avatar" src={props.post_user.profile} />
           </Grid>
           <Grid container item xs={7}>
             <Grid container item xs={12} alignItems="center" margin={"10px"}>
               <Grid item>
                 <Typography className="post_text post_screen">
-                  {displayName}
+                  {props.post_user.screen_name}
                 </Typography>
               </Grid>
               <Grid item>
                 <Typography className="post_text post_user">
-                  {verified && <VerifiedUserIcon className="post__badge" />} @{username} · 2d
+                  <VerifiedUserIcon className="post__badge" /> @{props.post_user.username} · 2d
                 </Typography>
               </Grid>
             </Grid>
             <Grid container item xs={12} justifyContent="center">
-              <img className="post_picture" src={image} alt="" />
+              <img className="post_picture" src={props.content} alt="" />
             </Grid>
           </Grid>
           <Grid item xs={2.5} />
         </Grid>
         <Grid container item xs={12} justifyContent="space-evenly" className="post_btns">
           <Grid container item xs={2} justifyContent="center">
-            <IconButton>
+            <IconButton onClick={openModal}>
               <ChatBubbleOutlineRoundedIcon fontSize="small" />
             </IconButton>
           </Grid>
@@ -45,7 +73,15 @@ function Post({ displayName, username, verified, text, image, avatar }) {
           </Grid>
         </Grid>
       </Grid>
-
+      <Modal className="modalWindow" open={showModal} onClose={closeModal}>
+        <Canvas
+          canvasCall={canvasCall}
+          user={props.user}
+          thread={0}
+          options={"pfp"}
+          visible={showModal}
+        />
+      </Modal>
       {/* <div className="post">
         <div className="post__avatar">
 

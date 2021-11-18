@@ -7,6 +7,7 @@ const post = async (req, res, pool) => {
       "INSERT INTO Posts (user_id, post_content) VALUES ($1, $2)",
       [user_id, post_content]
     );
+
     res.status(201).send();
   } catch (e) {
     console.log(e);
@@ -17,11 +18,11 @@ const post = async (req, res, pool) => {
 const replyID = async (req, res, pool) => {
   try {
     // user replying, post being replied to, and post_content being replied
-    const { user_id, post_id, post_content } = req.body;
+    const { user_id, post_id, replies_content } = req.body;
 
     await pool.query(
-      "INSERT INTO Replies (user_id, post_id, post_content) VALUES ($1, $2, $3)",
-      [user_id, post_id, post_content]
+      "INSERT INTO Replies (user_id, post_id, replies_content) VALUES ($1, $2, $3)",
+      [user_id, post_id, replies_content]
     );
     res.status(201).send();
   } catch (e) {
@@ -32,19 +33,18 @@ const replyID = async (req, res, pool) => {
 const getPosts = async (req, res, pool) => {
   try {
     const table = await pool.query("SELECT * FROM Posts");
-    const temp = [];
 
-    table.rows.forEach((element) => {
-      const { post_id, user_id, post_content, timestamp } = element;
+    res.json(table.rows);
+  } catch (e) {
+    res.status(400).send(e);
+  }
+};
 
-      temp.push({
-        ID: post_id,
-        user_id: user_id,
-        Text: post_content,
-        Date: timestamp,
-      });
-    });
-    res.json(temp);
+const getRepliesByPostID = async (req, res, pool) => {
+  const { id } = req.params;
+  try {
+    const table = await pool.query("SELECT * FROM Replies WHERE post_id = $1", [id]);
+    res.json(table.rows);
   } catch (e) {
     res.status(400).send(e);
   }
@@ -54,16 +54,10 @@ const getPostsByID = async (req, res, pool) => {
   try {
     const { id } = req.params;
 
-    const table = await pool.query("SELECT * FROM Posts WHERE user_id = $1", [
+    const table = await pool.query("SELECT * FROM Posts WHERE post_id = $1", [
       id,
     ]);
-    const { post_id, user_id, post_content, post_timestamp } = table.rows[0];
-    res.json({
-      ID: post_id,
-      UserId: user_id,
-      Text: post_content,
-      Date: post_timestamp,
-    });
+    res.json(table.rows);
   } catch (e) {
     res.status(400).send(e);
   }
@@ -74,4 +68,5 @@ module.exports = {
   replyID,
   getPosts,
   getPostsByID,
+  getRepliesByPostID
 };
