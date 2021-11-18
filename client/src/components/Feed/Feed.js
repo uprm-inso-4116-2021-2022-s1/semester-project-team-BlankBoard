@@ -5,20 +5,22 @@ import Post from "./Post";
 import { Card } from "@mui/material";
 
 function Feed(props) {
+
   return (
     <Card className="feed">
       {/* Posts */}
       <DrawBox user={props.user} />
 
+      {/* Use this format for loading a post */}
       <Post
-        displayName="Kevin"
-        verified
-        username="bugg"
-        avatar="https://res.cloudinary.com/dsunqodr1/image/upload/v1636847144/blankboard/l97wzc55qyrsdc5dwesd.png"
-        image="https://res.cloudinary.com/dsunqodr1/image/upload/v1636847713/blankboard/cwtjqkvat2pgz4rljfoi.png"
+        user={props.user}
+        post_user={{user_id: 69, screen_name: "Seraphchim", username: "Seraphchim", profile: "http://res.cloudinary.com/dsunqodr1/image/upload/v1636917375/blankboard/z7sy991oq1zjwpq4wkac.png"}}
+        post_id={15}
+        content={"http://res.cloudinary.com/dsunqodr1/image/upload/v1636950983/blankboard/j1seuyt7ktder3l2knix.png"}
+        time_stamp={""}
       />
 
-      <Post
+      {/* <Post
         displayName="Nat"
         username="pepper"
         avatar="https://res.cloudinary.com/dsunqodr1/image/upload/v1636846822/blankboard/vufoky3nucihrjoc6zfl.png"
@@ -35,7 +37,6 @@ function Feed(props) {
 
       <Post
         displayName="Lewis"
-        verified
         username="water_kami"
         avatar="https://res.cloudinary.com/dsunqodr1/image/upload/v1636846987/blankboard/oofc4liznkfgazygkttf.png"
         image="https://res.cloudinary.com/dsunqodr1/image/upload/v1636848088/blankboard/he8a4w2to0a9wjzalf15.png"
@@ -50,11 +51,10 @@ function Feed(props) {
 
       <Post
         displayName="Carlos"
-        verified
         username="bobby_ross"
         avatar="https://res.cloudinary.com/dsunqodr1/image/upload/v1636585758/blankboard/baipcld1vn0z9trwl2cq.png"
-        image="https://res.cloudinary.com/dsunqodr1/image/upload/v1636585376/blankboard/zhgxrirylenlghtrgi6m.png"
-      />
+        image="https://res.cloudinary.com/dsunqodr1/image/upload/v1636847713/blankboard/cwtjqkvat2pgz4rljfoi.png"
+      /> */}
     </Card>
   );
 }
