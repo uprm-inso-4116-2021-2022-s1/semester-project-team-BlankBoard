@@ -88,8 +88,6 @@ function Home() {
     } else if (!authentication.authenticated) {
         return <Redirect to={"/login"} />;
     } else {
-        console.log("authentication:", authentication);
-        console.log("user:", user);
         return (
             <>
                 <Navbar
