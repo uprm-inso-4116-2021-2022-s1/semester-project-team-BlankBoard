@@ -88,11 +88,11 @@ const Register = () => {
                 className="cred_container"
                 justifyContent="center"
               >
-                <Grid container item xs={12} justifyContent="center">
-                  <Typography>
+                <Grid container item xs={12} sm={3} justifyContent="center">
+                  <Typography className="cred_pic_text">
                     Click on the circle to put a profile picture!
                   </Typography>
-                  <IconButton onClick={openModal}>
+                  <IconButton onClick={openModal} className="cred_pic_button">
                     <Avatar className="cred_pic" src={profile} />
                   </IconButton>
                 </Grid>

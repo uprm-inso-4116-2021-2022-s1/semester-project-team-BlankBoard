@@ -1,33 +1,45 @@
 .nav {
-    box-shadow: 0 3px 6px lightgray !important;
-    background: 
-    linear-gradient(
-        to right, 
-        rgb(201, 253, 255, 1),
-        rgb(223, 254, 255, 1)
-      ) !important;
+  box-shadow: 0 3px 6px lightgray !important;
+  background: linear-gradient(
+    to right,
+    rgb(201, 253, 255, 1),
+    rgb(223, 254, 255, 1)
+  ) !important;
 }
 
-.nav_text{
-    font-family: Caveat Brush !important;
-    color: var(--sharedes-blueDark);
+.nav_text {
+  font-family: Caveat Brush !important;
+  color: var(--sharedes-blueDark);
 }
 
-.nav_title{
-    font-weight: bolder !important;
-    font-size: 40px !important;
+.nav_title {
+  font-weight: bolder !important;
+  font-size: 40px !important;
+}
+@media only screen and (max-width: 450px) {
+  .nav_title {
+    font-size: 30px !important;
+    display: inline-flex;
+  }
 }
 
-.nav_logo{
-    width:100%;
-    float: right;
+.nav_logo {
+  width: auto;
+  display: inline-flex;
+}
+@media only screen and (max-width: 450px) {
+  .nav_logo {
+    height: 3em;
+    width: 3em;
+    display: inline-flex;
+  }
 }
 
-.nav_name{
-    font-weight: normal !important;
-    font-size: 25px !important;
+.nav_name {
+  font-weight: normal !important;
+  font-size: 25px !important;
 }
 
-.nav_btn{
-    color: var(--sharedes-blueDark);
+.nav_btn {
+  color: var(--sharedes-blueDark);
 }

@@ -51,7 +51,7 @@ const Login = () => {
                 className="cred_container"
                 justifyContent="center"
               >
-                <Grid item xs={12}>
+                <Grid item xs={12} sm={6}>
                   <Typography className="bb_f1 cred_title" textAlign="center">
                     Sign in to BlankBoard
                   </Typography>

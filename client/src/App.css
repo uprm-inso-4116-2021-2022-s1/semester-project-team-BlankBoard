@@ -41,6 +41,19 @@ body {
   width: fit-content;
   border-radius: 20px !important;
 }
+@media only screen and (max-width: 350px) {
+  .cred_card {
+    padding: 5px !important;
+  }
+}
+@media only screen and (min-width: 500px) {
+  .cred_card {
+    justify-content: center !important;
+    flex: auto;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
 
 .reg_card {
   width: 32rem;
@@ -49,15 +62,51 @@ body {
 .cred_container {
   padding: 10px !important;
 }
+@media only screen and (max-width: 350px) {
+  .cred_container {
+    padding: 5px !important;
+  }
+}
+@media only screen and (min-width: 500px) {
+  .cred_container {
+    justify-content: center !important;
+    flex: auto;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
 
 .cred_pic {
   height: 10rem !important;
   width: 10rem !important;
-  margin: 20px;
+  margin-left: auto;
+  margin-right: auto;
+}
+@media only screen and (max-width: 450px) {
+  .cred_pic {
+    height: 4rem !important;
+    width: 4rem !important;
+  }
+}
+@media only screen and (min-width: 500px) {
+  .cred_pic {
+    display: flex;
+  }
+  .cred_pic_text {
+    display: flex;
+    width: fit-content;
+  }
+  .cred_pic_button {
+    display: flex;
+    width: fit-content;
+  }
 }
 
 .log_input {
   margin: 20px !important;
+  @media (max-width: 350px) {
+    padding: 0px !important;
+  }
 }
 
 .reg_input {
