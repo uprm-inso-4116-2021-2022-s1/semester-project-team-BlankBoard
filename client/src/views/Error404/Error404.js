@@ -1,8 +1,23 @@
 import React from 'react'
+import "./Error404.css";
+import { Button } from "@mui/material";
+import { useHistory } from "react-router-dom";
 
-const Error404 = () => {
+function Error404() {
+
+    let history = useHistory();
+
     return (
-        <>404 !!!!!!! :(</>
+    <div className="error404">
+        <h1>Page not found</h1>
+        <Button 
+        variant="text" 
+        className="error404__returnHome" 
+        onClick={() => {history.push("/");}}
+        fullWidth>
+            Return Home          
+        </Button>
+    </div>
     )
 }
 
