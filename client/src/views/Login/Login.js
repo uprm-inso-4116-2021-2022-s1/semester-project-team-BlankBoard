@@ -132,7 +132,6 @@ const Login = () => {
       },
       json: true
     }).then(res => {
-      console.log(res);
       setCookie("token", res.data.jwtToken);
       history.push("/");
     }).catch(e => {
