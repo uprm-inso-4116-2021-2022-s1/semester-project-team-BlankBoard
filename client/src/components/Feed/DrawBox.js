@@ -37,7 +37,6 @@ function DrawBox(props) {
     })
       .then((res) => {
         setCookie("token", res.data.jwtToken);
-        console.log(res);
         res.status(201).send();
       })
       .catch((e) => {
