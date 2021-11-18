@@ -31,9 +31,30 @@ const replyID = async (req, res, pool) => {
 };
 
 const getPosts = async (req, res, pool) => {
+  const { user_id } = req.query;
   try {
-    const table = await pool.query("SELECT * FROM Posts");
+    let table;
+    if (user_id) {
+      table = await pool.query("SELECT * FROM Posts WHERE user_id = $1", [user_id]);
+    } else {
+      table = await pool.query("SELECT * FROM Posts");
+    }
 
+    res.json(table.rows);
+  } catch (e) {
+    res.status(400).send(e);
+  }
+};
+
+const getReplies = async (req, res, pool) => {
+  const { user_id } = req.query;
+  try {
+    let table;
+    if (user_id) {
+      table = await pool.query("SELECT * FROM Replies WHERE user_id = $1", [user_id]);
+    } else {
+      table = await pool.query("SELECT * FROM Replies");
+    }
     res.json(table.rows);
   } catch (e) {
     res.status(400).send(e);
@@ -68,5 +89,6 @@ module.exports = {
   replyID,
   getPosts,
   getPostsByID,
+  getReplies,
   getRepliesByPostID
 };

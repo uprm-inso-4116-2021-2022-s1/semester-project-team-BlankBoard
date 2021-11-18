@@ -98,7 +98,6 @@ function Canvas(props) {
   const initCanvas = () => setCanvasReady(true);
 
   useEffect(() => {
-    console.log(props.user, props.thread, props.options, props.visible);
     if (props.visible) return;
     setCanvasReady(false);
     setBgReady(false);
