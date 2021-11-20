@@ -1,5 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Caveat+Brush&display=swap");
-
 body {
   --sharedes-pinkLight: #ffcbcb;
   --sharedes-pinkDeep: #ffa7a7;
@@ -8,7 +6,6 @@ body {
   --sharedes-background: #fff4f4;
   --sharedes-blueDark: #283861;
   --sharedes-pinkDark: #5f2727;
-  font-family: Caveat Brush !important;
   font-weight: lighter !important;
   align-items: center;
   align-content: center;
@@ -16,43 +13,50 @@ body {
   background-attachment: fixed !important;
 }
 
-.bb_f1 {
-  font-family: Caveat Brush !important;
-  color: var(--sharedes-blueDark);
+@font-face {
+  font-family: "Caveat Brush";
+  font-style: normal;
+  font-display: swap;
+  src: local("CaveatBrush"), local("CaveatBrush-Regular"),
+    url(./fonts/CaveatBrush.ttf) format("truetype");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215,
+    U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Montserrat sans-serif";
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: local("Montserrat sans-serif"), local("Montserrat-Regular"),
+    url(./fonts/Montserrat.ttf) format("truetype");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215,
+    U+FEFF, U+FFFD;
 }
 
-/* .cred_page{
+/* .bb_f1 {
+  color: var(--sharedes-blueDark);
+} */
+
+/* .cred_page {
   background: #eb01a5;
-  background-image: 
-  linear-gradient(
-    to top, 
-  rgba(255, 167, 167, 0.9),
-  rgba(255, 203, 203, 0.6)
-  ), 
-  url(./assets/img/cred_back.jpg) !important;
+  background-image: linear-gradient(
+      to top,
+      rgba(255, 167, 167, 0.9),
+      rgba(255, 203, 203, 0.6)
+    ),
+    url(./assets/img/cred_back.jpg) !important;
   background-size: 100vw;
   height: 100vh !important;
   width: 100vw;
 } */
 
-.cred_card {
+/* .cred_card {
   padding: 30px;
   margin: 50px;
   width: fit-content;
   border-radius: 20px !important;
-}
-@media only screen and (max-width: 350px) {
-  .cred_card {
-    padding: 5px !important;
-  }
-}
-@media only screen and (min-width: 500px) {
-  .cred_card {
-    justify-content: center !important;
-    flex: auto;
-    margin-left: auto;
-    margin-right: auto;
-  }
 }
 
 .reg_card {
@@ -62,19 +66,6 @@ body {
 .cred_container {
   padding: 10px !important;
 }
-@media only screen and (max-width: 350px) {
-  .cred_container {
-    padding: 5px !important;
-  }
-}
-@media only screen and (min-width: 500px) {
-  .cred_container {
-    justify-content: center !important;
-    flex: auto;
-    margin-left: auto;
-    margin-right: auto;
-  }
-}
 
 .cred_pic {
   height: 10rem !important;
@@ -82,31 +73,9 @@ body {
   margin-left: auto;
   margin-right: auto;
 }
-@media only screen and (max-width: 450px) {
-  .cred_pic {
-    height: 4rem !important;
-    width: 4rem !important;
-  }
-}
-@media only screen and (min-width: 500px) {
-  .cred_pic {
-    display: flex;
-  }
-  .cred_pic_text {
-    display: flex;
-    width: fit-content;
-  }
-  .cred_pic_button {
-    display: flex;
-    width: fit-content;
-  }
-}
 
 .log_input {
   margin: 20px !important;
-  @media (max-width: 350px) {
-    padding: 0px !important;
-  }
 }
 
 .reg_input {
@@ -130,4 +99,4 @@ body {
 
 .cred_register {
   color: gray;
-}
+} */

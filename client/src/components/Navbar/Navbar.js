@@ -15,34 +15,26 @@ import {
 function Navbar(props) {
   return (
     <>
-      <AppBar position="sticky" className="nav" width="fitContent">
+      <AppBar position="sticky" className="nav">
         <Toolbar>
           <Grid container>
-            <Grid container item xs={0.5}>
+            <Grid container item>
               <img
                 alt="logo"
                 className="nav_logo"
                 src="https://res.cloudinary.com/dsunqodr1/image/upload/v1636853232/blankboard/assets/uhi3r9t3jzqls4xhcsyx.png"
               ></img>
             </Grid>
-            <Grid container item xs={2.5}>
+            <Grid container item>
               <Typography
                 className="nav_text nav_title"
-                textAlign="left"
                 component="div"
                 sx={{ flexGrow: 1 }}
               >
                 BlankBoard
               </Typography>
             </Grid>
-            <Grid
-              container
-              item
-              xs={3}
-              justifyContent="right"
-              alignItems="center"
-              paddingRight="0.5rem"
-            >
+            <Grid container item>
               <IconButton
                 onClick={() => {
                   props.setTab("feed");
@@ -51,14 +43,7 @@ function Navbar(props) {
                 <HomeRoundedIcon className="nav_btn"></HomeRoundedIcon>
               </IconButton>
             </Grid>
-            <Grid
-              container
-              item
-              xs={3}
-              justifyContent="left"
-              alignItems="center"
-              paddingLeft="0.5rem"
-            >
+            <Grid container item>
               <IconButton
                 onClick={() => {
                   props.setTab("profile");
@@ -67,25 +52,15 @@ function Navbar(props) {
                 <AccountCircleIcon className="nav_btn"></AccountCircleIcon>
               </IconButton>
             </Grid>
-            <Grid
-              container
-              item
-              xs={1}
-              justifyContent="center"
-              alignItems="center"
-            >
-              <Avatar src={props.user.profile ? props.user.profile : ""} />
+            <Grid container item>
+              <Avatar
+                src={props.user.profile ? props.user.profile : ""}
+                className="nav_prof_pic"
+              />
             </Grid>
-            <Grid
-              container
-              item
-              xs={1}
-              justifyContent="center"
-              alignItems="center"
-            >
+            <Grid container item>
               <Typography
                 className="nav_text nav_name"
-                textAlign="left"
                 component="div"
                 sx={{ flexGrow: 1 }}
               >
@@ -96,13 +71,7 @@ function Navbar(props) {
                   : ""}
               </Typography>
             </Grid>
-            <Grid
-              container
-              item
-              xs={1}
-              justifyContent="center"
-              alignItems="center"
-            >
+            <Grid container item>
               <IconButton onClick={props.signOut}>
                 <ExitToAppIcon className="nav_btn"></ExitToAppIcon>
               </IconButton>

@@ -15,7 +15,29 @@ import {
   DialogContent,
   DialogContentText,
 } from "@mui/material";
+import { makeStyles } from "@mui/styles";
 import isAuthenticated from "../../common/authentication";
+
+const useStyles = makeStyles((theme) => ({
+  navlinks: {
+    marginLeft: theme.spacing(10),
+    display: "flex",
+  },
+  logo: {
+    flexGrow: "1",
+    cursor: "pointer",
+  },
+  link: {
+    textDecoration: "none",
+    color: "white",
+    fontSize: "20px",
+    marginLeft: theme.spacing(20),
+    "&:hover": {
+      color: "yellow",
+      borderBottom: "1px solid white",
+    },
+  },
+}));
 
 const Login = () => {
   let history = useHistory();

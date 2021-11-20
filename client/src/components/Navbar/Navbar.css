@@ -5,41 +5,55 @@
     rgb(201, 253, 255, 1),
     rgb(223, 254, 255, 1)
   ) !important;
+  display: flex !important;
+  flex-direction: row;
+}
+@media only screen and (min-width: 300px) {
+  .nav {
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    align-items: flex-start !important;
+  }
 }
 
 .nav_text {
   font-family: Caveat Brush !important;
   color: var(--sharedes-blueDark);
+  display: flex !important;
 }
 
 .nav_title {
   font-weight: bolder !important;
   font-size: 40px !important;
+  display: flex !important;
 }
-@media only screen and (max-width: 450px) {
+@media only screen and (min-width: 300px) {
   .nav_title {
-    font-size: 30px !important;
-    display: inline-flex;
+    display: inline;
+    flex-direction: row;
+    justify-content: space-between !important;
+    align-items: center !important;
   }
 }
 
 .nav_logo {
-  width: auto;
-  display: inline-flex;
+  display: flex !important;
+  flex-direction: row !important;
+  display: flex !important;
 }
-@media only screen and (max-width: 450px) {
+@media only screen and (min-width: 300px) {
   .nav_logo {
-    height: 3em;
-    width: 3em;
-    display: inline-flex;
+    width: 30px !important;
   }
 }
 
 .nav_name {
   font-weight: normal !important;
   font-size: 25px !important;
+  display: flex !important;
 }
 
 .nav_btn {
   color: var(--sharedes-blueDark);
+  display: flex !important;
 }
