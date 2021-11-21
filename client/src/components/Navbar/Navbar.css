@@ -5,34 +5,22 @@
     rgb(201, 253, 255, 1),
     rgb(223, 254, 255, 1)
   ) !important;
-  display: flex !important;
-  flex-direction: row;
-}
-@media only screen and (min-width: 300px) {
-  .nav {
-    flex-wrap: wrap !important;
-    justify-content: center !important;
-    align-items: flex-start !important;
-  }
+  display: inline-flex !important;
+  flex-direction: row !important;
 }
 
 .nav_text {
   font-family: Caveat Brush !important;
   color: var(--sharedes-blueDark);
-  display: flex !important;
 }
 
 .nav_title {
   font-weight: bolder !important;
   font-size: 40px !important;
-  display: flex !important;
 }
 @media only screen and (min-width: 300px) {
   .nav_title {
-    display: inline;
-    flex-direction: row;
-    justify-content: space-between !important;
-    align-items: center !important;
+    font-size: 20px !important;
   }
 }
 
@@ -43,7 +31,7 @@
 }
 @media only screen and (min-width: 300px) {
   .nav_logo {
-    width: 30px !important;
+    width: 40px !important;
   }
 }
 
@@ -52,8 +40,25 @@
   font-size: 25px !important;
   display: flex !important;
 }
+@media only screen and (min-width: 300px) {
+  .nav_name {
+    visibility: hidden;
+  }
+}
 
 .nav_btn {
   color: var(--sharedes-blueDark);
   display: flex !important;
+}
+@media only screen and (min-width: 300px) {
+  .nav_btn {
+    width: 1rem;
+    height: 1rem;
+  }
+}
+@media only screen and (min-width: 300px) {
+  .nav_prof_pic {
+    width: 0.5rem;
+    height: 0.5rem;
+  }
 }

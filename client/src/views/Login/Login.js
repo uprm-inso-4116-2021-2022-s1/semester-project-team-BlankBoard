@@ -17,29 +17,66 @@ import {
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import isAuthenticated from "../../common/authentication";
+import classNames from "classnames";
 
 const useStyles = makeStyles((theme) => ({
-  navlinks: {
-    marginLeft: theme.spacing(10),
-    display: "flex",
+  cred_card: {
+    padding: "30px",
+    margin: "auto",
+    width: "fit-content",
+    borderRadius: "20px",
   },
-  logo: {
-    flexGrow: "1",
-    cursor: "pointer",
+  bb_f1: {
+    color: "#283861",
+    fontSize: "40px",
+    textAlign: "center",
+    fontFamily: "Caveat Brush",
   },
-  link: {
-    textDecoration: "none",
-    color: "white",
+  reg_card: {
+    width: "32rem",
+  },
+  cred_container: {
+    padding: "20px",
+    paddingTop: "50px",
+    justifyContent: "center",
+    alignItems: "center",
+    fontFamily: "Caveat Brush",
+  },
+  log_input: {
+    margin: "20px",
+  },
+  reg_input: {
+    margin: "20px",
+  },
+  input: {
+    fontFamily: "Montserrat",
+    fontWeight: 700,
+  },
+  cred_button: {
+    borderRadius: "200px",
     fontSize: "20px",
-    marginLeft: theme.spacing(20),
-    "&:hover": {
-      color: "yellow",
-      borderBottom: "1px solid white",
-    },
+    color: "#283861",
+    background:
+      "linear-gradient(to right,rgb(201, 253, 255, 1),rgb(223, 254, 255, 1))",
+  },
+  cred_button_text: {
+    color: "#283861",
+    fontSize: "20px",
+    textAlign: "center",
+  },
+  cred_title: {
+    fontSize: "36px",
+    fontFamily: "Caveat Brush",
+  },
+  cred_register: {
+    color: "gray",
+    fontFamily: "Montserrat",
+    fontWeight: 700,
   },
 }));
 
 const Login = () => {
+  const classes = useStyles();
   let history = useHistory();
   const [cookies, setCookie] = useCookies(["user"]);
   const [open, setOpen] = useState(false);
@@ -60,90 +97,91 @@ const Login = () => {
     return <Redirect to={"/"} />;
   } else {
     return (
-      <>
-        <Grid
-          container
-          className="cred_container cred_page"
-          justifyContent="center"
-        >
-          <Grid item xs={12}>
-            <Card className="cred_card">
-              <Grid
-                container
-                className="cred_container"
-                justifyContent="center"
-              >
-                <Grid item xs={12} sm={6}>
-                  <Typography className="bb_f1 cred_title" textAlign="center">
-                    Sign in to BlankBoard
-                  </Typography>
-                </Grid>
+      <Grid
+        container
+        className={classNames(classes.cred_container, classes.cred_card)}
+        justifyContent="center"
+      >
+        <Grid item xs={12} sm={12}>
+          <Card className={classes.cred_card}>
+            <Grid
+              container
+              className={classes.cred_container}
+              justifyContent="center"
+            >
+              <Grid item xs={12}>
+                <Typography
+                  className={classNames(classes.bb_f1, classes.cred_title)}
+                  textAlign="center"
+                >
+                  Sign in to BlankBoard
+                </Typography>
               </Grid>
-              <Grid
-                container
-                className="cred_container"
-                justifyContent="center"
-              >
-                <Grid item xs={12}>
-                  <FormGroup>
-                    <TextField
-                      className="log_input"
-                      label="Email"
-                      variant="standard"
-                      type="email"
-                      id="email"
-                      name="email"
-                      placeholder="Email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                    />
-                    <TextField
-                      className="log_input"
-                      label="Password"
-                      variant="standard"
-                      type="password"
-                      id="pwd"
-                      name="pwd"
-                      placeholder="password"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                    />
-                    <Button
-                      className="log_input cred_button bb_f1"
-                      type="button"
-                      variant="contained"
-                      onClick={handleLogin}
-                    >
-                      Sign In
-                    </Button>
-                    <Dialog open={open} onClose={handleClose}>
-                      <DialogTitle>{"Invalid Credentials"}</DialogTitle>
-                      <DialogContent>
-                        <DialogContentText>
-                          It appears you have entered an incorrect email or
-                          password, please try again.
-                        </DialogContentText>
-                      </DialogContent>
-                    </Dialog>
-                  </FormGroup>
-                </Grid>
+            </Grid>
+            <Grid
+              container
+              className={classes.cred_container}
+              justifyContent="center"
+            >
+              <Grid item xs={12}>
+                <FormGroup>
+                  <TextField
+                    className="log_input"
+                    label="Email"
+                    variant="standard"
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="Email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                  <TextField
+                    className="log_input"
+                    label="Password"
+                    variant="standard"
+                    type="password"
+                    id="pwd"
+                    name="pwd"
+                    placeholder="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                  <Button
+                    className="log_input cred_button bb_f1"
+                    type="button"
+                    variant="contained"
+                    onClick={handleLogin}
+                  >
+                    Sign In
+                  </Button>
+                  <Dialog open={open} onClose={handleClose}>
+                    <DialogTitle>{"Invalid Credentials"}</DialogTitle>
+                    <DialogContent>
+                      <DialogContentText>
+                        It appears you have entered an incorrect email or
+                        password, please try again.
+                      </DialogContentText>
+                    </DialogContent>
+                  </Dialog>
+                </FormGroup>
               </Grid>
-              <Grid
-                container
-                className="cred_container"
-                justifyContent="center"
-              >
-                <Grid item xs={12}>
-                  <Typography className="cred_register">
-                    New to Blank Board?{" "}
-                    <a href="/register">Create a new account!</a>
-                  </Typography>
-                </Grid>
+            </Grid>
+            <Grid
+              container
+              className={classes.cred_container}
+              justifyContent="center"
+            >
+              <Grid item xs={12}>
+                <Typography className={classes.cred_register}>
+                  New to Blank Board?{" "}
+                  <a href="/register">Create a new account!</a>
+                </Typography>
               </Grid>
-            </Card>
-          </Grid>
+            </Grid>
+          </Card>
         </Grid>
-      </>
+      </Grid>
     );
   }
 

@@ -24,14 +24,6 @@ import isAuthenticated from "../../common/authentication";
 import classNames from "classnames";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    fontFamily: ["Caveat Brush", "cursive"].join(","),
-    fontWeight: "lighter",
-    alignItems: "center",
-    alignContent: "center",
-    background: "linear-gradient(to top, #ffcbcb, #fff4f4)",
-    backgroundAttachment: "fixed",
-  },
   cred_card: {
     padding: "30px",
     margin: "50px",
@@ -42,6 +34,7 @@ const useStyles = makeStyles((theme) => ({
     color: "#283861",
     fontSize: "40px",
     textAlign: "center",
+    fontFamily: "Caveat Brush",
   },
   reg_card: {
     width: "32rem",
@@ -72,6 +65,7 @@ const useStyles = makeStyles((theme) => ({
   },
   reg_input: {
     margin: "20px",
+    fontFamily: "Montserrat",
   },
   input: {
     fontFamily: "Montserrat",
@@ -80,14 +74,14 @@ const useStyles = makeStyles((theme) => ({
   cred_button: {
     borderRadius: "200px",
     fontSize: "20px",
-    color: "#283861",
-    background:
-      "linear-gradient(to right,rgb(201, 253, 255, 1),rgb(223, 254, 255, 1))",
+    color: "#c9fdff",
+    background: `linear-gradient(to right,rgb(201, 253, 255, 1),rgb(223, 254, 255, 1))`,
   },
   cred_button_text: {
     color: "#283861",
     fontSize: "20px",
     textAlign: "center",
+    fontFamily: "Caveat Brush",
   },
   cred_title: {
     fontSize: "36px",
@@ -263,11 +257,11 @@ const Register = () => {
                       }}
                     />
                     <Button
-                      className={
-                        (classes.log_input,
+                      className={classNames(
+                        classes.log_input,
                         classes.cred_button,
-                        classes.cred_button_text)
-                      }
+                        classes.cred_button_text
+                      )}
                       type="button"
                       variant="contained"
                       onClick={handleRegister}
