@@ -15,68 +15,10 @@ import {
   DialogContent,
   DialogContentText,
 } from "@mui/material";
-import { makeStyles } from "@mui/styles";
 import isAuthenticated from "../../common/authentication";
-import classNames from "classnames";
-
-const useStyles = makeStyles((theme) => ({
-  cred_card: {
-    padding: "30px",
-    margin: "auto",
-    width: "fit-content",
-    borderRadius: "20px",
-  },
-  bb_f1: {
-    color: "#283861",
-    fontSize: "40px",
-    textAlign: "center",
-    fontFamily: "Caveat Brush",
-  },
-  reg_card: {
-    width: "32rem",
-  },
-  cred_container: {
-    padding: "20px",
-    paddingTop: "50px",
-    justifyContent: "center",
-    alignItems: "center",
-    fontFamily: "Caveat Brush",
-  },
-  log_input: {
-    margin: "20px",
-  },
-  reg_input: {
-    margin: "20px",
-  },
-  input: {
-    fontFamily: "Montserrat",
-    fontWeight: 700,
-  },
-  cred_button: {
-    borderRadius: "200px",
-    fontSize: "20px",
-    color: "#283861",
-    background:
-      "linear-gradient(to right,rgb(201, 253, 255, 1),rgb(223, 254, 255, 1))",
-  },
-  cred_button_text: {
-    color: "#283861",
-    fontSize: "20px",
-    textAlign: "center",
-  },
-  cred_title: {
-    fontSize: "36px",
-    fontFamily: "Caveat Brush",
-  },
-  cred_register: {
-    color: "gray",
-    fontFamily: "Montserrat",
-    fontWeight: 700,
-  },
-}));
+import "./Login.css";
 
 const Login = () => {
-  const classes = useStyles();
   let history = useHistory();
   const [cookies, setCookie] = useCookies(["user"]);
   const [open, setOpen] = useState(false);
@@ -99,20 +41,26 @@ const Login = () => {
     return (
       <Grid
         container
-        className={classNames(classes.cred_container, classes.cred_card)}
+        className="login_cred_container, login_cred_card"
         justifyContent="center"
       >
         <Grid item xs={12} sm={12}>
-          <Card className={classes.cred_card}>
+          <Card className="login_cred_card">
             <Grid
               container
-              className={classes.cred_container}
+              className="login_cred_container"
               justifyContent="center"
             >
               <Grid item xs={12}>
                 <Typography
-                  className={classNames(classes.bb_f1, classes.cred_title)}
+                  className="login_bb_f1, login_cred_title"
                   textAlign="center"
+                  sx={{
+                    color: "#283861",
+                    fontSize: "40px",
+                    textAlign: "center",
+                    fontFamily: "Caveat Brush",
+                  }}
                 >
                   Sign in to BlankBoard
                 </Typography>
@@ -120,7 +68,7 @@ const Login = () => {
             </Grid>
             <Grid
               container
-              className={classes.cred_container}
+              className="login_cred_container"
               justifyContent="center"
             >
               <Grid item xs={12}>
@@ -135,6 +83,16 @@ const Login = () => {
                     placeholder="Email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
+                    sx={{
+                      label: {
+                        fontFamily: "Montserrat",
+                        fontWeight: 600,
+                      },
+                      input: {
+                        fontFamily: "Montserrat",
+                        fontWeight: 600,
+                      },
+                    }}
                   />
                   <TextField
                     className="log_input"
@@ -146,12 +104,30 @@ const Login = () => {
                     placeholder="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
+                    sx={{
+                      label: {
+                        fontFamily: "Montserrat",
+                        fontWeight: 600,
+                      },
+                      input: {
+                        fontFamily: "Montserrat",
+                        fontWeight: 600,
+                      },
+                    }}
                   />
                   <Button
-                    className="log_input cred_button bb_f1"
+                    className="log_input login_cred_button login_bb_f1"
                     type="button"
                     variant="contained"
                     onClick={handleLogin}
+                    sx={{
+                      borderRadius: "200px",
+                      fontSize: "20px",
+                      fontFamily: "Caveat Brush",
+                      color: "#283861",
+                      background:
+                        "linear-gradient(to right,rgb(201, 253, 255, 1),rgb(223, 254, 255, 1))",
+                    }}
                   >
                     Sign In
                   </Button>
@@ -169,11 +145,17 @@ const Login = () => {
             </Grid>
             <Grid
               container
-              className={classes.cred_container}
+              className="login_cred_container"
               justifyContent="center"
             >
               <Grid item xs={12}>
-                <Typography className={classes.cred_register}>
+                <Typography
+                  className="login_cred_register"
+                  sx={{
+                    fontFamily: "Montserrat",
+                    fontWeight: 600,
+                  }}
+                >
                   New to Blank Board?{" "}
                   <a href="/register">Create a new account!</a>
                 </Typography>

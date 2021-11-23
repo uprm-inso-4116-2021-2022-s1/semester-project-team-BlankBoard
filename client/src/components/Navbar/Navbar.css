@@ -7,8 +7,12 @@
   ) !important;
   display: inline-flex !important;
   flex-direction: row !important;
+  height: auto;
+  padding: 0.5rem;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
 }
-
 .nav_text {
   font-family: Caveat Brush !important;
   color: var(--sharedes-blueDark);
@@ -23,6 +27,16 @@
     font-size: 20px !important;
   }
 }
+@media only screen and (min-width: 500px) {
+  .nav_title {
+    font-size: 40px !important;
+  }
+}
+@media only screen and (min-width: 1000px) {
+  .nav_title {
+    font-size: 50px !important;
+  }
+}
 
 .nav_logo {
   display: flex !important;
@@ -32,6 +46,17 @@
 @media only screen and (min-width: 300px) {
   .nav_logo {
     width: 40px !important;
+    height: 40px !important;
+  }
+}
+@media only screen and (min-width: 500px) {
+  .nav_logo {
+    width: 60px !important;
+  }
+}
+@media only screen and (min-width: 1000px) {
+  .nav_logo {
+    width: 70px !important;
   }
 }
 
@@ -45,20 +70,25 @@
     visibility: hidden;
   }
 }
+@media only screen and (min-width: 500px) {
+  .nav_name {
+    visibility: hidden;
+  }
+}
+@media only screen and (min-width: 700px) {
+  .nav_name {
+    visibility: visible;
+    font-size: 30px !important;
+  }
+}
+@media only screen and (min-width: 1000px) {
+  .nav_name {
+    visibility: visible;
+    font-size: 45px !important;
+  }
+}
 
 .nav_btn {
   color: var(--sharedes-blueDark);
   display: flex !important;
-}
-@media only screen and (min-width: 300px) {
-  .nav_btn {
-    width: 1rem;
-    height: 1rem;
-  }
-}
-@media only screen and (min-width: 300px) {
-  .nav_prof_pic {
-    width: 0.5rem;
-    height: 0.5rem;
-  }
 }
