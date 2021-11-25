@@ -1,5 +1,5 @@
 import React from "react";
-import "./Navbar.css";
+//import "./Navbar.css";
 import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
@@ -11,8 +11,10 @@ import {
   Typography,
   Avatar,
   ThemeProvider,
+  Box,
 } from "@mui/material";
 import { createTheme } from "@mui/material";
+import ColorLensTwoToneIcon from "@mui/icons-material/ColorLensTwoTone";
 
 const theme = createTheme({
   breakpoints: {
@@ -28,132 +30,187 @@ const theme = createTheme({
 
 function Navbar(props) {
   return (
-    <>
-      <ThemeProvider theme={theme}>
-        <Toolbar>
-          <AppBar position="fixed" className="nav">
+    <ThemeProvider theme={theme}>
+      <Box sx={{ flexGrow: 1 }}>
+        <AppBar
+          position="fixed"
+          sx={{
+            boxShadow: "0 3px 6px lightgray",
+            background:
+              "linear-gradient(to right,rgb(201, 253, 255, 1),rgb(223, 254, 255, 1))",
+          }}
+        >
+          <Toolbar
+            sx={{
+              flexGrow: 1,
+              alignItems: "center",
+              alignContent: "center",
+              justifyContent: "center",
+            }}
+          >
             <Grid container>
-              <Grid container item xs={1.2} sm={1.5} md={1} xl={1}>
-                <img
+              <Grid container item xs={1} sx={{ flexGrow: 1 }}>
+                <ColorLensTwoToneIcon
+                  sx={{
+                    color: "var(--sharedes-blueDark)",
+                    height: "fit-content",
+                    fontSize: {
+                      xs: "2rem",
+                      sm: "3rem",
+                      md: "3rem",
+                      lg: "3.5rem",
+                    },
+                    padding: {
+                      xs: "8px",
+                      sm: "8px",
+                      md: "8px",
+                      lg: "8px",
+                    },
+                  }}
+                />
+                {/* <img
                   alt="logo"
-                  className="nav_logo"
                   src="https://res.cloudinary.com/dsunqodr1/image/upload/v1636853232/blankboard/assets/uhi3r9t3jzqls4xhcsyx.png"
-                ></img>
+                ></img> */}
               </Grid>
-              <Grid container item xs={2.5} sm={3} md={3} xl={3}>
-                <Typography className="nav_text nav_title">
+              <Grid container item xs={3} sm={3} lg={3} xl={3}>
+                <Typography
+                  sx={{
+                    fontFamily: "Caveat Brush",
+                    color: "var(--sharedes-blueDark)",
+                    fontWeight: "bolder",
+                    height: "fit-content",
+                    fontSize: {
+                      xs: "20px",
+                      sm: "30px",
+                      lg: "30px",
+                      xl: "40px",
+                    },
+                    padding: {
+                      xs: "8px",
+                      sm: "8px",
+                      md: "8px",
+                      lg: "8px",
+                    },
+                  }}
+                >
                   BlankBoard
                 </Typography>
               </Grid>
-              <Grid container item xs={1}>
+              <Grid container item xs={1} sm={1} lg={1} xl={1}>
                 <IconButton
                   onClick={() => {
                     props.setTab("feed");
                   }}
-                  className="nav_btn"
                 >
                   <HomeRoundedIcon
                     sx={{
                       color: "var(--sharedes-blueDark)",
-                      [theme.breakpoints.up("xs")]: {
-                        width: "1em",
-                        height: "1em",
+                      fontSize: {
+                        xs: "30px",
+                        sm: "2em",
+                        md: "30px",
+                        lg: "40px",
+                        xl: "4em",
                       },
-                      [theme.breakpoints.up("sm")]: {
-                        width: "1em",
-                        height: "1em",
+                      height: {
+                        xs: "30px",
+                        sm: "2em",
+                        md: "30px",
+                        lg: "40px",
+                        xl: "4em",
                       },
-                      [theme.breakpoints.up("md")]: {
-                        width: "2em",
-                        height: "2em",
-                      },
-                      [theme.breakpoints.up("lg")]: {
-                        width: "3em",
-                        height: "3em",
-                      },
-                      [theme.breakpoints.up("xl")]: {
-                        width: "2em",
-                        height: "2em",
+                      padding: {
+                        xs: "8px",
+                        sm: "8px",
+                        md: "8px",
+                        lg: "8px",
                       },
                     }}
                   ></HomeRoundedIcon>
                 </IconButton>
               </Grid>
-              <Grid container item xs={1.5} sm={1.5} md={1.5}>
+              <Grid container item xs={1.5} sm={2} lg={2} xl={1}>
                 <IconButton
                   onClick={() => {
                     props.setTab("profile");
                   }}
-                  className="nav_btn"
                 >
                   <AccountCircleIcon
                     sx={{
                       color: "var(--sharedes-blueDark)",
-                      [theme.breakpoints.up("xs")]: {
-                        width: "1em",
-                        height: "1em",
+                      fontSize: {
+                        xs: "30px",
+                        sm: "2em",
+                        md: "30px",
+                        lg: "40px",
+                        xl: "4em",
                       },
-                      [theme.breakpoints.up("sm")]: {
-                        width: "1em",
-                        height: "1em",
+                      height: {
+                        xs: "30px",
+                        sm: "2em",
+                        md: "30px",
+                        lg: "40px",
+                        xl: "4em",
                       },
-                      [theme.breakpoints.up("md")]: {
-                        width: "2em",
-                        height: "2em",
-                      },
-                      [theme.breakpoints.up("lg")]: {
-                        width: "3em",
-                        height: "3em",
-                      },
-                      [theme.breakpoints.up("xl")]: {
-                        width: "2em",
-                        height: "2em",
+                      padding: {
+                        xs: "8px",
+                        sm: "8px",
+                        md: "8px",
+                        lg: "8px",
                       },
                     }}
                   ></AccountCircleIcon>
                 </IconButton>
               </Grid>
-              <Grid container item xs={0.1} sm={0.5} md={1} xl={0.7}>
+              <Grid container item xs={0.7} md={0.7} xl={1}>
                 <Avatar
                   src={props.user.profile ? props.user.profile : ""}
-                  className="nav_prof_pic"
                   sx={{
-                    mt: "13px",
-                    [theme.breakpoints.up("xs")]: {
-                      width: "1.5em",
-                      height: "1.5em",
+                    borderRadius: "5px",
+                    width: {
+                      xs: "30px",
+                      sm: "2em",
+                      md: "30px",
+                      lg: "40px",
+                      xl: "4em",
                     },
-                    [theme.breakpoints.up("sm")]: {
-                      width: "2em",
-                      height: "2em",
+                    height: {
+                      xs: "30px",
+                      sm: "2em",
+                      md: "30px",
+                      lg: "40px",
+                      xl: "4em",
                     },
-                    [theme.breakpoints.up("md")]: {
-                      width: "3em",
-                      height: "3em",
-                    },
-                    [theme.breakpoints.up("lg")]: {
-                      width: "4em",
-                      height: "4em",
-                    },
-                    [theme.breakpoints.up("xl")]: {
-                      width: "3em",
-                      height: "3em",
+                    padding: {
+                      xs: "8px",
+                      sm: "8px",
+                      md: "8px",
+                      lg: "8px",
                     },
                   }}
                 />
               </Grid>
-              <Grid container item xs={0.7} xl={3}>
+              <Grid container item xs={0.5} md={2} xl={1}>
                 <Typography
-                  className="nav_text nav_name"
                   sx={{
                     fontWeight: "normal",
                     fontSize: "25px",
                     fontFamily: "Caveat Brush",
                     color: "var(--sharedes-blueDark)",
-                    visibility: "hidden",
-                    [theme.breakpoints.up("xl")]: {
-                      visibility: "visible",
-                      fontSize: "25px",
+                    visibility: {
+                      xs: "hidden",
+                      sm: "hidden",
+                      md: "visible",
+                    },
+                    fontSize: {
+                      md: "20px",
+                    },
+                    padding: {
+                      xs: "8px",
+                      sm: "8px",
+                      md: "8px",
+                      lg: "8px",
                     },
                   }}
                 >
@@ -164,37 +221,34 @@ function Navbar(props) {
                     : ""}
                 </Typography>
               </Grid>
-              <Grid container item xs={1}>
+              <Grid container item xs={1} xl={1}>
                 <IconButton onClick={props.signOut}>
                   <ExitToAppIcon
-                    className="nav_btn"
                     sx={{
                       color: "var(--sharedes-blueDark)",
-                      [theme.breakpoints.up("sm")]: {
-                        width: "1em",
-                        height: "1em",
+                      width: {
+                        xs: "30px",
+                        sm: "2em",
+                        md: "30px",
+                        lg: "30px",
+                        xl: "4em",
                       },
-                      [theme.breakpoints.up("md")]: {
-                        width: "2em",
-                        height: "2em",
-                      },
-                      [theme.breakpoints.up("lg")]: {
-                        width: "3em",
-                        height: "3em",
-                      },
-                      [theme.breakpoints.up("xl")]: {
-                        width: "2em",
-                        height: "2em",
+                      height: {
+                        xs: "30px",
+                        sm: "2em",
+                        md: "30px",
+                        lg: "30px",
+                        xl: "4em",
                       },
                     }}
                   ></ExitToAppIcon>
                 </IconButton>
               </Grid>
             </Grid>
-          </AppBar>
-        </Toolbar>
-      </ThemeProvider>
-    </>
+          </Toolbar>
+        </AppBar>
+      </Box>
+    </ThemeProvider>
   );
 }
 

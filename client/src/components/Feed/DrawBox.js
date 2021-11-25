@@ -1,10 +1,33 @@
 import React, { useState } from "react";
-import "./DrawBox.css";
-import { Avatar, Button, Grid, Typography, Modal } from "@mui/material";
+import {
+  Avatar,
+  Button,
+  Grid,
+  Typography,
+  Modal,
+  createTheme,
+  ThemeProvider,
+  Card,
+  CardHeader,
+  CardMedia,
+  CardContent,
+  CardActions,
+} from "@mui/material";
 import Canvas from "../../components/Canvas/Canvas";
 import axios from "axios";
 import { useCookies } from "react-cookie";
 
+const theme = createTheme({
+  breakpoints: {
+    values: {
+      xs: 300,
+      sm: 500,
+      md: 700,
+      lg: 1000,
+      xl: 1200,
+    },
+  },
+});
 function DrawBox(props) {
   const [drawing, setDrawing] = useState(
     "https://res.cloudinary.com/dsunqodr1/image/upload/v1636918991/blankboard/xq6laesvfqfpoomvsumd.png"
@@ -46,33 +69,42 @@ function DrawBox(props) {
   };
 
   return (
-    <>
-      <Grid container className="dbox">
-        <Grid container item xs={3} alignItems="top" justifyContent="center">
-          <Avatar
-            className="dbox_profile"
-            src={props.user.profile ? props.user.profile : ""}
-          ></Avatar>
-        </Grid>
-        <Grid container item xs={6} justifyContent="center">
-          <Grid item>
-            <Button onClick={openModal}>
-              <img alt="post" id="dbd" className="dbox_drawing" src={drawing} />
-            </Button>
-          </Grid>
-        </Grid>
-        <Grid container item xs={3}>
-          <Grid item xs={12}>
-            <Typography color="gray">
-              You can click on the gray square to begin drawing. Press the Post
-              button to post your drawing on BlankBoard!
-            </Typography>
-          </Grid>
-          <Grid item xs={12}>
-            <Button onClick={createPost}>Post</Button>
-          </Grid>
-        </Grid>
-      </Grid>
+    <ThemeProvider theme={theme}>
+      <Card sx={{ width: "fit-content" }}>
+        <CardHeader
+          avatar={
+            <Avatar
+              className="dbox_profile"
+              src={props.user.profile ? props.user.profile : ""}
+            ></Avatar>
+          }
+        ></CardHeader>
+        <CardMedia
+          sx={{
+            alignItems: "center",
+            justifyContent: "center",
+            width: "fit-content",
+          }}
+        >
+          <Button onClick={openModal}>
+            <img alt="post" id="dbd" className="dbox_drawing" src={drawing} />
+          </Button>
+        </CardMedia>
+        <CardContent>
+          <Typography
+            color="gray"
+            sx={{ alignItems: "center", justifyContent: "center", p: "2em" }}
+          >
+            You can click on the gray square to begin drawing. Press the Post
+            button to post your drawing on BlankBoard!
+          </Typography>
+        </CardContent>
+        <CardActions
+          sx={{ alignItems: "center", justifyContent: "center", p: "2em" }}
+        >
+          <Button onClick={createPost}>Post</Button>
+        </CardActions>
+      </Card>
       <Modal className="modalWindow" open={showModal} onClose={closeModal}>
         <Canvas
           canvasCall={canvasCall}
@@ -82,16 +114,7 @@ function DrawBox(props) {
           visible={showModal}
         />
       </Modal>
-      {/* <div className="drawBox">
-                <form>
-                    <div className="drawBox__input">
-
-                        <input placeholder="Drawing 'box' Location Placeholder" />
-                    </div>
-                    <Button className="drawBox__drawButton">Draw</Button>
-                </form>
-            </div> */}
-    </>
+    </ThemeProvider>
   );
 }
 
