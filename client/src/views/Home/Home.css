@@ -1,11 +1,11 @@
 .home {
-    display: flex;
-    height: 100vh;
-    max-width: 1800px;
-    margin-left: auto;
-    margin-right: auto;
+  display: flex;
+  height: 100vh;
+  max-width: 1800px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.hide{
-    display: none !important;
+.hide {
+  display: none !important;
 }

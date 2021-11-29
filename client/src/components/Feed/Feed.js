@@ -1,5 +1,5 @@
 import React from "react";
-import "./Feed.css";
+//import "./Feed.css";
 import DrawBox from "./DrawBox";
 import Post from "./Post";
 import { Card } from "@mui/material";
