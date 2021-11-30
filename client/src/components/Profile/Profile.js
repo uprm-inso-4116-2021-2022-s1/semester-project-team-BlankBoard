@@ -120,7 +120,8 @@ function Profile(props) {
             title={
               <Typography
                 sx={{
-                  fontFamily: "Caveat Brush",
+                  fontFamily: "Montserrat",
+                  fontWeight: "700",
                   fontSize: "30px",
                   m: "10px",
                 }}
@@ -132,7 +133,8 @@ function Profile(props) {
             subheader={
               <Typography
                 sx={{
-                  fontFamily: "Caveat Brush",
+                  fontFamily: "Montserrat",
+                  fontWeight: "700",
                   fontSize: "30px",
                   m: "10px",
                   color: "gray",
@@ -153,7 +155,8 @@ function Profile(props) {
                 <Typography
                   sx={{
                     fontSize: "30px",
-                    fontFamily: "Caveat Brush",
+                    fontFamily: "Montserrat",
+                    fontWeight: "700",
                     m: "10px",
                   }}
                 >
@@ -162,7 +165,8 @@ function Profile(props) {
                 <Typography
                   sx={{
                     fontSize: "30px",
-                    fontFamily: "Caveat Brush",
+                    fontFamily: "Montserrat",
+                    fontWeight: "700",
                     m: "10px",
                   }}
                 >
@@ -173,7 +177,8 @@ function Profile(props) {
                 <Typography
                   sx={{
                     fontSize: "30px",
-                    fontFamily: "Caveat Brush",
+                    fontFamily: "Montserrat",
+                    fontWeight: "700",
                     m: "10px",
                   }}
                 >
@@ -182,7 +187,8 @@ function Profile(props) {
                 <Typography
                   sx={{
                     fontSize: "30px",
-                    fontFamily: "Caveat Brush",
+                    fontFamily: "Montserrat",
+                    fontWeight: "700",
                     m: "10px",
                   }}
                 >

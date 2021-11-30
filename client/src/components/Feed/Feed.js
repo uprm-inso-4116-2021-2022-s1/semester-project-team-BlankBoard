@@ -2,7 +2,7 @@ import React from "react";
 //import "./Feed.css";
 import DrawBox from "./DrawBox";
 import Post from "./Post";
-import { Grid } from "@mui/material";
+import { Divider, Stack } from "@mui/material";
 import { createTheme } from "@mui/system";
 
 const theme = createTheme({
@@ -18,18 +18,17 @@ const theme = createTheme({
 });
 function Feed(props) {
   return (
-    <Grid
-      container
-      mt={2}
+    <Stack
+      mt={10}
       spacing={2}
-      wrap
+      direction="column"
       sx={{
         alignItems: "center",
         justifyContent: "center",
       }}
     >
       {/* Posts */}
-      <Grid
+      {/* <Grid
         item
         wrap
         sx={{
@@ -37,36 +36,36 @@ function Feed(props) {
           justifyContent: "center",
           [theme.breakpoints.up("xs")]: { m: "20px" },
         }}
-      >
-        <DrawBox user={props.user} />
-      </Grid>
+      > */}
+      <DrawBox user={props.user} />
+      {/* </Grid> */}
 
       {/* Use this format for loading a post */}
-      <Grid
+      {/* <Grid
         item
         wrap
         sx={{
           alignItems: "center",
           justifyContent: "center",
         }}
-      >
-        <Post
-          user={props.user}
-          post_user={{
-            user_id: 69,
-            screen_name: "Seraphchim",
-            username: "Seraphchim",
-            profile:
-              "http://res.cloudinary.com/dsunqodr1/image/upload/v1636917375/blankboard/z7sy991oq1zjwpq4wkac.png",
-          }}
-          post_id={15}
-          content={
-            "http://res.cloudinary.com/dsunqodr1/image/upload/v1636950983/blankboard/j1seuyt7ktder3l2knix.png"
-          }
-          time_stamp={""}
-        />
-      </Grid>
-    </Grid>
+      > */}
+      <Post
+        user={props.user}
+        post_user={{
+          user_id: 69,
+          screen_name: "Seraphchim",
+          username: "Seraphchim",
+          profile:
+            "http://res.cloudinary.com/dsunqodr1/image/upload/v1636917375/blankboard/z7sy991oq1zjwpq4wkac.png",
+        }}
+        post_id={15}
+        content={
+          "http://res.cloudinary.com/dsunqodr1/image/upload/v1636950983/blankboard/j1seuyt7ktder3l2knix.png"
+        }
+        time_stamp={""}
+      />
+      {/* </Grid> */}
+    </Stack>
   );
 }
 

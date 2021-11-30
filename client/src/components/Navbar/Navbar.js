@@ -138,14 +138,14 @@ function Navbar(props) {
                   fontFamily: "Caveat Brush",
                   color: "var(--sharedes-blueDark)",
                   visibility: {
-                    xs: "hidden",
-                    sm: "hidden",
+                    xs: "visible",
+                    sm: "visible",
                     md: "visible",
                     lg: "visible",
                     xl: "visible",
                   },
                   fontSize: {
-                    md: "25px",
+                    md: "30px",
                   },
                   pr: {
                     md: "30px",

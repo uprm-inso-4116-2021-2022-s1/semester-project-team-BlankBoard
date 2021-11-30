@@ -12,6 +12,7 @@ import {
   CardMedia,
   CardContent,
   CardActions,
+  Divider,
 } from "@mui/material";
 import Canvas from "../../components/Canvas/Canvas";
 import axios from "axios";
@@ -74,7 +75,7 @@ function DrawBox(props) {
         <Grid
           container
           sx={{
-            maxWidth: "fit-content",
+            maxWidth: "320px",
           }}
         >
           <Card>
@@ -85,7 +86,19 @@ function DrawBox(props) {
                     src={props.user.profile ? props.user.profile : ""}
                   ></Avatar>
                 }
-              ></CardHeader>
+                title={
+                  <Typography
+                    sx={{
+                      color: "gray",
+                      fontFamily: "Montserrat",
+                      fontWeight: "700",
+                    }}
+                  >
+                    You can click on the gray square to begin drawing. Press the
+                    Post button to post your drawing on BlankBoard!
+                  </Typography>
+                }
+              />
             </Grid>
 
             <Grid
@@ -93,33 +106,26 @@ function DrawBox(props) {
               sx={{
                 alignItems: "center",
                 justifyContent: "center",
-                width: "fit-content",
               }}
             >
               <CardMedia>
-                <Button onClick={openModal} sx={{ width: "320px" }}>
+                <Button onClick={openModal} sx={{ p: "0px" }}>
                   <img alt="post" id="dbd" src={drawing} />
                 </Button>
               </CardMedia>
             </Grid>
 
-            <CardContent
-              sx={{
-                alignItems: "center",
-                justifyContent: "center",
-                width: "fit-content",
-              }}
-            >
-              <Typography sx={{ color: "gray" }}>
-                You can click on the gray square to begin drawing. Press the
-                Post button to post your drawing on BlankBoard!
-              </Typography>
-            </CardContent>
+            <Divider />
 
             <CardActions
               sx={{ alignItems: "center", justifyContent: "center" }}
             >
-              <Button onClick={createPost}>Post</Button>
+              <Button
+                onClick={createPost}
+                sx={{ fontFamily: "Montserrat", fontWeight: "700" }}
+              >
+                Post
+              </Button>
             </CardActions>
           </Card>
         </Grid>

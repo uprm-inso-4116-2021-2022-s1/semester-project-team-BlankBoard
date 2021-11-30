@@ -8,7 +8,7 @@ import {
   Modal,
   ThemeProvider,
   createTheme,
-  Stack,
+  Divider,
   Card,
   CardHeader,
   CardMedia,
@@ -68,7 +68,10 @@ function Post(props) {
             <Avatar className="post_avatar" src={props.post_user.profile} />
           }
           title={
-            <Typography className="post_text post_screen">
+            <Typography
+              className="post_text post_screen"
+              sx={{ fontFamily: "Montserrat", fontWeight: "700" }}
+            >
               {props.post_user.screen_name}
               <VerifiedUserIcon className="post__badge" />
               {""}@{props.post_user.username} · 2d
@@ -81,9 +84,10 @@ function Post(props) {
         >
           <img className="post_picture" src={props.content} alt="" />
         </CardMedia>
+        <Divider />
         <CardActions
           className="post"
-          sx={{ alignItems: "center", justifyContent: "center", p: "2em" }}
+          sx={{ alignItems: "center", justifyContent: "center" }}
         >
           <IconButton onClick={openModal}>
             <ChatBubbleOutlineRoundedIcon fontSize="small" />
@@ -93,33 +97,6 @@ function Post(props) {
           </IconButton>
         </CardActions>
       </Card>
-      {/* <Grid container item xs={12}>
-            <Grid
-              container
-              item
-              xs={2.5}
-              alignItems="top"
-              justifyContent="center"
-            ></Grid>
-            <Grid container item xs={7}>
-              <Grid container item xs={12} alignItems="center" margin={"10px"}>
-                <Grid item></Grid>
-                <Grid item></Grid>
-              </Grid>
-              <Grid container item xs={12} justifyContent="center"></Grid>
-            </Grid>
-            <Grid item xs={2.5} />
-          </Grid>
-        <Grid
-          container
-          item
-          xs={12}
-          justifyContent="space-evenly"
-          className="post_btns"
-        >
-          <Grid container item xs={2} justifyContent="center"></Grid>
-          <Grid container item xs={2} justifyContent="center"></Grid>
-        </Grid> */}
       <Modal className="modalWindow" open={showModal} onClose={closeModal}>
         <Canvas
           canvasCall={canvasCall}
