@@ -1,4 +1,5 @@
-import { React, useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
+import * as React from "react";
 import axios from "axios";
 import { Button, Fab, Slider, Grid, Card } from "@mui/material";
 import { BiUndo, BiTrash } from "react-icons/bi";

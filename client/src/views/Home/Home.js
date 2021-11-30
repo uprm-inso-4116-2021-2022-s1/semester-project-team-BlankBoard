@@ -3,14 +3,12 @@ import { useCookies } from "react-cookie";
 import { Redirect, useHistory } from "react-router-dom";
 
 import jwt_decode from "jwt-decode";
-import { Grid } from "@mui/material";
-
 import isAuthenticated from "../../common/authentication";
 import userGetById from "../../requests/userGetById";
 import Navbar from "../../components/Navbar/Navbar";
 import Feed from "../../components/Feed/Feed";
 import Profile from "../../components/Profile/Profile";
-import "./Home.css";
+//import "./Home.css";
 
 function Home() {
   let history = useHistory();
@@ -51,15 +49,15 @@ function Home() {
           signOut={signOut}
           setTab={setTab}
         />
-        {console.log("user:", user)}
-        <Grid container className="home" justifyContent="center">
-          <Grid item xs={6} className={tab === "feed" ? "show" : "hide"}>
-            <Feed user={user} />
-          </Grid>
-          <Grid item xs={6} className={tab === "profile" ? "show" : "hide"}>
-            <Profile user={user} />
-          </Grid>
-        </Grid>
+        {/* {console.log("user:", user)} */}
+        {tab === "feed" ? <Feed user={user} /> : <Profile user={user} />}
+        {/* <Grid container className="home" justifyContent="center">
+          <Grid item className={tab === "feed" ? "show" : classes.hide}></Grid>
+          <Grid
+            item
+            className={tab === "profile" ? "show" : classes.hide}
+          ></Grid>
+        </Grid> */}
       </>
     );
   }

@@ -17,6 +17,7 @@ import {
 } from "@mui/material";
 import Canvas from "../../components/Canvas/Canvas";
 import axios from "axios";
+import Divider from "@mui/material/Divider";
 
 function Profile(props) {
   const [showModal, setShowModal] = useState(false);
@@ -57,7 +58,7 @@ function Profile(props) {
     return (
       <ImageList cols={3} gap={32}>
         {posts.map((post, i) => (
-          <ImageListItem key={i}>
+          <ImageListItem key={i} sx={{ width: "150px", height: "150px" }}>
             <img
               className="prf_post"
               alt=""
@@ -87,23 +88,30 @@ function Profile(props) {
     <React.Fragment>
       <ThemeProvider theme={theme}>
         <Card
-          className="background"
           sx={{
-            justifyContent: "center",
-            alignItems: "center",
-            borderRadius: "10px",
-            m: "30px",
+            [theme.breakpoints.up("xs")]: {
+              mt: "30px",
+              ml: "0",
+              borderRadius: "10px",
+              width: "fit-content",
+              height: "auto",
+            },
+            [theme.breakpoints.up("md")]: {
+              ml: "10%",
+            },
+            [theme.breakpoints.up("lg")]: {
+              ml: "30%",
+            },
           }}
         >
           <CardHeader
             avatar={
               <IconButton onClick={openModal}>
                 <Avatar
-                  className="pf_picture"
                   src={props.user.profile ? props.user.profile : ""}
                   sx={{
-                    height: "10rem",
-                    width: "10rem",
+                    height: "5rem",
+                    width: "5rem",
                     margin: "30px",
                   }}
                 ></Avatar>
@@ -111,22 +119,21 @@ function Profile(props) {
             }
             title={
               <Typography
-                className="pf_text pf_screen_name"
                 sx={{
                   fontFamily: "Caveat Brush",
-                  fontSize: "46px",
+                  fontSize: "30px",
                   m: "10px",
                 }}
               >
                 {props.user.screen_name ? props.user.screen_name : ""}{" "}
               </Typography>
             }
+            titleTypographyProps={{ align: "center" }}
             subheader={
               <Typography
-                className="pf_text pf_username"
                 sx={{
                   fontFamily: "Caveat Brush",
-                  fontSize: "46px",
+                  fontSize: "30px",
                   m: "10px",
                   color: "gray",
                 }}
@@ -134,14 +141,18 @@ function Profile(props) {
                 @{props.user.username ? props.user.username : ""}{" "}
               </Typography>
             }
-          ></CardHeader>
+            subheaderTypographyProps={{ align: "center", gutterBottom: true }}
+          />
           <CardContent>
-            <Stack spacing={2} direction="row">
+            <Stack
+              spacing={3}
+              direction="row"
+              divider={<Divider orientation="vertical" flexItem />}
+            >
               <ListItem>
                 <Typography
-                  className="pf_text pf_stats"
                   sx={{
-                    fontSize: "40px",
+                    fontSize: "30px",
                     fontFamily: "Caveat Brush",
                     m: "10px",
                   }}
@@ -149,9 +160,8 @@ function Profile(props) {
                   {numOfPosts}
                 </Typography>
                 <Typography
-                  className="pf_text pf_stats"
                   sx={{
-                    fontSize: "40px",
+                    fontSize: "30px",
                     fontFamily: "Caveat Brush",
                     m: "10px",
                   }}
@@ -161,9 +171,8 @@ function Profile(props) {
               </ListItem>
               <ListItem>
                 <Typography
-                  className="pf_text pf_stats"
                   sx={{
-                    fontSize: "40px",
+                    fontSize: "30px",
                     fontFamily: "Caveat Brush",
                     m: "10px",
                   }}
@@ -171,9 +180,8 @@ function Profile(props) {
                   {numOfComments}{" "}
                 </Typography>
                 <Typography
-                  className="pf_text pf_stats"
                   sx={{
-                    fontSize: "40px",
+                    fontSize: "30px",
                     fontFamily: "Caveat Brush",
                     m: "10px",
                   }}
@@ -184,27 +192,27 @@ function Profile(props) {
             </Stack>
             <CardMedia>{showPosts()}</CardMedia>
           </CardContent>
-          <Modal
-            className="modalWindow"
-            open={showModal}
-            onClose={closeModal}
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <Canvas
-              canvasCall={canvasCall}
-              user={props.user}
-              thread={0}
-              options={"pfp"}
-              visible={showModal}
-              sx={{ width: "75%" }}
-            />
-          </Modal>
         </Card>
       </ThemeProvider>
+      <Modal
+        className="modalWindow"
+        open={showModal}
+        onClose={closeModal}
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <Canvas
+          canvasCall={canvasCall}
+          user={props.user}
+          thread={0}
+          options={"pfp"}
+          visible={showModal}
+          sx={{ width: "75%" }}
+        />
+      </Modal>
     </React.Fragment>
   );
 }

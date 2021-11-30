@@ -69,42 +69,61 @@ function DrawBox(props) {
   };
 
   return (
-    <ThemeProvider theme={theme}>
-      <Card sx={{ width: "fit-content" }}>
-        <CardHeader
-          avatar={
-            <Avatar
-              className="dbox_profile"
-              src={props.user.profile ? props.user.profile : ""}
-            ></Avatar>
-          }
-        ></CardHeader>
-        <CardMedia
+    <>
+      <ThemeProvider theme={theme}>
+        <Grid
+          container
           sx={{
-            alignItems: "center",
-            justifyContent: "center",
-            width: "fit-content",
+            maxWidth: "fit-content",
           }}
         >
-          <Button onClick={openModal}>
-            <img alt="post" id="dbd" className="dbox_drawing" src={drawing} />
-          </Button>
-        </CardMedia>
-        <CardContent>
-          <Typography
-            color="gray"
-            sx={{ alignItems: "center", justifyContent: "center", p: "2em" }}
-          >
-            You can click on the gray square to begin drawing. Press the Post
-            button to post your drawing on BlankBoard!
-          </Typography>
-        </CardContent>
-        <CardActions
-          sx={{ alignItems: "center", justifyContent: "center", p: "2em" }}
-        >
-          <Button onClick={createPost}>Post</Button>
-        </CardActions>
-      </Card>
+          <Card>
+            <Grid item>
+              <CardHeader
+                avatar={
+                  <Avatar
+                    src={props.user.profile ? props.user.profile : ""}
+                  ></Avatar>
+                }
+              ></CardHeader>
+            </Grid>
+
+            <Grid
+              item
+              sx={{
+                alignItems: "center",
+                justifyContent: "center",
+                width: "fit-content",
+              }}
+            >
+              <CardMedia>
+                <Button onClick={openModal} sx={{ width: "320px" }}>
+                  <img alt="post" id="dbd" src={drawing} />
+                </Button>
+              </CardMedia>
+            </Grid>
+
+            <CardContent
+              sx={{
+                alignItems: "center",
+                justifyContent: "center",
+                width: "fit-content",
+              }}
+            >
+              <Typography sx={{ color: "gray" }}>
+                You can click on the gray square to begin drawing. Press the
+                Post button to post your drawing on BlankBoard!
+              </Typography>
+            </CardContent>
+
+            <CardActions
+              sx={{ alignItems: "center", justifyContent: "center" }}
+            >
+              <Button onClick={createPost}>Post</Button>
+            </CardActions>
+          </Card>
+        </Grid>
+      </ThemeProvider>
       <Modal className="modalWindow" open={showModal} onClose={closeModal}>
         <Canvas
           canvasCall={canvasCall}
@@ -114,7 +133,7 @@ function DrawBox(props) {
           visible={showModal}
         />
       </Modal>
-    </ThemeProvider>
+    </>
   );
 }
 

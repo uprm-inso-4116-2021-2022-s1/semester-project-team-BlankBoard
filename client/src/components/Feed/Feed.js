@@ -2,31 +2,71 @@ import React from "react";
 //import "./Feed.css";
 import DrawBox from "./DrawBox";
 import Post from "./Post";
-import { Card } from "@mui/material";
+import { Grid } from "@mui/material";
+import { createTheme } from "@mui/system";
 
+const theme = createTheme({
+  breakpoints: {
+    values: {
+      xs: 300,
+      sm: 500,
+      md: 700,
+      lg: 1000,
+      xl: 1200,
+    },
+  },
+});
 function Feed(props) {
   return (
-    <Card>
+    <Grid
+      container
+      mt={2}
+      spacing={2}
+      wrap
+      sx={{
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
       {/* Posts */}
-      <DrawBox user={props.user} />
+      <Grid
+        item
+        wrap
+        sx={{
+          alignItems: "center",
+          justifyContent: "center",
+          [theme.breakpoints.up("xs")]: { m: "20px" },
+        }}
+      >
+        <DrawBox user={props.user} />
+      </Grid>
 
       {/* Use this format for loading a post */}
-      <Post
-        user={props.user}
-        post_user={{
-          user_id: 69,
-          screen_name: "Seraphchim",
-          username: "Seraphchim",
-          profile:
-            "http://res.cloudinary.com/dsunqodr1/image/upload/v1636917375/blankboard/z7sy991oq1zjwpq4wkac.png",
+      <Grid
+        item
+        wrap
+        sx={{
+          alignItems: "center",
+          justifyContent: "center",
         }}
-        post_id={15}
-        content={
-          "http://res.cloudinary.com/dsunqodr1/image/upload/v1636950983/blankboard/j1seuyt7ktder3l2knix.png"
-        }
-        time_stamp={""}
-      />
-    </Card>
+      >
+        <Post
+          user={props.user}
+          post_user={{
+            user_id: 69,
+            screen_name: "Seraphchim",
+            username: "Seraphchim",
+            profile:
+              "http://res.cloudinary.com/dsunqodr1/image/upload/v1636917375/blankboard/z7sy991oq1zjwpq4wkac.png",
+          }}
+          post_id={15}
+          content={
+            "http://res.cloudinary.com/dsunqodr1/image/upload/v1636950983/blankboard/j1seuyt7ktder3l2knix.png"
+          }
+          time_stamp={""}
+        />
+      </Grid>
+    </Grid>
   );
 }
 
