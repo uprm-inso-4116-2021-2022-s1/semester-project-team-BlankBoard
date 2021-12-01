@@ -93,18 +93,11 @@ function Canvas(props) {
   const contextRef = useRef(null);
 
   const canvasDimensions = 320;
-  const [canvasReady, setCanvasReady] = useState(false);
   const [bgReady, setBgReady] = useState(false);
-  const initCanvas = () => setCanvasReady(true);
 
   useEffect(() => {
-    if (props.visible) return;
-    setCanvasReady(false);
-    setBgReady(false);
-  }, [props]);
-
-  useEffect(() => {
-    if (!canvasReady) return;
+    console.log(props.user, props.visible);
+    if (!props.visible) return;
     const canvas = document.getElementById("canvas");
     const ctx = canvas.getContext("2d");
     ctx.globalCompositeOperation = "source-over";
@@ -120,7 +113,7 @@ function Canvas(props) {
     if (tool === "pencil") ctx.strokeStyle = color;
     if (tool === "eraser") ctx.strokeStyle = "whitesmoke";
     contextRef.current = ctx;
-  }, [tool, color, thickness, bgReady, canvasReady, canvasDimensions]);
+  }, [props, tool, color, thickness, bgReady, canvasDimensions]);
 
   const startDrawing = ({ nativeEvent }) => {
     const { offsetX, offsetY } = nativeEvent;
@@ -228,7 +221,7 @@ function Canvas(props) {
   return (
     <>
       <Card className="canvas">
-        <Grid container onMouseEnter={initCanvas}>
+        <Grid container>
           <Grid container item xs={7}>
             <Grid container item xs={12} justifyContent="center">
               <canvas
