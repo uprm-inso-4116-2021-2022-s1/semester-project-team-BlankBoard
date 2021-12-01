@@ -50,7 +50,8 @@ function Post(props) {
               </Grid>
               <Grid item>
                 <Typography className="post_text post_user">
-                  <VerifiedUserIcon className="post__badge" /> @{props.post_user.username} · 2d
+                  <VerifiedUserIcon className="post__badge" /> @{props.post_user.username} · {props.post_timestamp}
+                  {/* Date format: "2021-11-29T01:46:37.634Z" */}
                 </Typography>
               </Grid>
             </Grid>
