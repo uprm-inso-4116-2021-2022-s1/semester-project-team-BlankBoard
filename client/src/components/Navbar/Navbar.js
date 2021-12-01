@@ -11,8 +11,12 @@ import {
   Typography,
   Avatar,
   ThemeProvider,
-  Box,
+  Stack,
   Container,
+  ListItem,
+  ListItemIcon,
+  ListItemAvatar,
+  ListItemText,
 } from "@mui/material";
 import { createTheme } from "@mui/material";
 import ColorLensTwoToneIcon from "@mui/icons-material/ColorLensTwoTone";
@@ -40,167 +44,152 @@ function Navbar(props) {
             "linear-gradient(to right,rgb(201, 253, 255, 1),rgb(223, 254, 255, 1))",
         }}
       >
-        <Container maxWidth="xl">
-          <Toolbar disableGutters>
-            <ColorLensTwoToneIcon
-              sx={{
-                color: "var(--sharedes-blueDark)",
-                pr: "3px",
-                fontSize: {
-                  md: "3em",
-                },
-              }}
-            />
-            <Box
-              sx={{
-                flexGrow: 1,
-                display: {
-                  xs: "flex",
-                  sm: "flex",
-                  md: "flex",
-                  lg: "flex",
-                  xl: "flex",
-                },
-              }}
+        <Container maxWidth="false">
+          <Toolbar
+            disableGutters
+            sx={{
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Stack
+              direction="row"
+              justifyContent="center"
+              alignItems="center"
+              spacing={1}
             >
-              {" "}
-              <Typography
-                sx={{
-                  fontFamily: "Caveat Brush",
-                  color: "var(--sharedes-blueDark)",
-                  fontWeight: "bolder",
-                  fontSize: "20px",
-                  pr: "20px",
-                  fontSize: {
-                    md: "30px",
-                  },
-                  pr: {
-                    md: "70px",
-                    lg: "7em",
-                    xl: "15em",
-                  },
-                }}
-              >
-                BlankBoard
-              </Typography>
-              <IconButton
-                onClick={() => {
-                  props.setTab("feed");
-                }}
-              >
-                <HomeRoundedIcon
+              <ListItemIcon>
+                <ColorLensTwoToneIcon
                   sx={{
                     color: "var(--sharedes-blueDark)",
+                    pr: "0px",
                     fontSize: {
-                      md: "1.5em",
+                      sm: "3em",
+                      md: "3em",
                     },
                   }}
-                ></HomeRoundedIcon>
-              </IconButton>
-              <IconButton
-                onClick={() => {
-                  props.setTab("profile");
-                }}
-              >
-                <AccountCircleIcon
+                />
+              </ListItemIcon>{" "}
+              <ListItemText>
+                <Typography
                   sx={{
+                    fontFamily: "Caveat Brush",
                     color: "var(--sharedes-blueDark)",
-                    pr: "20px",
+                    fontWeight: "bolder",
+                    fontSize: "20px",
                     fontSize: {
-                      md: "1.5em",
+                      sm: "30px",
+                      md: "30px",
                     },
                     pr: {
-                      md: "50px",
-                      lg: "5em",
-                      xl: "10em",
+                      md: "3rem",
+                    },
+                    display: {
+                      xs: "none",
+                      sm: "inline-flex",
+                      md: "inline-flex",
+                      lg: "inline-flex",
+                      xl: "inline-flex",
                     },
                   }}
-                ></AccountCircleIcon>
-              </IconButton>
-              <Avatar
-                src={props.user.profile ? props.user.profile : ""}
-                sx={{
-                  borderRadius: "20px",
-                  height: {
-                    xs: "30px",
-                    md: "40px",
-                  },
-                  width: {
-                    xs: "30px",
-                    md: "40px",
-                  },
-                }}
-              />
-              <Typography
-                sx={{
-                  fontWeight: "normal",
-                  fontSize: "1px",
-                  fontFamily: "Caveat Brush",
-                  color: "var(--sharedes-blueDark)",
-                  visibility: {
-                    xs: "visible",
-                    sm: "visible",
-                    md: "visible",
-                    lg: "visible",
-                    xl: "visible",
-                  },
-                  fontSize: {
-                    md: "30px",
-                  },
-                  pr: {
-                    md: "30px",
-                  },
-                }}
-              >
-                {props.user.screen_name
-                  ? props.user.screen_name
-                  : props.user.username
-                  ? props.user.username
-                  : ""}
-              </Typography>
-              <IconButton onClick={props.signOut}>
-                <ExitToAppIcon
+                >
+                  BlankBoard
+                </Typography>
+              </ListItemText>
+              <ListItemIcon>
+                <IconButton
+                  onClick={() => {
+                    props.setTab("feed");
+                  }}
+                >
+                  <HomeRoundedIcon
+                    sx={{
+                      color: "var(--sharedes-blueDark)",
+                      fontSize: {
+                        sm: "1em",
+                        md: "1.5em",
+                      },
+                    }}
+                  ></HomeRoundedIcon>
+                </IconButton>
+              </ListItemIcon>
+              <ListItemIcon>
+                <IconButton
+                  onClick={() => {
+                    props.setTab("profile");
+                  }}
+                >
+                  <AccountCircleIcon
+                    sx={{
+                      color: "var(--sharedes-blueDark)",
+                      fontSize: {
+                        sm: "1em",
+                        md: "1.5em",
+                      },
+                      pr: { sm: "2rem" },
+                    }}
+                  ></AccountCircleIcon>
+                </IconButton>
+              </ListItemIcon>
+              <ListItemAvatar>
+                <Avatar
+                  src={props.user.profile ? props.user.profile : ""}
                   sx={{
-                    color: "var(--sharedes-blueDark)",
-                    fontSize: {
-                      md: "2rem",
+                    borderRadius: "20px",
+                    height: {
+                      xs: "30px",
+                      md: "40px",
+                    },
+                    width: {
+                      xs: "30px",
+                      md: "40px",
                     },
                   }}
-                ></ExitToAppIcon>
-              </IconButton>
-            </Box>
+                />
+              </ListItemAvatar>
+              <ListItemText>
+                <Typography
+                  sx={{
+                    fontWeight: "normal",
+                    fontSize: "25px",
+                    fontFamily: "Caveat Brush",
+                    color: "var(--sharedes-blueDark)",
+                    display: {
+                      xs: "none",
+                      sm: "flex",
+                      md: "flex",
+                      lg: "flex",
+                      xl: "flex",
+                    },
+                  }}
+                >
+                  {props.user.screen_name
+                    ? props.user.screen_name
+                    : props.user.username
+                    ? props.user.username
+                    : ""}
+                </Typography>
+              </ListItemText>
+              <ListItemIcon>
+                <IconButton onClick={props.signOut}>
+                  <ExitToAppIcon
+                    sx={{
+                      color: "var(--sharedes-blueDark)",
+                      fontSize: {
+                        md: "2rem",
+                      },
+                      m: {
+                        xs: "0px",
+                      },
+                    }}
+                  ></ExitToAppIcon>
+                </IconButton>
+              </ListItemIcon>
+            </Stack>
           </Toolbar>
         </Container>
       </AppBar>
     </ThemeProvider>
-
-    /* <Box sx={{ flexGrow: 1 }}>
-        <AppBar>
-          <Toolbar
-            sx={{
-              flexGrow: 1,
-              alignItems: "center",
-              alignContent: "center",
-              justifyContent: "center",
-            }}
-          >
-            <Grid container>
-              <Grid container item xs={1} sx={{ flexGrow: 1 }}>
-                {/* <img
-                  alt="logo"
-                  src="https://res.cloudinary.com/dsunqodr1/image/upload/v1636853232/blankboard/assets/uhi3r9t3jzqls4xhcsyx.png"
-                ></img> 
-              </Grid>
-              <Grid container item xs={3} sm={3} lg={3} xl={3}></Grid>
-              <Grid container item xs={1} sm={1} lg={1} xl={1}></Grid>
-              <Grid container item xs={1.5} sm={2} lg={2} xl={1}></Grid>
-              <Grid container item xs={0.7} md={0.7} xl={1}></Grid>
-              <Grid container item xs={0.5} md={2} xl={1}></Grid>
-              <Grid container item xs={1} xl={1}></Grid>
-            </Grid>
-          </Toolbar>
-        </AppBar>
-      </Box> */
   );
 }
 
