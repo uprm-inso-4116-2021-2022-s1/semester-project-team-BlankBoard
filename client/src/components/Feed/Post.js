@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Avatar, Grid, Typography, IconButton, Modal } from "@mui/material";
 import VerifiedUserIcon from '@mui/icons-material/VerifiedUser';
@@ -8,6 +8,19 @@ import Canvas from '../Canvas/Canvas';
 import "./Post.css";
 
 function Post(props) {
+  let [user, setUser] = useState({})
+
+  useEffect(() => {
+    async function getUsers() {
+      try {
+        const response = await axios.get(`${process.env.REACT_APP_API}/users/${props.post.user_id}`);
+        setUser(response.data);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    getUsers();
+  }, []);
 
   const [showModal, setShowModal] = useState(false);
   const openModal = () => setShowModal(true);
@@ -28,35 +41,36 @@ function Post(props) {
       },
       json: true
     }).then()
-    .catch(e => {
-      console.log(e);
-    });
+      .catch(e => {
+        console.log(e);
+      });
     closeModal();
   };
+  if(!props.post || !user) return;
 
   return (
     <>
       <Grid container className="post">
         <Grid container item xs={12}>
           <Grid container item xs={2.5} alignItems="top" justifyContent="center">
-            <Avatar className="post_avatar" src={props.post_user.profile} />
+            <Avatar className="post_avatar" src={user.profile} />
           </Grid>
           <Grid container item xs={7}>
             <Grid container item xs={12} alignItems="center" margin={"10px"}>
               <Grid item>
                 <Typography className="post_text post_screen">
-                  {props.post_user.screen_name}
+                  {user.screen_name}
                 </Typography>
               </Grid>
               <Grid item>
                 <Typography className="post_text post_user">
-                  <VerifiedUserIcon className="post__badge" /> @{props.post_user.username} · {props.post_timestamp}
+                  <VerifiedUserIcon className="post__badge" /> @{user.username} · {props.post.post_timestamp}
                   {/* Date format: "2021-11-29T01:46:37.634Z" */}
                 </Typography>
               </Grid>
             </Grid>
             <Grid container item xs={12} justifyContent="center">
-              <img className="post_picture" src={props.content} alt="" />
+              <img className="post_picture" src={props.post.post_content} alt="" />
             </Grid>
           </Grid>
           <Grid item xs={2.5} />

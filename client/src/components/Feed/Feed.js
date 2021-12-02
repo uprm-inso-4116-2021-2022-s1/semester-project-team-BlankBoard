@@ -6,64 +6,31 @@ import { Card, Grid } from "@mui/material";
 import axios from "axios";
 
 function Feed(props) {
-  
-  const initUser = {
-    username: "" ,
-    user_id : 0 ,
-    profile : "",
-    screen_name : ""
-  }
-
-  const [user, setUser] = useState([]);
-
-  const getUser = async(id) => {
-    const resUser = await axios
-    .get(`${process.env.REACT_APP_API}/users/${id}`) 
-    .then(res => { setUser([...user, res.data]); console.log(user); });
-  }
+  const [posts, setPosts] = useState([]);
+  useEffect(() => {
+    async function getPosts() {
+      try {
+        const response = await axios.get(`${process.env.REACT_APP_API}/posts`);
+        setPosts(response.data);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    getPosts();
+  }, []);
 
   const ShowPosts = () => {
-    const [userPosts, setUserPosts] = useState([]);
-
-    useEffect( () => { 
-        async function fetchData() {
-            try {
-                const resPost = await axios.get(`${process.env.REACT_APP_API}/posts`); 
-                setUserPosts(resPost.data);
-            } catch (err) {
-                console.log(err);
-            }
-        }
-        fetchData();
-    }, []);
-
-    // Screen_name set to display post_id for testing purposes
-    // username set to display user_id for testing purposes
-
-    // the following userPost parameters are used &/or displayed (user_id, post_id, content) 
-    // missing: a way to show the post user's screen_name, username, profile picture & (optional given the time constraint: relative time in the post) 
-
-    // Posts load from earliest to latest (should be latest to earliest according to specs)
-
-    return (    
+    if (posts === []) return;
+    return (
       <Grid>
-      {userPosts.map((userPost) => (
-        <Grid>
-          {/* attemp at getting the user's info (didn't work T_T )) */}
-
-          {/* {getUser(userPost.user_id)} */}
-          <Post
-          user={props.user}
-          post_user={{user_id: userPost.user_id, 
-                      screen_name: userPost.post_id ,
-                      username: userPost.user_id ,
-                      profile: "" }}
-          post_id={userPost.post_id}
-          content={userPost.post_content}
-          time_stamp={userPost.post_timestamp}
-          />
-        </Grid>
-      )) }
+        {posts.map((post, i) => (
+          <Grid>
+            <Post
+              user={props.user}
+              post={post}
+            />
+          </Grid>
+        ))}
       </Grid>
     )
   }

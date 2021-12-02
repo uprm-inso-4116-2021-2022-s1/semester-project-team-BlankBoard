@@ -99,124 +99,124 @@ const usersDelId = async (req, res, pool) => {
   }
 }
 
-const followID = async (req, res, pool) => {
-  try {
-    const { id } = req.params; // user to be followed
-    const { user_id } = req.body; // user following
+// const followID = async (req, res, pool) => {
+//   try {
+//     const { id } = req.params; // user to be followed
+//     const { user_id } = req.body; // user following
 
-    await pool.query(
-      "INSERT INTO Follows (follower_id, followee_id) VALUES ($1,$2)",
-      [user_id, id]
-    );
-    res.status(201).end();
+//     await pool.query(
+//       "INSERT INTO Follows (follower_id, followee_id) VALUES ($1,$2)",
+//       [user_id, id]
+//     );
+//     res.status(201).end();
 
-    // The id of the follower needs to be passed through the body
-  } catch (e) {
-    res.status(400).send(e);
-  }
-};
+//     // The id of the follower needs to be passed through the body
+//   } catch (e) {
+//     res.status(400).send(e);
+//   }
+// };
 
-const unfollowID = async (req, res, pool) => {
-  try {
-    const { id } = req.params;
-    const { UserId } = req.body;
+// const unfollowID = async (req, res, pool) => {
+//   try {
+//     const { id } = req.params;
+//     const { UserId } = req.body;
 
-    await pool.query(
-      'DELETE FROM Follows WHERE follower_id=$1 AND followee_id=$2',
-      [UserId, id],
-    );
-    res.status(200).send();
-  } catch (e) {
-    res.satus(400).send(e);
-  }
-}
+//     await pool.query(
+//       'DELETE FROM Follows WHERE follower_id=$1 AND followee_id=$2',
+//       [UserId, id],
+//     );
+//     res.status(200).send();
+//   } catch (e) {
+//     res.satus(400).send(e);
+//   }
+// }
 
-const followedByID = async (req, res, pool) => {
-  try {
-    const { id } = req.params;
+// const followedByID = async (req, res, pool) => {
+//   try {
+//     const { id } = req.params;
 
-    const table = await pool.query(
-      'SELECT U.user_id, U.username, U.password FROM Follows as F, Users as U WHERE F.followee_id = U.user_id AND follower_id=$1',
-      [id],
-    );
-    res.json(table.rows);
-  } catch (e) {
-    res.status(400).send(e);
-  }
-}
+//     const table = await pool.query(
+//       'SELECT U.user_id, U.username, U.password FROM Follows as F, Users as U WHERE F.followee_id = U.user_id AND follower_id=$1',
+//       [id],
+//     );
+//     res.json(table.rows);
+//   } catch (e) {
+//     res.status(400).send(e);
+//   }
+// }
 
-const followsID = async (req, res, pool) => {
-  try {
-    const { id } = req.params;
+// const followsID = async (req, res, pool) => {
+//   try {
+//     const { id } = req.params;
 
-    const table = await pool.query(
-      'SELECT U.user_id,U.username,U.password FROM Follows as F, Users as U WHERE F.follower_id = U.user_id AND F.followee_id=$1',
-      [id],
-    );
-    res.json(table.rows);
-  } catch (e) {
-    res.status(400).send(e);
-  }
-}
+//     const table = await pool.query(
+//       'SELECT U.user_id,U.username,U.password FROM Follows as F, Users as U WHERE F.follower_id = U.user_id AND F.followee_id=$1',
+//       [id],
+//     );
+//     res.json(table.rows);
+//   } catch (e) {
+//     res.status(400).send(e);
+//   }
+// }
 
-// Requires user authentication
-const blockID = async (req, res, pool) => {
-  try {
-    const { id } = req.params; // user being blocked
-    const { user_id } = req.body; // user blocking
+// // Requires user authentication
+// const blockID = async (req, res, pool) => {
+//   try {
+//     const { id } = req.params; // user being blocked
+//     const { user_id } = req.body; // user blocking
 
-    await pool.query(
-      "INSERT INTO Blocks (blocker_id,blockee_id) VALUES($1,$2)",
-      [user_id, id]
-    );
-    res.status(201).end();
-  } catch (e) {
-    res.status(400).send(e);
-  }
-};
+//     await pool.query(
+//       "INSERT INTO Blocks (blocker_id,blockee_id) VALUES($1,$2)",
+//       [user_id, id]
+//     );
+//     res.status(201).end();
+//   } catch (e) {
+//     res.status(400).send(e);
+//   }
+// };
 
-const unblockID = async (req, res, pool) => {
-  try {
-    const { id } = req.params; // user being unblocked
-    const { user_id } = req.body; // user unblocking
+// const unblockID = async (req, res, pool) => {
+//   try {
+//     const { id } = req.params; // user being unblocked
+//     const { user_id } = req.body; // user unblocking
 
-    await pool.query(
-      "DELETE FROM Blocks WHERE blocker_id = $1 AND blockee_id = $2",
-      [user_id, id]
-    );
-    res.status(200).end();
-  } catch (e) {
-    res.status(400).send(e);
-  }
-};
+//     await pool.query(
+//       "DELETE FROM Blocks WHERE blocker_id = $1 AND blockee_id = $2",
+//       [user_id, id]
+//     );
+//     res.status(200).end();
+//   } catch (e) {
+//     res.status(400).send(e);
+//   }
+// };
 
-const blockedByID = async (req, res, pool) => {
-  try {
-    const { id } = req.params;
+// const blockedByID = async (req, res, pool) => {
+//   try {
+//     const { id } = req.params;
 
-    const table = await pool.query(
-      'SELECT U.user_id, U.username, U.password FROM Blocks as B, Users U WHERE B.blockee_id = U.user_id AND B.blocker_id = $1',
-      [id],
-    );
-    res.json(table.rows);
-  } catch (e) {
-    res.status(400).send(e);
-  }
-}
+//     const table = await pool.query(
+//       'SELECT U.user_id, U.username, U.password FROM Blocks as B, Users U WHERE B.blockee_id = U.user_id AND B.blocker_id = $1',
+//       [id],
+//     );
+//     res.json(table.rows);
+//   } catch (e) {
+//     res.status(400).send(e);
+//   }
+// }
 
-const blockingID = async (req, res, pool) => {
-  try {
-    const { id } = req.params;
+// const blockingID = async (req, res, pool) => {
+//   try {
+//     const { id } = req.params;
 
-    const table = await pool.query(
-      'SELECT U.user_id, U.username, U.password FROM Blocks as B, Users U WHERE B.blocker_id = U.user_id AND B.blockee_id = $1',
-      [id],
-    );
-    res.json(table.rows);
-  } catch (e) {
-    res.status(400).send(e);
-  }
-}
+//     const table = await pool.query(
+//       'SELECT U.user_id, U.username, U.password FROM Blocks as B, Users U WHERE B.blocker_id = U.user_id AND B.blockee_id = $1',
+//       [id],
+//     );
+//     res.json(table.rows);
+//   } catch (e) {
+//     res.status(400).send(e);
+//   }
+// }
 
 const test = async (req, res, pool) => {
   try {
@@ -235,13 +235,13 @@ module.exports = {
   usersGetId,
   usersPutId,
   usersDelId,
-  followID,
-  followedByID,
-  followsID,
-  unfollowID,
-  blockID,
-  blockedByID,
-  blockingID,
-  unblockID,
+  // followID,
+  // followedByID,
+  // followsID,
+  // unfollowID,
+  // blockID,
+  // blockedByID,
+  // blockingID,
+  // unblockID,
   test,
 };
