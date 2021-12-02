@@ -14,6 +14,41 @@ function Post(props) {
   const [showModal, setShowModal] = useState(false);
   const openModal = () => setShowModal(true);
   const closeModal = () => setShowModal(false);
+  const [replies, setReplies] = useState([]);
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    const getReplies = async () => {
+      axios.get(`${process.env.REACT_APP_API}/replies/${props.post_id}`)
+        .then((res) => {
+          console.log("r:", res.data);
+          setReplies(res.data);
+        }).catch(e => {
+          console.log(e);
+        });
+    }
+    getReplies();
+  }, [])
+
+  useEffect(() => {
+    const getUsers = async () => {
+      if (!replies) return;
+      let results = []
+      replies.forEach((reply) => {
+        axios.get(`${process.env.REACT_APP_API}/users/${reply.user_id}`)
+          .then((res) => {
+            console.log("user:", res.data);
+            results.push(res.data);
+          }).catch(e => {
+            console.log(e);
+          });
+      })
+      console.log("u:", results);
+      setUsers(results);
+    }
+
+    getUsers();
+  }, [replies])
 
   const canvasCall = async (replyLink) => {
     let body = {
@@ -31,9 +66,9 @@ function Post(props) {
       },
       json: true
     }).then()
-    .catch(e => {
-      console.log(e);
-    });
+      .catch(e => {
+        console.log(e);
+      });
     closeModal();
     window.location.reload();
   };
@@ -42,60 +77,75 @@ function Post(props) {
   const handleReplies = () => setShowReplies(!showReplies);
 
   const handleReplyButton = () => {
-    if(!showReplies)
+    if (!showReplies)
       return <KeyboardArrowDownIcon fontSize="large" />
     else
       return <KeyboardArrowUpIcon fontSize="large" />
   }
 
+  const calculateTime = (timestamp) => {
+    let postDate = new Date(timestamp);
+    let currentDate = new Date();
+    let timeDiff = ((currentDate - postDate) / 1000)/60;
+    let suffix = "m";
+    if(timeDiff > 60){
+      timeDiff = timeDiff/60;
+      suffix = "h"
+    }
+    if(timeDiff > 24){
+      timeDiff = timeDiff/24;
+      suffix = "d"
+    }
+    if(timeDiff > 7){
+      timeDiff = timeDiff/7;
+      suffix = "w"
+    }
+    if(timeDiff > 30){
+      timeDiff = timeDiff/30;
+      suffix = "mo"
+    }
+    if(timeDiff > 12){
+      timeDiff = timeDiff/12;
+      suffix = "yr"
+    }
+
+    return `${Math.floor(timeDiff)} ${suffix}`
+  }
+
   const DisplayReplies = () => {
-    const [replies, setReplies] = useState([]);
 
-    useEffect(() => {
-      axios.get(`${process.env.REACT_APP_API}/replies/${props.post_id}`)
-        .then((resReplies) => {
-          console.log(resReplies.data);
-          // setReplies(resReplies.data);
-        });
-    }, []);
-
-    if(!showReplies) return;
-
-    // replies.map((reply) => {
-    //   console.log(reply);
-    // });
-
-    // return (
-    //   <Grid>
-    //     {replies.map((reply) => (
-    //       <Grid container className="reply">
-    //         <Grid container item xs={12}>
-    //           <Grid container item xs={2.5} alignItems="top" justifyContent="center">
-    //             <Avatar className="post_avatar" src={"users[i].profile"} />
-    //           </Grid>
-    //           <Grid container item xs={7}>
-    //             <Grid container item xs={12} alignItems="center" margin={"10px"}>
-    //               <Grid item>
-    //                 <Typography className="post_text post_screen">
-    //                   {"user[i].screen_name"}
-    //                 </Typography>
-    //               </Grid>
-    //               <Grid item>
-    //                 <Typography className="post_text post_user">
-    //                   <VerifiedUserIcon className="post__badge" /> @{"users[i].username"} · 2d
-    //                 </Typography>
-    //               </Grid>
-    //             </Grid>
-    //             <Grid container item xs={12} justifyContent="center">
-    //               <img className="post_picture" src={reply.replies_content} alt="" />
-    //             </Grid>
-    //           </Grid>
-    //           <Grid item xs={2.5} />
-    //         </Grid>
-    //       </Grid>
-    //     ))}
-    //   </Grid>
-    // );
+    if (!showReplies || replies === [] || users === []) return;
+    return (
+      <Grid>
+        {replies.map((reply, i) => (
+          <Grid container className="reply">
+            <Grid container item xs={12}>
+              <Grid container item xs={2.5} alignItems="top" justifyContent="center">
+                <Avatar className="post_avatar" src={users[i].profile} />
+              </Grid>
+              <Grid container item xs={7}>
+                <Grid container item xs={12} alignItems="center" margin={"10px"}>
+                  <Grid item>
+                    <Typography className="post_text post_screen">
+                      {users[i].screen_name}
+                    </Typography>
+                  </Grid>
+                  <Grid item>
+                    <Typography className="post_text post_user">
+                      <VerifiedUserIcon className="post__badge" /> @{users[i].username} · {calculateTime(reply.replies_timestamp)};
+                    </Typography>
+                  </Grid>
+                </Grid>
+                <Grid container item xs={12} justifyContent="center">
+                  <img className="post_picture" src={reply.replies_content} alt="" />
+                </Grid>
+              </Grid>
+              <Grid item xs={2.5} />
+            </Grid>
+          </Grid>
+        ))}
+      </Grid>
+    );
   }
 
   return (
