@@ -13,7 +13,7 @@ import "./Post.css";
 function Post(props) {
   const [postUser, setPostUser] = useState({});
   const [replies, setReplies] = useState([]);
-  const [replyUsers, setReplyUsers] = useState([]);
+  const [replyPosts, setReplyPosts] = useState([]);
   const [showReplies, setShowReplies] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const openModal = () => setShowModal(true);
@@ -36,7 +36,6 @@ function Post(props) {
     const getReplies = async () => {
       axios.get(`${process.env.REACT_APP_API}/replies/${props.post.post_id}`)
         .then((res) => {
-          console.log("r:", res.data);
           setReplies(res.data);
         }).catch(e => {
           console.log(e);
@@ -52,16 +51,14 @@ function Post(props) {
       replies.forEach((reply) => {
         axios.get(`${process.env.REACT_APP_API}/users/${reply.user_id}`)
           .then((res) => {
-            console.log("user:", res.data);
-            results.push(res.data);
+            results.push({...reply, ...res.data});
+            console.log("results:", results);
           }).catch(e => {
             console.log(e);
           });
       })
-      console.log("u:", results);
-      setReplyUsers(results);
+      setReplyPosts(results);
     }
-
     getUsers();
   }, [replies])
 
@@ -97,30 +94,30 @@ function Post(props) {
 
   const DisplayReplies = () => {
 
-    if (!showReplies || replies === [] || replyUsers === []) return;
+    if (!showReplies || !replyPosts) return;
     return (
       <Grid>
-        {replies.map((reply, i) => (
+        {replyPosts.map((replyPost) => (
           <Grid container className="reply">
             <Grid container item xs={12}>
               <Grid container item xs={2.5} alignItems="top" justifyContent="center">
-                <Avatar className="post_avatar" src={replyUsers[i].profile} />
+                <Avatar className="post_avatar" src={replyPost.profile} />
               </Grid>
               <Grid container item xs={7}>
                 <Grid container item xs={12} alignItems="center" margin={"10px"}>
                   <Grid item>
                     <Typography className="post_text post_screen">
-                      {replyUsers[i].screen_name}
+                      {replyPost.screen_name}
                     </Typography>
                   </Grid>
                   <Grid item>
                     <Typography className="post_text post_user">
-                      <VerifiedUserIcon className="post__badge" /> @{replyUsers[i].username} · {calculateTime(reply.replies_timestamp)};
+                      <VerifiedUserIcon className="post__badge" /> @{replyPost.username} · {calculateTime(replyPost.replies_timestamp)};
                     </Typography>
                   </Grid>
                 </Grid>
                 <Grid container item xs={12} justifyContent="center">
-                  <img className="post_picture" src={reply.replies_content} alt="" />
+                  <img className="post_picture" src={replyPost.replies_content} alt="" />
                 </Grid>
               </Grid>
               <Grid item xs={2.5} />
