@@ -40,3 +40,9 @@
 .post_btns{
     margin-top:10px !important;
 }
+
+.reply {
+    background-color: rgba(200, 200, 200, 0.4);
+    border-bottom: 1px solid lightgray;
+    padding: 10px;
+}

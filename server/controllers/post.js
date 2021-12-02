@@ -64,7 +64,8 @@ const getReplies = async (req, res, pool) => {
 const getRepliesByPostID = async (req, res, pool) => {
   const { id } = req.params;
   try {
-    const table = await pool.query("SELECT * FROM Replies WHERE post_id = $1", [id]);
+    // const table = await pool.query("SELECT * FROM Replies WHERE post_id = $1", [id]);
+    const table = await pool.query("SELECT * FROM Replies JOIN Users ON Replies.user_id=Users.user_id WHERE post_id = $1", [id]);
     res.json(table.rows);
   } catch (e) {
     res.status(400).send(e);
