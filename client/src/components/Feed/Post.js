@@ -7,19 +7,34 @@ import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import Canvas from '../Canvas/Canvas';
+import calculateTime from '../../common/common';
 import "./Post.css";
 
 function Post(props) {
-
+  const [postUser, setPostUser] = useState({});
+  const [replies, setReplies] = useState([]);
+  const [replyUsers, setReplyUsers] = useState([]);
+  const [showReplies, setShowReplies] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const openModal = () => setShowModal(true);
   const closeModal = () => setShowModal(false);
-  const [replies, setReplies] = useState([]);
-  const [users, setUsers] = useState([]);
+  const handleReplies = () => setShowReplies(!showReplies);
+
+  useEffect(() => {
+    async function getUsers() {
+      try {
+        const response = await axios.get(`${process.env.REACT_APP_API}/users/${props.post.user_id}`);
+        setPostUser(response.data);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    getUsers();
+  }, []);
 
   useEffect(() => {
     const getReplies = async () => {
-      axios.get(`${process.env.REACT_APP_API}/replies/${props.post_id}`)
+      axios.get(`${process.env.REACT_APP_API}/replies/${props.post.post_id}`)
         .then((res) => {
           console.log("r:", res.data);
           setReplies(res.data);
@@ -44,7 +59,7 @@ function Post(props) {
           });
       })
       console.log("u:", results);
-      setUsers(results);
+      setReplyUsers(results);
     }
 
     getUsers();
@@ -53,7 +68,7 @@ function Post(props) {
   const canvasCall = async (replyLink) => {
     let body = {
       user_id: props.user.user_id,
-      post_id: props.post_id,
+      post_id: props.post.post_id,
       replies_content: replyLink
     }
     let bodySend = JSON.stringify(body)
@@ -73,9 +88,6 @@ function Post(props) {
     window.location.reload();
   };
 
-  const [showReplies, setShowReplies] = useState(false);
-  const handleReplies = () => setShowReplies(!showReplies);
-
   const handleReplyButton = () => {
     if (!showReplies)
       return <KeyboardArrowDownIcon fontSize="large" />
@@ -83,56 +95,27 @@ function Post(props) {
       return <KeyboardArrowUpIcon fontSize="large" />
   }
 
-  const calculateTime = (timestamp) => {
-    let postDate = new Date(timestamp);
-    let currentDate = new Date();
-    let timeDiff = ((currentDate - postDate) / 1000)/60;
-    let suffix = "m";
-    if(timeDiff > 60){
-      timeDiff = timeDiff/60;
-      suffix = "h"
-    }
-    if(timeDiff > 24){
-      timeDiff = timeDiff/24;
-      suffix = "d"
-    }
-    if(timeDiff > 7){
-      timeDiff = timeDiff/7;
-      suffix = "w"
-    }
-    if(timeDiff > 30){
-      timeDiff = timeDiff/30;
-      suffix = "mo"
-    }
-    if(timeDiff > 12){
-      timeDiff = timeDiff/12;
-      suffix = "yr"
-    }
-
-    return `${Math.floor(timeDiff)} ${suffix}`
-  }
-
   const DisplayReplies = () => {
 
-    if (!showReplies || replies === [] || users === []) return;
+    if (!showReplies || replies === [] || replyUsers === []) return;
     return (
       <Grid>
         {replies.map((reply, i) => (
           <Grid container className="reply">
             <Grid container item xs={12}>
               <Grid container item xs={2.5} alignItems="top" justifyContent="center">
-                <Avatar className="post_avatar" src={users[i].profile} />
+                <Avatar className="post_avatar" src={replyUsers[i].profile} />
               </Grid>
               <Grid container item xs={7}>
                 <Grid container item xs={12} alignItems="center" margin={"10px"}>
                   <Grid item>
                     <Typography className="post_text post_screen">
-                      {users[i].screen_name}
+                      {replyUsers[i].screen_name}
                     </Typography>
                   </Grid>
                   <Grid item>
                     <Typography className="post_text post_user">
-                      <VerifiedUserIcon className="post__badge" /> @{users[i].username} · {calculateTime(reply.replies_timestamp)};
+                      <VerifiedUserIcon className="post__badge" /> @{replyUsers[i].username} · {calculateTime(reply.replies_timestamp)};
                     </Typography>
                   </Grid>
                 </Grid>
@@ -148,28 +131,30 @@ function Post(props) {
     );
   }
 
+  if(!props.post || !postUser) return;
+
   return (
     <>
       <Grid container className="post">
         <Grid container item xs={12}>
           <Grid container item xs={2.5} alignItems="top" justifyContent="center">
-            <Avatar className="post_avatar" src={props.post_user.profile} />
+            <Avatar className="post_avatar" src={postUser.profile} />
           </Grid>
           <Grid container item xs={7}>
             <Grid container item xs={12} alignItems="center" margin={"10px"}>
               <Grid item>
                 <Typography className="post_text post_screen">
-                  {props.post_user.screen_name}
+                  {postUser.screen_name}
                 </Typography>
               </Grid>
               <Grid item>
                 <Typography className="post_text post_user">
-                  <VerifiedUserIcon className="post__badge" /> @{props.post_user.username} · 2d
+                  <VerifiedUserIcon className="post__badge" /> @{postUser.username} · {calculateTime(props.post.post_timestamp)}
                 </Typography>
               </Grid>
             </Grid>
             <Grid container item xs={12} justifyContent="center">
-              <img className="post_picture" src={props.content} alt="" />
+              <img className="post_picture" src={props.post.post_content} alt="" />
             </Grid>
           </Grid>
           <Grid item xs={2.5} />
@@ -178,11 +163,6 @@ function Post(props) {
           <Grid container item xs={2} justifyContent="center">
             <IconButton onClick={openModal}>
               <ChatBubbleOutlineRoundedIcon fontSize="small" />
-            </IconButton>
-          </Grid>
-          <Grid container item xs={2} justifyContent="center">
-            <IconButton>
-              <ShareOutlinedIcon fontSize="small" />
             </IconButton>
           </Grid>
           <Grid container item xs={2} justifyContent="center">
@@ -196,7 +176,7 @@ function Post(props) {
       <Modal className="modalWindow" open={showModal} onClose={closeModal}>
         <Canvas
           canvasCall={canvasCall}
-          user={props.user}
+          user={postUser}
           visible={showModal}
         />
       </Modal>

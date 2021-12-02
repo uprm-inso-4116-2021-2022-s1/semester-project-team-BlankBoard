@@ -85,11 +85,48 @@ const getPostsByID = async (req, res, pool) => {
   }
 };
 
+const deletePostByID = async (req, res, pool) => {
+  try {
+    const { id } = req.params;
+
+    const deletedPost = await pool.query('DELETE FROM Posts WHERE post_id = $1 RETURNING *', [id]);
+
+    if (deletedPost.rows.length > 0) {
+      res.status(200).json("Post succesfully deleted!");
+    } else {
+      res.status(400).json("No such post exists. Lucky you I guess.");
+    }
+
+  } catch (e) {
+    console.log(e);
+    res.status(400).send(e);
+  }
+}
+
+const deleteReplyByID = async (req, res, pool) => {
+  try {
+    const { id } = req.params;
+
+    const deletedReply = await pool.query('DELETE FROM replies WHERE reply_id = $1 RETURNING *', [id]);
+
+    if (deletedReply.rows.length > 0) {
+      res.status(200).json("Reply succesfully deleted!");
+    } else {
+      res.status(400).json("No such reply exists. Lucky you I guess.");
+    }
+
+  } catch (e) {
+    console.log(e);
+    res.status(400).send(e);
+  }
+}
 module.exports = {
   post,
   replyID,
   getPosts,
   getPostsByID,
   getReplies,
-  getRepliesByPostID
+  getRepliesByPostID,
+  deletePostByID,
+  deleteReplyByID
 };
