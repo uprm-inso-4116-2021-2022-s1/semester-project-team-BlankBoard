@@ -39,6 +39,7 @@ function DrawBox(props) {
       .catch((e) => {
         console.log(e);
       });
+      window.location.reload();
   };
 
   return (
