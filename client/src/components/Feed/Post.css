@@ -37,6 +37,18 @@
   border-radius: 20px !important;
 }
 
+<<<<<<< HEAD
 .post_btns {
   margin-top: 10px !important;
 }
+=======
+.post_btns{
+    margin-top:10px !important;
+}
+
+.reply {
+    background-color: rgba(200, 200, 200, 0.4);
+    border-bottom: 1px solid lightgray;
+    padding: 10px;
+}
+>>>>>>> 35376c3025d46b2c4dae0b8e56125dd1722c1786

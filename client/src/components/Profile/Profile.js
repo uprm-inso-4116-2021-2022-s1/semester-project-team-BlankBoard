@@ -36,33 +36,21 @@ function Profile(props) {
     window.location.reload(false);
   };
 
-  const numOfPosts = 3;
-  const numOfComments = 7;
-
-  const posts = [
-    "https://res.cloudinary.com/dsunqodr1/image/upload/v1636585376/blankboard/zhgxrirylenlghtrgi6m.png",
-    "https://res.cloudinary.com/dsunqodr1/image/upload/v1636584833/blankboard/fiewyhdxo7hb8xp9v6qj.png",
-    "https://res.cloudinary.com/dsunqodr1/image/upload/v1636585569/blankboard/jbmcsbvr2zbw982bpkd8.png",
-    "https://res.cloudinary.com/dsunqodr1/image/upload/v1636585796/blankboard/f5chxncquhdlo3z4e70v.png",
-    "https://res.cloudinary.com/dsunqodr1/image/upload/v1636585815/blankboard/nvezntg06oebio2ikzcf.png",
-    "https://res.cloudinary.com/dsunqodr1/image/upload/v1636586193/blankboard/xhzsb1sm5g7vf1nxqfij.png",
-    "https://res.cloudinary.com/dsunqodr1/image/upload/v1636585889/blankboard/oq2gieifmtmioygrfv26.png",
-    "https://res.cloudinary.com/dsunqodr1/image/upload/v1636586034/blankboard/xmygk1u9dhehijnv4zn7.png",
-    "https://res.cloudinary.com/dsunqodr1/image/upload/v1636585957/blankboard/jprpx4tmj6sqcda9xb7i.png",
-    "https://res.cloudinary.com/dsunqodr1/image/upload/v1636585973/blankboard/unokwhpi6posevnb1qct.png",
-    "https://res.cloudinary.com/dsunqodr1/image/upload/v1636586119/blankboard/tqlpetz0abv747fl0bam.png",
-    "https://res.cloudinary.com/dsunqodr1/image/upload/v1636586093/blankboard/q2mxykwhhohyixetl46g.png",
-  ];
-
   const showPosts = () => {
     return (
       <ImageList cols={3} gap={32}>
-        {posts.map((post, i) => (
-          <ImageListItem key={i} sx={{ width: "150px", height: "150px" }}>
+        {props.posts.map((post, i) => (
+          <ImageListItem
+            key={i}
+            sx={{
+              height: "10rem",
+              width: "10rem",
+            }}
+          >
             <img
               className="prf_post"
               alt=""
-              src={`${post}?w=320&h=320&fit=crop&auto=format`}
+              src={`${post.post_content}?w=320&h=320&fit=crop&auto=format`}
               loading="lazy"
             />
           </ImageListItem>
@@ -89,18 +77,20 @@ function Profile(props) {
       <ThemeProvider theme={theme}>
         <Card
           sx={{
-            [theme.breakpoints.up("xs")]: {
-              mt: "30px",
-              ml: "0",
-              borderRadius: "10px",
-              width: "fit-content",
-              height: "auto",
+            mt: "4rem",
+            width: "fit-content",
+            height: "fit-content",
+            [theme.breakpoints.up("sm")]: {
+              ml: "20%",
             },
             [theme.breakpoints.up("md")]: {
-              ml: "10%",
+              ml: "25%",
             },
             [theme.breakpoints.up("lg")]: {
               ml: "30%",
+            },
+            [theme.breakpoints.up("xl")]: {
+              ml: "35%",
             },
           }}
         >
@@ -108,12 +98,12 @@ function Profile(props) {
             avatar={
               <IconButton onClick={openModal}>
                 <Avatar
-                  src={props.user.profile ? props.user.profile : ""}
                   sx={{
                     height: "5rem",
                     width: "5rem",
-                    margin: "30px",
+                    ml: "auto",
                   }}
+                  src={props.user.profile ? props.user.profile : ""}
                 ></Avatar>
               </IconButton>
             }
@@ -123,27 +113,25 @@ function Profile(props) {
                   fontFamily: "Montserrat",
                   fontWeight: "700",
                   fontSize: "30px",
-                  m: "10px",
+                  ml: "auto",
                 }}
               >
-                {props.user.screen_name ? props.user.screen_name : ""}{" "}
+                {props.user.screen_name ? props.user.screen_name : ""}
               </Typography>
             }
-            titleTypographyProps={{ align: "center" }}
             subheader={
               <Typography
                 sx={{
+                  color: "gray",
                   fontFamily: "Montserrat",
                   fontWeight: "700",
                   fontSize: "30px",
-                  m: "10px",
-                  color: "gray",
+                  ml: "auto",
                 }}
               >
-                @{props.user.username ? props.user.username : ""}{" "}
+                @{props.user.username ? props.user.username : ""}
               </Typography>
             }
-            subheaderTypographyProps={{ align: "center", gutterBottom: true }}
           />
           <CardContent>
             <Stack
@@ -160,7 +148,7 @@ function Profile(props) {
                     m: "10px",
                   }}
                 >
-                  {numOfPosts}
+                  {props.posts.length}
                 </Typography>
                 <Typography
                   sx={{
@@ -182,7 +170,7 @@ function Profile(props) {
                     m: "10px",
                   }}
                 >
-                  {numOfComments}{" "}
+                  {props.replies.length}
                 </Typography>
                 <Typography
                   sx={{

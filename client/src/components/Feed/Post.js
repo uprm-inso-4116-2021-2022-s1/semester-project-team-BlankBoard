@@ -1,33 +1,90 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import {
   Avatar,
-  Grid,
+  createTheme,
   Typography,
   IconButton,
   Modal,
-  ThemeProvider,
-  createTheme,
-  Divider,
-  Card,
   CardHeader,
   CardMedia,
+  Card,
   CardActions,
+  Box,
 } from "@mui/material";
 import VerifiedUserIcon from "@mui/icons-material/VerifiedUser";
 import ChatBubbleOutlineRoundedIcon from "@mui/icons-material/ChatBubbleOutlineRounded";
-import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import Canvas from "../Canvas/Canvas";
+import calculateTime from "../../common/common";
+import { ThemeProvider } from "@mui/system";
+import { ExpandMore } from "@mui/icons-material";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 //import "./Post.css";
 
 function Post(props) {
+  const [postUser, setPostUser] = useState({});
+  const [replies, setReplies] = useState([]);
+  const [replyPosts, setReplyPosts] = useState([]);
+  const [showReplies, setShowReplies] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const openModal = () => setShowModal(true);
   const closeModal = () => setShowModal(false);
+  const handleReplies = () => setShowReplies(!showReplies);
+
+  useEffect(() => {
+    async function getUsers() {
+      try {
+        const response = await axios.get(
+          `${process.env.REACT_APP_API}/users/${props.post.user_id}`
+        );
+        setPostUser(response.data);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    getUsers();
+  }, []);
+
+  useEffect(() => {
+    const getReplies = async () => {
+      axios
+        .get(`${process.env.REACT_APP_API}/replies/${props.post.post_id}`)
+        .then((res) => {
+          setReplies(res.data);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    };
+    getReplies();
+  }, []);
+
+  useEffect(() => {
+    const getUsers = async () => {
+      if (!replies) return;
+      let results = [];
+      replies.forEach((reply) => {
+        axios
+          .get(`${process.env.REACT_APP_API}/users/${reply.user_id}`)
+          .then((res) => {
+            results.push({ ...reply, ...res.data });
+            console.log("results:", results);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      });
+      setReplyPosts(results);
+    };
+    getUsers();
+  }, [replies]);
+
   const canvasCall = async (replyLink) => {
     let body = {
       user_id: props.user.user_id,
-      post_id: props.post_id,
+      post_id: props.post.post_id,
       replies_content: replyLink,
     };
     let bodySend = JSON.stringify(body);
@@ -45,6 +102,7 @@ function Post(props) {
         console.log(e);
       });
     closeModal();
+    window.location.reload();
   };
 
   const theme = createTheme({
@@ -59,52 +117,78 @@ function Post(props) {
     },
   });
 
+  const handleReplyButton = () => {
+    if (!showReplies) return <KeyboardArrowDownIcon fontSize="large" />;
+    else return <KeyboardArrowUpIcon fontSize="large" />;
+  };
+
+  const DisplayReplies = () => {
+    if (!showReplies || !replyPosts) return;
+    return (
+      <ThemeProvider theme={theme}>
+        {replyPosts.map((replyPost) => (
+          <Card>
+            <CardHeader
+              avatar={
+                <Avatar className="post_avatar" src={replyPost.profile} />
+              }
+              title={
+                <Typography
+                  className="post_text post_screen"
+                  sx={{ fontFamily: "Montserrat", fontWeight: "700" }}
+                >
+                  {replyPost.screen_name}
+                  <VerifiedUserIcon className="post__badge" /> @
+                  {replyPost.username} ·{" "}
+                  {calculateTime(replyPost.replies_timestamp)}
+                </Typography>
+              }
+            />
+            <CardMedia sx={{ alignItems: "center", justifyContent: "center" }}>
+              <img
+                className="post_picture"
+                src={replyPost.replies_content}
+                alt=""
+              />
+            </CardMedia>
+          </Card>
+        ))}
+      </ThemeProvider>
+    );
+  };
+
+  if (!props.post || !postUser) return;
+
   return (
     <ThemeProvider theme={theme}>
-      <Card className="post" sx={{ width: "fit-content" }}>
+      <Card>
         <CardHeader
-          className="post"
-          avatar={
-            <Avatar className="post_avatar" src={props.post_user.profile} />
-          }
+          avatar={<Avatar className="post_avatar" src={postUser.profile} />}
           title={
-            <Typography
-              className="post_text post_screen"
-              sx={{ fontFamily: "Montserrat", fontWeight: "700" }}
-            >
-              {props.post_user.screen_name}
-              <VerifiedUserIcon className="post__badge" />
-              {""}@{props.post_user.username} · 2d
+            <Typography className="post_text post_screen">
+              {postUser.screen_name}
+              <VerifiedUserIcon className="post__badge" /> @{postUser.username}{" "}
+              · {calculateTime(props.post.post_timestamp)}
             </Typography>
           }
-        ></CardHeader>
-        <CardMedia
-          className="post"
-          sx={{ alignItems: "center", justifyContent: "center" }}
-        >
-          <img className="post_picture" src={props.content} alt="" />
+        />
+        <CardMedia>
+          <img className="post_picture" src={props.post.post_content} alt="" />
         </CardMedia>
-        <Divider />
-        <CardActions
-          className="post"
-          sx={{ alignItems: "center", justifyContent: "center" }}
-        >
+        <CardActions>
           <IconButton onClick={openModal}>
             <ChatBubbleOutlineRoundedIcon fontSize="small" />
           </IconButton>
-          <IconButton>
-            <ShareOutlinedIcon fontSize="small" />
-          </IconButton>
+
+          <ExpandMore onClick={handleReplies}>
+            {" "}
+            {handleReplyButton()}
+          </ExpandMore>
         </CardActions>
+        {DisplayReplies()}
       </Card>
       <Modal className="modalWindow" open={showModal} onClose={closeModal}>
-        <Canvas
-          canvasCall={canvasCall}
-          user={props.user}
-          thread={0}
-          options={"pfp"}
-          visible={showModal}
-        />
+        <Canvas canvasCall={canvasCall} user={postUser} visible={showModal} />
       </Modal>
     </ThemeProvider>
   );

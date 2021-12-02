@@ -1,6 +1,7 @@
-import React, { useState } from "react";
-import { useCookies } from "react-cookie";
 import { Redirect, useHistory } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { useCookies } from "react-cookie";
 
 import jwt_decode from "jwt-decode";
 import isAuthenticated from "../../common/authentication";
@@ -12,33 +13,71 @@ import Profile from "../../components/Profile/Profile";
 
 function Home() {
   let history = useHistory();
-  const [loading, setLoading] = useState(true);
   const [cookies, setCookie] = useCookies(["token"]);
-  const [authenticated, setAuthenticated] = useState(false);
+  const [authentication, setAuthentication] = useState({
+    loading: true,
+    authenticated: false,
+  });
   const [tab, setTab] = useState("feed");
   const [user, setUser] = useState({});
+  const [userPosts, setUserPosts] = useState([]);
+  const [userReplies, setUserReplies] = useState([]);
 
-  // <Modal className="modalWindow" open={showModal} onClose={closeModal}>{Canvas(1, 0, "pfp", showModal)}</Modal>
-
-  const check = async () => {
-    setAuthenticated(await isAuthenticated(cookies.token));
-
-    if (authenticated) {
-      setUser(await userGetById(jwt_decode(cookies.token).user.user_id));
+  useEffect(() => {
+    let profileUser;
+    async function authenticate() {
+      let flag = await isAuthenticated(cookies.token);
+      setAuthentication({ loading: false, authenticated: flag });
+      if (flag) {
+        profileUser = await userGetById(jwt_decode(cookies.token).user.user_id);
+        setUser(profileUser);
+        await loadProfileData();
+      }
+      setAuthentication({ loading: false, authenticated: flag });
     }
-
-    setLoading(false);
-  };
+    async function loadProfileData() {
+      await axios({
+        method: "GET",
+        url: process.env.REACT_APP_API + `/posts`,
+        params: { user_id: profileUser.user_id },
+        headers: {
+          "Content-Type": "application/json",
+        },
+        json: true,
+      })
+        .then((res) => {
+          setUserPosts(res.data);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+      await axios({
+        method: "GET",
+        url: process.env.REACT_APP_API + `/replies`,
+        params: { user_id: profileUser.user_id },
+        headers: {
+          "Content-Type": "application/json",
+        },
+        json: true,
+      })
+        .then((res) => {
+          setUserReplies(res.data);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    }
+    authenticate();
+  }, []);
 
   const signOut = () => {
     setCookie("token", "");
     history.push("/login");
   };
 
-  if (loading) {
-    check();
+  if (authentication.loading) {
     return <h1>Loading...</h1>;
-  } else if (!authenticated) {
+  } else if (!authentication.authenticated) {
     return <Redirect to={"/login"} />;
   } else {
     return (
@@ -49,15 +88,11 @@ function Home() {
           signOut={signOut}
           setTab={setTab}
         />
-        {/* {console.log("user:", user)} */}
-        {tab === "feed" ? <Feed user={user} /> : <Profile user={user} />}
-        {/* <Grid container className="home" justifyContent="center">
-          <Grid item className={tab === "feed" ? "show" : classes.hide}></Grid>
-          <Grid
-            item
-            className={tab === "profile" ? "show" : classes.hide}
-          ></Grid>
-        </Grid> */}
+        {tab === "feed" ? (
+          <Feed user={user} />
+        ) : (
+          <Profile user={user} posts={userPosts} replies={userReplies} />
+        )}
       </>
     );
   }

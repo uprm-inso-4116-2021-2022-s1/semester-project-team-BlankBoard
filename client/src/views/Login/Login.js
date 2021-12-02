@@ -1,5 +1,4 @@
-import { useState } from "react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Redirect } from "react-router-dom";
 import axios from "axios";
 import { useCookies } from "react-cookie";
@@ -25,18 +24,22 @@ const Login = () => {
   const [open, setOpen] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(true);
-  const [authenticated, setAuthenticated] = useState(false);
+  const [authentication, setAuthentication] = useState({
+    loading: true,
+    authenticated: false,
+  });
 
-  const check = async () => {
-    setAuthenticated(await isAuthenticated(cookies.token));
-    setLoading(false);
-  };
+  useEffect(() => {
+    async function authenticate() {
+      let flag = await isAuthenticated(cookies.token);
+      setAuthentication({ loading: false, authenticated: flag });
+    }
+    authenticate();
+  }, [cookies.token]);
 
-  if (loading) {
-    check();
+  if (authentication.loading) {
     return <h1>Loading...</h1>;
-  } else if (authenticated) {
+  } else if (authentication.authenticated) {
     return <Redirect to={"/"} />;
   } else {
     return (
@@ -189,7 +192,6 @@ const Login = () => {
     })
       .then((res) => {
         setCookie("token", res.data.jwtToken);
-        console.log("Cookie right after setting", cookies.token);
         history.push("/");
       })
       .catch((e) => {

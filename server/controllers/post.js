@@ -31,9 +31,30 @@ const replyID = async (req, res, pool) => {
 };
 
 const getPosts = async (req, res, pool) => {
+  const { user_id } = req.query;
   try {
-    const table = await pool.query("SELECT * FROM Posts");
+    let table;
+    if (user_id) {
+      table = await pool.query("SELECT * FROM Posts WHERE user_id = $1", [user_id]);
+    } else {
+      table = await pool.query("SELECT * FROM Posts");
+    }
 
+    res.json(table.rows);
+  } catch (e) {
+    res.status(400).send(e);
+  }
+};
+
+const getReplies = async (req, res, pool) => {
+  const { user_id } = req.query;
+  try {
+    let table;
+    if (user_id) {
+      table = await pool.query("SELECT * FROM Replies WHERE user_id = $1", [user_id]);
+    } else {
+      table = await pool.query("SELECT * FROM Replies");
+    }
     res.json(table.rows);
   } catch (e) {
     res.status(400).send(e);
@@ -43,7 +64,8 @@ const getPosts = async (req, res, pool) => {
 const getRepliesByPostID = async (req, res, pool) => {
   const { id } = req.params;
   try {
-    const table = await pool.query("SELECT * FROM Replies WHERE post_id = $1", [id]);
+    // const table = await pool.query("SELECT * FROM Replies WHERE post_id = $1", [id]);
+    const table = await pool.query("SELECT * FROM Replies JOIN Users ON Replies.user_id=Users.user_id WHERE post_id = $1", [id]);
     res.json(table.rows);
   } catch (e) {
     res.status(400).send(e);
@@ -63,10 +85,48 @@ const getPostsByID = async (req, res, pool) => {
   }
 };
 
+const deletePostByID = async (req, res, pool) => {
+  try {
+    const { id } = req.params;
+
+    const deletedPost = await pool.query('DELETE FROM Posts WHERE post_id = $1 RETURNING *', [id]);
+
+    if (deletedPost.rows.length > 0) {
+      res.status(200).json("Post succesfully deleted!");
+    } else {
+      res.status(400).json("No such post exists. Lucky you I guess.");
+    }
+
+  } catch (e) {
+    console.log(e);
+    res.status(400).send(e);
+  }
+}
+
+const deleteReplyByID = async (req, res, pool) => {
+  try {
+    const { id } = req.params;
+
+    const deletedReply = await pool.query('DELETE FROM replies WHERE reply_id = $1 RETURNING *', [id]);
+
+    if (deletedReply.rows.length > 0) {
+      res.status(200).json("Reply succesfully deleted!");
+    } else {
+      res.status(400).json("No such reply exists. Lucky you I guess.");
+    }
+
+  } catch (e) {
+    console.log(e);
+    res.status(400).send(e);
+  }
+}
 module.exports = {
   post,
   replyID,
   getPosts,
   getPostsByID,
-  getRepliesByPostID
+  getReplies,
+  getRepliesByPostID,
+  deletePostByID,
+  deleteReplyByID
 };

@@ -59,14 +59,11 @@ function DrawBox(props) {
       },
       json: true,
     })
-      .then((res) => {
-        setCookie("token", res.data.jwtToken);
-        console.log(res);
-        res.status(201).send();
-      })
+      .then()
       .catch((e) => {
         console.log(e);
       });
+    window.location.reload();
   };
 
   return (
@@ -78,7 +75,7 @@ function DrawBox(props) {
             maxWidth: "320px",
           }}
         >
-          <Card>
+          <Card sx={{ mt: "3rem" }}>
             <Grid item>
               <CardHeader
                 avatar={

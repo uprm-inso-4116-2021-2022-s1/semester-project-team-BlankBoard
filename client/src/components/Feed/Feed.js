@@ -1,25 +1,35 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 //import "./Feed.css";
 import DrawBox from "./DrawBox";
 import Post from "./Post";
-import { Divider, Stack } from "@mui/material";
-import { createTheme } from "@mui/system";
+//import { Card, Grid } from "@mui/material";
+import axios from "axios";
+import { Stack, createTheme } from "@mui/material";
 
-const theme = createTheme({
-  breakpoints: {
-    values: {
-      xs: 300,
-      sm: 500,
-      md: 700,
-      lg: 1000,
-      xl: 1200,
-    },
-  },
-});
 function Feed(props) {
+  const [posts, setPosts] = useState([]);
+  useEffect(() => {
+    async function getPosts() {
+      try {
+        const response = await axios.get(`${process.env.REACT_APP_API}/posts`);
+        let posts = response.data.sort(function (a, b) {
+          a = new Date(a.post_timestamp);
+          b = new Date(b.post_timestamp);
+          return b - a;
+        });
+        setPosts(posts);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    getPosts();
+  }, []);
+
+  const ShowPosts = () => {
+    if (posts === []) return;
+  };
   return (
     <Stack
-      mt={10}
       spacing={2}
       direction="column"
       sx={{
@@ -27,44 +37,12 @@ function Feed(props) {
         justifyContent: "center",
       }}
     >
-      {/* Posts */}
-      {/* <Grid
-        item
-        wrap
-        sx={{
-          alignItems: "center",
-          justifyContent: "center",
-          [theme.breakpoints.up("xs")]: { m: "20px" },
-        }}
-      > */}
       <DrawBox user={props.user} />
-      {/* </Grid> */}
+      {ShowPosts()}
 
-      {/* Use this format for loading a post */}
-      {/* <Grid
-        item
-        wrap
-        sx={{
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      > */}
-      <Post
-        user={props.user}
-        post_user={{
-          user_id: 69,
-          screen_name: "Seraphchim",
-          username: "Seraphchim",
-          profile:
-            "http://res.cloudinary.com/dsunqodr1/image/upload/v1636917375/blankboard/z7sy991oq1zjwpq4wkac.png",
-        }}
-        post_id={15}
-        content={
-          "http://res.cloudinary.com/dsunqodr1/image/upload/v1636950983/blankboard/j1seuyt7ktder3l2knix.png"
-        }
-        time_stamp={""}
-      />
-      {/* </Grid> */}
+      {posts.map((post, i) => (
+        <Post user={props.user} post={post} />
+      ))}
     </Stack>
   );
 }
