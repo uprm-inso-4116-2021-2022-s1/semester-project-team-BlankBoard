@@ -1,25 +1,22 @@
-@import url('https://fonts.googleapis.com/css2?family=Caveat+Brush&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Caveat+Brush&display=swap");
 
-.canvas { 
-  width: 55vw !important;
+.canvas {
+  width: 350px !important;
   border-radius: 20px !important;
+  padding: 2rem !important;
   /* background:     linear-gradient(
         to right, 
         rgb(201, 253, 255, 1),
         rgb(223, 254, 255, 1)
       ) !important;
    */
-  background: linear-gradient(
-        to right bottom, 
-        #57667e,
-        #687fa3
-      ) !important;
-  padding: 30px !important;
-  padding-bottom: 0px !important;
+  background: linear-gradient(to right bottom, #57667e, #687fa3) !important;
+  /* padding: 30px !important;
+  padding-bottom: 0px !important; */
   z-index: -1 !important;
 }
 
-.colors{
+.colors {
   margin: 10px !important;
 }
 
@@ -68,11 +65,7 @@
 }
 
 .submitButton {
-  background: linear-gradient(
-    to top left, 
-    #ffa7a7,
-    #ffcbcb
-  )  !important;
+  background: linear-gradient(to top left, #ffa7a7, #ffcbcb) !important;
   background-color: #ffa7a7 !important;
   border-radius: 10px !important;
   color: var(--sharedes-pinkDark) !important;
@@ -80,6 +73,7 @@
   width: 60% !important;
   font-family: Caveat Brush !important;
   font-size: 26px !important;
+  margin-left: 7rem !important;
 }
 
 .modalContent {
@@ -95,12 +89,17 @@
 
 .optionText {
   display: flex;
-  justify-content: center;
+  justify-content: left;
   font-family: Caveat Brush;
   font-size: xx-large;
   font-weight: bolder;
   color: whitesmoke;
   cursor: default;
+}
+@media screen and (min-width: 300px) {
+  .optionText {
+    font-size: 20px !important;
+  }
 }
 
 .options {
@@ -111,10 +110,15 @@
 .modalTools {
   display: flex;
   align-items: center;
-  justify-content: center;
-  padding-top: 16px;
+  justify-content: left;
+  /* padding-top: 16px; */
   font-size: 48px;
   cursor: pointer;
+}
+@media screen and (min-width: 300px) {
+  .modalTools {
+    font-size: 22px !important;
+  }
 }
 
 .toolSelected {
@@ -138,13 +142,19 @@
   border-style: hidden;
   cursor: pointer;
 }
+@media screen and (min-width: 300px) {
+  .whiteboard {
+    width: 320px !important;
+    height: 320px !important;
+  }
+}
 
 .modalSlider {
   display: flex;
   align-items: center;
-  justify-content: center;
-  margin-left: 64px;
-  margin-right: 64px;
+  justify-content: left;
+  /* margin-left: 64px;
+  margin-right: 64px; */
   cursor: pointer;
 }
 
@@ -153,25 +163,29 @@
   grid-template-columns: auto auto auto auto auto auto;
   grid-template-rows: auto auto;
   justify-content: space-evenly;
-  margin-bottom: 32px;
+  margin-bottom: auto;
 }
-
 .colorButton {
   margin: 5px !important;
   border: 3px solid var(--sharedes-pinkDeep) !important;
   cursor: pointer;
 }
 
-.bi_btn{
+.bi_btn {
   font-size: 36px;
-  color: #ffa7a7; 
+  color: #ffa7a7;
   border: 3px solid var(--sharedes-pinkDeep) !important;
-  margin: 3px !important; 
+  margin: 3px !important;
   border-radius: 200px;
   margin-right: 10px !important;
   cursor: pointer;
 }
+@media screen and (min-width: 300px) {
+  .bi_btn {
+    font-size: 20px !important;
+  }
+}
 
 .colorButton:hover {
-  opacity: 0.7
+  opacity: 0.7;
 }

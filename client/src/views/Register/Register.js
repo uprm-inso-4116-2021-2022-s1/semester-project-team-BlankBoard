@@ -1,4 +1,5 @@
-import { React, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
+import * as React from "react";
 import { Redirect } from "react-router-dom";
 import axios from "axios";
 import { useCookies } from "react-cookie";
@@ -17,11 +18,84 @@ import {
   DialogContent,
   DialogContentText,
   IconButton,
-} from "@mui/material";
+  makeStyles,
+} from "@material-ui/core";
 import Canvas from "../../components/Canvas/Canvas";
 import isAuthenticated from "../../common/authentication";
+import classNames from "classnames";
+
+const useStyles = makeStyles((theme) => ({
+  cred_card: {
+    padding: "30px",
+    margin: "50px",
+    width: "fit-content",
+    borderRadius: "20px",
+  },
+  bb_f1: {
+    color: "#283861",
+    fontSize: "40px",
+    textAlign: "center",
+    fontFamily: "Caveat Brush",
+  },
+  reg_card: {
+    width: "32rem",
+  },
+  cred_container: {
+    padding: "10px",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  cred_pic: {
+    [theme.breakpoints.up("sm")]: {
+      height: "10rem",
+      width: "10rem",
+    },
+    [theme.breakpoints.between("xs", "sm")]: {
+      height: "5rem",
+      width: "5rem",
+    },
+  },
+  cred_pic_text: {
+    textAlign: "center",
+    fontFamily: "Montserrat",
+    fontWeight: "700",
+    width: "100%",
+  },
+  log_input: {
+    margin: "20px",
+  },
+  reg_input: {
+    margin: "20px",
+    fontFamily: "Montserrat",
+  },
+  input: {
+    fontFamily: "Montserrat",
+    fontWeight: 700,
+  },
+  cred_button: {
+    borderRadius: "200px",
+    fontSize: "20px",
+    color: "#c9fdff",
+    background: `linear-gradient(to right,rgb(201, 253, 255, 1),rgb(223, 254, 255, 1))`,
+  },
+  cred_button_text: {
+    color: "#283861",
+    fontSize: "20px",
+    textAlign: "center",
+    fontFamily: "Caveat Brush",
+  },
+  cred_title: {
+    fontSize: "36px",
+  },
+  cred_register: {
+    color: "gray",
+    fontFamily: "Montserrat",
+    fontWeight: 700,
+  },
+}));
 
 const Register = () => {
+  const classes = useStyles();
   let history = useHistory();
   const [cookies, setCookie] = useCookies(["user"]);
   const [open, setOpen] = useState(false);
@@ -66,40 +140,55 @@ const Register = () => {
       <>
         <Grid
           container
-          className="cred_page cred_container"
+          className={classes.cred_container}
           justifyContent="center"
         >
           <Grid item>
-            <Card className="cred_card">
+            <Card className={classes.cred_card}>
               <Grid
                 container
-                className="cred_container"
-                padding="0px !important"
+                className={classes.cred_container}
                 justifyContent="center"
               >
                 <Grid item xs={12}>
-                  <Typography className="bb_f1 cred_title" textAlign="center">
+                  <Typography
+                    className={classNames(
+                      classes.bb_f1,
+                      classes.cred_container
+                    )}
+                    textAlign="center"
+                  >
                     Welcome to BlankBoard!
                   </Typography>
                 </Grid>
               </Grid>
               <Grid
                 container
-                className="cred_container"
+                className={classes.cred_container}
                 justifyContent="center"
               >
-                <Grid container item xs={12} justifyContent="center">
-                  <Typography>
+                <Grid
+                  container
+                  item
+                  xs={12}
+                  sm={12}
+                  md={12}
+                  lg={12}
+                  xl={12}
+                  justifyContent="center"
+                  alignItems="center"
+                >
+                  <Typography className={classes.cred_pic_text}>
                     Click on the circle to put a profile picture!
                   </Typography>
                   <IconButton onClick={openModal}>
-                    <Avatar className="cred_pic" src={profile} />
+                    <Avatar className={classes.cred_pic} src={profile} />
                   </IconButton>
                 </Grid>
                 <Grid item xs={12}>
                   <FormGroup>
                     <TextField
-                      className="reg_input"
+                      className={classes.reg_input}
                       label="Username"
                       variant="standard"
                       type="name"
@@ -108,9 +197,12 @@ const Register = () => {
                       placeholder="Username"
                       value={username}
                       onChange={(e) => setUsername(e.target.value)}
+                      InputProps={{
+                        className: classes.input,
+                      }}
                     />
                     <TextField
-                      className="reg_input"
+                      className={classes.reg_input}
                       label="Screen Name"
                       variant="standard"
                       type="name"
@@ -119,9 +211,12 @@ const Register = () => {
                       placeholder="Screen Name"
                       value={screen_name}
                       onChange={(e) => setScreenName(e.target.value)}
+                      InputProps={{
+                        className: classes.input,
+                      }}
                     />
                     <TextField
-                      className="reg_input"
+                      className={classes.reg_input}
                       label="Email"
                       variant="standard"
                       type="email"
@@ -130,9 +225,12 @@ const Register = () => {
                       placeholder="Email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
+                      InputProps={{
+                        className: classes.input,
+                      }}
                     />
                     <TextField
-                      className="reg_input"
+                      className={classes.reg_input}
                       label="Password"
                       variant="standard"
                       type="password"
@@ -141,9 +239,12 @@ const Register = () => {
                       placeholder="password"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
+                      InputProps={{
+                        className: classes.input,
+                      }}
                     />
                     <TextField
-                      className="reg_input"
+                      className={classes.reg_input}
                       label="Confirm Password"
                       variant="standard"
                       type="cPassword"
@@ -152,9 +253,16 @@ const Register = () => {
                       placeholder="Confirm Password"
                       value={confirmPassword}
                       onChange={(e) => setConfirmPassword(e.target.value)}
+                      InputProps={{
+                        className: classes.input,
+                      }}
                     />
                     <Button
-                      className="log_input cred_button bb_f1"
+                      className={classNames(
+                        classes.log_input,
+                        classes.cred_button,
+                        classes.cred_button_text
+                      )}
                       type="button"
                       variant="contained"
                       onClick={handleRegister}
@@ -166,11 +274,11 @@ const Register = () => {
               </Grid>
               <Grid
                 container
-                className="cred_container"
+                className={classes.cred_container}
                 justifyContent="center"
               >
                 <Grid item>
-                  <Typography className="cred_register">
+                  <Typography className={classes.cred_register}>
                     Already have an account? <a href="/login">Log in</a>
                   </Typography>
                 </Grid>

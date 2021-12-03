@@ -1,0 +1,31 @@
+.login_cred_card {
+  padding: 30px;
+  margin: auto;
+  width: fit-content;
+  border-radius: 20px;
+}
+.login_reg_card {
+  width: 32rem;
+}
+.login_cred_container {
+  padding: 20px;
+  padding-top: 50px;
+  justify-content: center;
+  align-items: center;
+  font-family: Caveat Brush;
+}
+.log_input {
+  margin: 20px;
+  font-family: Montserrat;
+  font-weight: 700;
+}
+.reg_input {
+  margin: 20px;
+  font-family: Montserrat;
+  font-weight: 700;
+}
+.cred_register {
+  color: gray;
+  font-family: Montserrat;
+  font-weight: 700;
+}

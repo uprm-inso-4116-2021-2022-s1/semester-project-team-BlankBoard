@@ -1,66 +1,203 @@
 import React from "react";
-import "./Navbar.css";
-import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
-import ExitToAppIcon from '@mui/icons-material/ExitToApp';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { Grid, AppBar, Toolbar, IconButton, Typography, Avatar } from "@mui/material";
+//import "./Navbar.css";
+import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import {
+  Grid,
+  AppBar,
+  Toolbar,
+  IconButton,
+  Typography,
+  Avatar,
+  ThemeProvider,
+  Stack,
+  Container,
+  ListItem,
+  ListItemIcon,
+  ListItemAvatar,
+  ListItemText,
+} from "@mui/material";
+import { createTheme } from "@mui/material";
+import ColorLensTwoToneIcon from "@mui/icons-material/ColorLensTwoTone";
+
+const styles = {
+  "&.Mui-focusVisible": {
+    backgroundColor: "pink",
+    width: "fit-content",
+  },
+};
+const theme = createTheme({
+  breakpoints: {
+    values: {
+      xs: 300,
+      sm: 500,
+      md: 700,
+      lg: 1000,
+      xl: 1400,
+    },
+  },
+});
 
 function Navbar(props) {
-    return (
-        <>
-            <AppBar position="sticky" className="nav">
-                <Toolbar>
-                    <Grid container>
-                        <Grid container item xs={0.5}>
-                            <img alt="logo" className="nav_logo" src="https://res.cloudinary.com/dsunqodr1/image/upload/v1636853232/blankboard/assets/uhi3r9t3jzqls4xhcsyx.png"></img>
-                        </Grid>
-                        <Grid container item xs={2.5}>
-                            <Typography className="nav_text nav_title" textAlign="left" component="div" sx={{ flexGrow: 1 }}>
-                                BlankBoard
-                            </Typography>
-                        </Grid>
-                        <Grid container item xs={3} justifyContent="right" alignItems="center" paddingRight="0.5rem">
-                            <IconButton onClick={() => { props.setTab("feed") }}><HomeRoundedIcon className="nav_btn"></HomeRoundedIcon></IconButton>
-                        </Grid>
-                        <Grid container item xs={3} justifyContent="left" alignItems="center" paddingLeft="0.5rem">
-                            <IconButton onClick={() => { props.setTab("profile") }}><AccountCircleIcon className="nav_btn"></AccountCircleIcon></IconButton>
-                        </Grid>
-                        <Grid container item xs={1} justifyContent="center" alignItems="center">
-                            <Avatar src={props.user.profile ? props.user.profile : ""} />
-                        </Grid>
-                        <Grid container item xs={1} justifyContent="center" alignItems="center">
-                            <Typography className="nav_text nav_name" textAlign="left" component="div" sx={{ flexGrow: 1 }}>
-                                {props.user.screen_name ? props.user.screen_name : props.user.username ? props.user.username : ""}
-                            </Typography>
-                        </Grid>
-                        <Grid container item xs={1} justifyContent="center" alignItems="center">
-                            <IconButton onClick={props.signOut}><ExitToAppIcon className="nav_btn"></ExitToAppIcon></IconButton>
-                        </Grid>
-                    </Grid>
-                </Toolbar>
-            </AppBar>
-            {/* <Grid container spacing={0} className="nav">
-                <Grid item xs={12} justifyContent="center" textAlign="center">
-                    <h1> BlankBoard </h1>
-                </Grid>
-                <Grid item xs={12}>
-                    <Button variant="outlined" className="nav_button" fullWidth>
-                        <HomeRoundedIcon /> Home
-                    </Button>
-                </Grid>
-                <Grid item xs={12}>
-                    <Button variant="outlined" className="nav_button" fullWidth >
-                        <AccountCircleOutlinedIcon /> Profile
-                    </Button>
-                </Grid>
-                <Grid container item xs={12}>
-                    <Button variant="outlined" className="nav_button nav_draw" fullWidth>
-                        Draw
-                    </Button>
-                </Grid>
-            </Grid> */}
-        </>
-    );
+  return (
+    <ThemeProvider theme={theme}>
+      <AppBar
+        position="fixed"
+        sx={{
+          boxShadow: "0 3px 6px lightgray",
+          background:
+            "linear-gradient(to right,rgb(201, 253, 255, 1),rgb(223, 254, 255, 1))",
+        }}
+      >
+        <Container maxWidth="false">
+          <Toolbar
+            disableGutters
+            sx={{
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Stack
+              direction="row"
+              justifyContent="center"
+              alignItems="center"
+              spacing={1}
+            >
+              <ListItemIcon>
+                <ColorLensTwoToneIcon
+                  sx={{
+                    color: "var(--sharedes-blueDark)",
+                    pr: "0px",
+                    fontSize: {
+                      sm: "3em",
+                      md: "3em",
+                    },
+                  }}
+                />
+              </ListItemIcon>{" "}
+              <ListItemText>
+                <Typography
+                  sx={{
+                    fontFamily: "Caveat Brush",
+                    color: "var(--sharedes-blueDark)",
+                    fontWeight: "bolder",
+                    fontSize: "20px",
+                    fontSize: {
+                      sm: "30px",
+                      md: "30px",
+                    },
+                    pr: {
+                      md: "3rem",
+                    },
+                    display: {
+                      xs: "none",
+                      sm: "inline-flex",
+                      md: "inline-flex",
+                      lg: "inline-flex",
+                      xl: "inline-flex",
+                    },
+                  }}
+                >
+                  BlankBoard
+                </Typography>
+              </ListItemText>
+              <ListItemIcon>
+                <IconButton
+                  onClick={() => {
+                    props.setTab("feed");
+                  }}
+                >
+                  <HomeRoundedIcon
+                    sx={{
+                      color: "var(--sharedes-blueDark)",
+                      fontSize: {
+                        sm: "1em",
+                        md: "1.5em",
+                      },
+                    }}
+                  ></HomeRoundedIcon>
+                </IconButton>
+              </ListItemIcon>
+              <ListItemIcon>
+                <IconButton
+                  onClick={() => {
+                    props.setTab("profile");
+                  }}
+                >
+                  <AccountCircleIcon
+                    sx={{
+                      ...styles,
+                      color: "var(--sharedes-blueDark)",
+                      fontSize: {
+                        sm: "1em",
+                        md: "1.5em",
+                      },
+                      pr: { sm: "2rem" },
+                    }}
+                  ></AccountCircleIcon>
+                </IconButton>
+              </ListItemIcon>
+              <ListItemAvatar>
+                <Avatar
+                  src={props.user.profile ? props.user.profile : ""}
+                  sx={{
+                    borderRadius: "20px",
+                    height: {
+                      xs: "30px",
+                      md: "40px",
+                    },
+                    width: {
+                      xs: "30px",
+                      md: "40px",
+                    },
+                  }}
+                />
+              </ListItemAvatar>
+              <ListItemText>
+                <Typography
+                  sx={{
+                    fontWeight: "normal",
+                    fontSize: "25px",
+                    fontFamily: "Caveat Brush",
+                    color: "var(--sharedes-blueDark)",
+                    display: {
+                      xs: "none",
+                      sm: "flex",
+                      md: "flex",
+                      lg: "flex",
+                      xl: "flex",
+                    },
+                  }}
+                >
+                  {props.user.screen_name
+                    ? props.user.screen_name
+                    : props.user.username
+                    ? props.user.username
+                    : ""}
+                </Typography>
+              </ListItemText>
+              <ListItemIcon>
+                <IconButton onClick={props.signOut}>
+                  <ExitToAppIcon
+                    sx={{
+                      color: "var(--sharedes-blueDark)",
+                      fontSize: {
+                        md: "2rem",
+                      },
+                      m: {
+                        xs: "0px",
+                      },
+                    }}
+                  ></ExitToAppIcon>
+                </IconButton>
+              </ListItemIcon>
+            </Stack>
+          </Toolbar>
+        </Container>
+      </AppBar>
+    </ThemeProvider>
+  );
 }
 
 export default Navbar;

@@ -1,10 +1,12 @@
-import { React, useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
+import * as React from "react";
 import axios from "axios";
-import { Button, Fab, Slider, Grid, Card } from "@mui/material";
+import { Button, Fab, Slider, Grid, Box, createTheme } from "@mui/material";
 import { BiUndo, BiTrash } from "react-icons/bi";
 import { BsEraserFill } from "react-icons/bs";
 import { RiPencilFill } from "react-icons/ri";
 import "./Canvas.css";
+import { ThemeProvider } from "@mui/system";
 
 function Canvas(props) {
   const [tool, setTool] = useState("pencil");
@@ -93,11 +95,19 @@ function Canvas(props) {
   const contextRef = useRef(null);
 
   const canvasDimensions = 320;
+  const [canvasReady, setCanvasReady] = useState(false);
   const [bgReady, setBgReady] = useState(false);
+  const initCanvas = () => setCanvasReady(true);
 
   useEffect(() => {
-    console.log(props.user, props.visible);
-    if (!props.visible) return;
+    console.log(props.user, props.thread, props.options, props.visible);
+    if (props.visible) return;
+    setCanvasReady(false);
+    setBgReady(false);
+  }, [props]);
+
+  useEffect(() => {
+    if (!canvasReady) return;
     const canvas = document.getElementById("canvas");
     const ctx = canvas.getContext("2d");
     ctx.globalCompositeOperation = "source-over";
@@ -113,7 +123,7 @@ function Canvas(props) {
     if (tool === "pencil") ctx.strokeStyle = color;
     if (tool === "eraser") ctx.strokeStyle = "whitesmoke";
     contextRef.current = ctx;
-  }, [props, tool, color, thickness, bgReady, canvasDimensions]);
+  }, [tool, color, thickness, bgReady, canvasReady, canvasDimensions]);
 
   const startDrawing = ({ nativeEvent }) => {
     const { offsetX, offsetY } = nativeEvent;
@@ -218,95 +228,81 @@ function Canvas(props) {
       });
   };
 
+  const theme = createTheme({
+    breakpoints: {
+      values: {
+        xs: 300,
+        sm: 500,
+        md: 700,
+        lg: 1000,
+        xl: 1200,
+      },
+    },
+  });
   return (
     <>
-      <Card className="canvas">
-        <Grid container>
-          <Grid container item xs={7}>
-            <Grid container item xs={12} justifyContent="center">
-              <canvas
-                id="canvas"
-                className="whiteboard"
-                width={canvasDimensions}
-                height={canvasDimensions}
-                onMouseDown={startDrawing}
-                onMouseMove={draw}
-                onMouseUp={endDrawing}
-                onMouseLeave={endDrawing}
-              />
-            </Grid>
-            <Grid
-              className="colors"
-              container
-              item
-              xs={12}
-              justifyContent="center"
-            >
-              <Grid item xs={1}>
-                <BiUndo className="bi_btn" onClick={undoDrawing} />
-                <BiTrash className="bi_btn" onClick={clearDrawing} />
+      <ThemeProvider theme={theme}>
+        <Box
+          flexGrow={1}
+          className="canvas"
+          sx={{
+            alignItems: "center",
+            justifyContent: "center",
+            [theme.breakpoints.up("sm")]: { ml: "10%" },
+            [theme.breakpoints.up("md")]: { ml: "20%" },
+            [theme.breakpoints.up("lg")]: { ml: "30%" },
+            [theme.breakpoints.up("xl")]: { ml: "40%" },
+          }}
+        >
+          <Grid container onMouseEnter={initCanvas} flexGrow={1}>
+            <Grid item>
+              <Grid item justifyContent="center">
+                <canvas
+                  id="canvas"
+                  className="whiteboard"
+                  width={canvasDimensions}
+                  height={canvasDimensions}
+                  onMouseDown={startDrawing}
+                  onMouseMove={draw}
+                  onMouseUp={endDrawing}
+                  onMouseLeave={endDrawing}
+                />
               </Grid>
-              <Grid item xs={11}>
-                <div className="colorsGrid">{colorOptions()}</div>
+              <Grid className="colors" item justifyContent="center">
+                <Grid item>
+                  <BiUndo className="bi_btn" onClick={undoDrawing} />
+                  <BiTrash className="bi_btn" onClick={clearDrawing} />
+                </Grid>
+                <Grid item>
+                  <div className="colorsGrid">{colorOptions()}</div>
+                </Grid>
+              </Grid>
+            </Grid>
+
+            <Grid container flexGrow={1}>
+              <Grid item xs={6}>
+                <div className="optionText">TOOLS</div>
+                <div className="modalTools">{toolOptions()}</div>
+              </Grid>
+
+              <Grid item xs={3}>
+                <div className="optionText">THICKNESS</div>
+                <div className="modalSlider">{sliderOptions()} </div>
+              </Grid>
+
+              <Grid item>
+                <Button
+                  variant="filled"
+                  className="submitButton"
+                  onClick={drawingToCloud}
+                >
+                  SAVE
+                </Button>
               </Grid>
             </Grid>
           </Grid>
-          <Grid container item xs={5}>
-            <Grid item xs={12}>
-              <div className="optionText">TOOLS</div>
-              <div className="modalTools">{toolOptions()}</div>
-            </Grid>
-            <Grid item xs={12}>
-              <div className="optionText">THICKNESS</div>
-              <div className="modalSlider">{sliderOptions()} </div>
-            </Grid>
-            <Grid container item xs={12} justifyContent="center">
-              <Button
-                variant="filled"
-                className="submitButton"
-                onClick={drawingToCloud}
-              >
-                SAVE
-              </Button>
-            </Grid>
-          </Grid>
-        </Grid>
-      </Card>
-      {/* <div className="modalBg" onMouseEnter={initCanvas}>
-        <div className="modalNavbar">
-          <div className="navLeft">
-            <BiUndo style={{ fontSize: "36px", color: "#ffa7a7", marginLeft: "10%", cursor: "pointer" }} onClick={undoDrawing} />
-            <Button style={{ backgroundColor: "#ffa7a7", color: "black", fontFamily: "Caveat Brush", marginLeft: "32px", cursor: "pointer" }} onClick={clearDrawing}>CLEAR</Button>
-          </div>
-          <div className="navRight">
-            <Button className="submitButton" style={{ backgroundColor: "#ffa7a7", color: "black", fontFamily: "Caveat Brush", marginRight: "10%" }} onClick={drawingToCloud}>SUBMIT</Button>
-          </div>
-        </div>
-        <div className="modalContent">
-          <div className="options">
-            <div className="optionText">TOOLS</div>
-            <div className="modalTools">{toolOptions()}</div>
-          </div>
-          <div>
-            <canvas
-              id="canvas"
-              className="whiteboard"
-              width={canvasDimensions}
-              height={canvasDimensions}
-              onMouseDown={startDrawing}
-              onMouseMove={draw}
-              onMouseUp={endDrawing}
-              onMouseLeave={endDrawing}
-            />
-          </div>
-          <div className="options">
-            <div className="optionText">COLORS</div>
-            <div className="colorsGrid">{colorOptions()}</div>
-            <div className="optionText">THICKNESS</div>
-            <div className="modalSlider">{sliderOptions()} </div>
-          </div>
-        </div>
-      </div> */}
+        </Box>
+      </ThemeProvider>
     </>
   );
 }

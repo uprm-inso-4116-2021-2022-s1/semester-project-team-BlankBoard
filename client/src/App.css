@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Caveat+Brush&display=swap');
-
 body {
   --sharedes-pinkLight: #ffcbcb;
   --sharedes-pinkDeep: #ffa7a7;
@@ -8,82 +6,76 @@ body {
   --sharedes-background: #fff4f4;
   --sharedes-blueDark: #283861;
   --sharedes-pinkDark: #5f2727;
-  font-family: Caveat Brush !important;
   font-weight: lighter !important;
-  background:
-  linear-gradient(
-    to top, 
-    #ffcbcb,
-    #fff4f4
-  ) 
-  !important;
+  align-items: center;
+  align-content: center;
+  background: linear-gradient(to top, #ffcbcb, #fff4f4) !important;
   background-attachment: fixed !important;
+  font-family: "Caveat Brush", cursive !important;
 }
 
-.bb_f1{
-  font-family: Caveat Brush !important;
+.login_title {
   color: var(--sharedes-blueDark);
 }
 
-/* .cred_page{
+/* .cred_page {
   background: #eb01a5;
-  background-image: 
-  linear-gradient(
-    to top, 
-  rgba(255, 167, 167, 0.9),
-  rgba(255, 203, 203, 0.6)
-  ), 
-  url(./assets/img/cred_back.jpg) !important;
+  background-image: linear-gradient(
+      to top,
+      rgba(255, 167, 167, 0.9),
+      rgba(255, 203, 203, 0.6)
+    ),
+    url(./assets/img/cred_back.jpg) !important;
   background-size: 100vw;
   height: 100vh !important;
   width: 100vw;
 } */
 
-.cred_card{
+.cred_card {
   padding: 30px;
   margin: 50px;
-  width: 26rem;
-  border-radius: 20px !important; 
+  width: fit-content;
+  border-radius: 20px !important;
 }
 
-.reg_card{
+.reg_card {
   width: 32rem;
 }
 
-.cred_container{
+.cred_container {
   padding: 10px !important;
 }
 
-.cred_pic{
+.cred_pic {
   height: 10rem !important;
   width: 10rem !important;
-  margin: 20px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.log_input{
+.log_input {
   margin: 20px !important;
 }
 
-.reg_input{
+.reg_input {
   margin: 20px !important;
 }
 
-.cred_button{
+.cred_button {
   border-radius: 200px !important;
   font-size: 20px !important;
   color: var(--sharedes-blueDark) !important;
-  background: 
-  linear-gradient(
-      to right, 
-      rgb(201, 253, 255, 1),
-      rgb(223, 254, 255, 1)
-    ) !important;
+  background: linear-gradient(
+    to right,
+    rgb(201, 253, 255, 1),
+    rgb(223, 254, 255, 1)
+  ) !important;
 }
 
-.cred_title{
+.cred_title {
   font-size: 36px !important;
 }
 
-.cred_register{
-  color:gray;
+.cred_register {
+  color: gray;
 }

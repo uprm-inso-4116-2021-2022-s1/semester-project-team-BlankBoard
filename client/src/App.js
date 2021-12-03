@@ -1,8 +1,9 @@
-import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
-import Home from './views/Home';
-import Login from './views/Login';
-import Register from './views/Register';
-import Error404 from './views/Error404';
+import React from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import Home from "./views/Home";
+import Login from "./views/Login";
+import Register from "./views/Register";
+import Error404 from "./views/Error404";
 import "./App.css";
 
 function App() {
