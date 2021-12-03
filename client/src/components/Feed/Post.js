@@ -1,14 +1,39 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { Avatar, Grid, Typography, IconButton, Modal } from "@mui/material";
-import VerifiedUserIcon from '@mui/icons-material/VerifiedUser';
-import ChatBubbleOutlineRoundedIcon from '@mui/icons-material/ChatBubbleOutlineRounded';
-import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import Canvas from '../Canvas/Canvas';
-import calculateTime from '../../common/common';
-import "./Post.css";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import {
+  Avatar,
+  createTheme,
+  Typography,
+  IconButton,
+  Modal,
+  CardHeader,
+  CardMedia,
+  Card,
+  CardActions,
+  Box,
+} from "@mui/material";
+import VerifiedUserIcon from "@mui/icons-material/VerifiedUser";
+import ChatBubbleOutlineRoundedIcon from "@mui/icons-material/ChatBubbleOutlineRounded";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import Canvas from "../Canvas/Canvas";
+import calculateTime from "../../common/common";
+import { ThemeProvider } from "@mui/system";
+import { ExpandMore } from "@mui/icons-material";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+//import "./Post.css";
+
+const theme = createTheme({
+  breakpoints: {
+    values: {
+      xs: 300,
+      sm: 500,
+      md: 700,
+      lg: 1000,
+      xl: 1200,
+    },
+  },
+});
 
 function Post(props) {
   const [postUser, setPostUser] = useState({});
@@ -23,7 +48,9 @@ function Post(props) {
   useEffect(() => {
     async function getUsers() {
       try {
-        const response = await axios.get(`${process.env.REACT_APP_API}/users/${props.post.user_id}`);
+        const response = await axios.get(
+          `${process.env.REACT_APP_API}/users/${props.post.user_id}`
+        );
         setPostUser(response.data);
       } catch (err) {
         console.log(err);
@@ -34,51 +61,56 @@ function Post(props) {
 
   useEffect(() => {
     const getReplies = async () => {
-      axios.get(`${process.env.REACT_APP_API}/replies/${props.post.post_id}`)
+      axios
+        .get(`${process.env.REACT_APP_API}/replies/${props.post.post_id}`)
         .then((res) => {
           setReplies(res.data);
-        }).catch(e => {
+        })
+        .catch((e) => {
           console.log(e);
         });
-    }
+    };
     getReplies();
-  }, [])
+  }, []);
 
   useEffect(() => {
     const getUsers = async () => {
       if (!replies) return;
-      let results = []
+      let results = [];
       replies.forEach((reply) => {
-        axios.get(`${process.env.REACT_APP_API}/users/${reply.user_id}`)
+        axios
+          .get(`${process.env.REACT_APP_API}/users/${reply.user_id}`)
           .then((res) => {
-            results.push({...reply, ...res.data});
+            results.push({ ...reply, ...res.data });
             console.log("results:", results);
-          }).catch(e => {
+          })
+          .catch((e) => {
             console.log(e);
           });
-      })
+      });
       setReplyPosts(results);
-    }
+    };
     getUsers();
-  }, [replies])
+  }, [replies]);
 
   const canvasCall = async (replyLink) => {
     let body = {
       user_id: props.user.user_id,
       post_id: props.post.post_id,
-      replies_content: replyLink
-    }
-    let bodySend = JSON.stringify(body)
+      replies_content: replyLink,
+    };
+    let bodySend = JSON.stringify(body);
     await axios({
-      method: 'POST',
+      method: "POST",
       url: process.env.REACT_APP_API + `/reply`,
       data: bodySend,
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
       },
-      json: true
-    }).then()
-      .catch(e => {
+      json: true,
+    })
+      .then()
+      .catch((e) => {
         console.log(e);
       });
     closeModal();
@@ -86,98 +118,83 @@ function Post(props) {
   };
 
   const handleReplyButton = () => {
-    if (!showReplies)
-      return <KeyboardArrowDownIcon fontSize="large" />
-    else
-      return <KeyboardArrowUpIcon fontSize="large" />
-  }
+    if (!showReplies) return <KeyboardArrowDownIcon fontSize="large" />;
+    else return <KeyboardArrowUpIcon fontSize="large" />;
+  };
 
   const DisplayReplies = () => {
-
     if (!showReplies || !replyPosts) return;
     return (
-      <Grid>
+      <ThemeProvider theme={theme}>
         {replyPosts.map((replyPost) => (
-          <Grid container className="reply">
-            <Grid container item xs={12}>
-              <Grid container item xs={2.5} alignItems="top" justifyContent="center">
+          <Card>
+            <CardHeader
+              avatar={
                 <Avatar className="post_avatar" src={replyPost.profile} />
-              </Grid>
-              <Grid container item xs={7}>
-                <Grid container item xs={12} alignItems="center" margin={"10px"}>
-                  <Grid item>
-                    <Typography className="post_text post_screen">
-                      {replyPost.screen_name}
-                    </Typography>
-                  </Grid>
-                  <Grid item>
-                    <Typography className="post_text post_user">
-                      <VerifiedUserIcon className="post__badge" /> @{replyPost.username} · {calculateTime(replyPost.replies_timestamp)};
-                    </Typography>
-                  </Grid>
-                </Grid>
-                <Grid container item xs={12} justifyContent="center">
-                  <img className="post_picture" src={replyPost.replies_content} alt="" />
-                </Grid>
-              </Grid>
-              <Grid item xs={2.5} />
-            </Grid>
-          </Grid>
+              }
+              title={
+                <Typography
+                  className="post_text post_screen"
+                  sx={{ fontFamily: "Montserrat", fontWeight: "700" }}
+                >
+                  {replyPost.screen_name}
+                  <VerifiedUserIcon className="post__badge" /> @
+                  {replyPost.username} ·{" "}
+                  {calculateTime(replyPost.replies_timestamp)}
+                </Typography>
+              }
+            />
+            <CardMedia sx={{ alignItems: "center", justifyContent: "center" }}>
+              <img
+                className="post_picture"
+                src={replyPost.replies_content}
+                alt=""
+              />
+            </CardMedia>
+          </Card>
         ))}
-      </Grid>
+      </ThemeProvider>
     );
-  }
+  };
 
-  if(!props.post || !postUser) return;
+  if (!props.post || !postUser) return;
 
   return (
-    <>
-      <Grid container className="post">
-        <Grid container item xs={12}>
-          <Grid container item xs={2.5} alignItems="top" justifyContent="center">
-            <Avatar className="post_avatar" src={postUser.profile} />
-          </Grid>
-          <Grid container item xs={7}>
-            <Grid container item xs={12} alignItems="center" margin={"10px"}>
-              <Grid item>
-                <Typography className="post_text post_screen">
-                  {postUser.screen_name}
-                </Typography>
-              </Grid>
-              <Grid item>
-                <Typography className="post_text post_user">
-                  <VerifiedUserIcon className="post__badge" /> @{postUser.username} · {calculateTime(props.post.post_timestamp)}
-                </Typography>
-              </Grid>
-            </Grid>
-            <Grid container item xs={12} justifyContent="center">
-              <img className="post_picture" src={props.post.post_content} alt="" />
-            </Grid>
-          </Grid>
-          <Grid item xs={2.5} />
-        </Grid>
-        <Grid container item xs={12} justifyContent="space-evenly" className="post_btns">
-          <Grid container item xs={2} justifyContent="center">
-            <IconButton onClick={openModal}>
-              <ChatBubbleOutlineRoundedIcon fontSize="small" />
-            </IconButton>
-          </Grid>
-          <Grid container item xs={2} justifyContent="center">
-            <IconButton onClick={handleReplies}>
-              {handleReplyButton()}
-            </IconButton>
-          </Grid>
-        </Grid>
-      </Grid>
-      {DisplayReplies()}
-      <Modal className="modalWindow" open={showModal} onClose={closeModal}>
-        <Canvas
-          canvasCall={canvasCall}
-          user={postUser}
-          visible={showModal}
+    <ThemeProvider theme={theme}>
+      <Card>
+        <CardHeader
+          avatar={<Avatar className="post_avatar" src={postUser.profile} />}
+          title={
+            <Typography className="post_text post_screen">
+              {postUser.screen_name}
+              <VerifiedUserIcon className="post__badge" /> @{postUser.username}{" "}
+              · {calculateTime(props.post.post_timestamp)}
+            </Typography>
+          }
         />
+        <CardMedia>
+          <img className="post_picture" src={props.post.post_content} alt="" />
+        </CardMedia>
+        <CardActions
+          sx={{
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <IconButton onClick={openModal}>
+            <ChatBubbleOutlineRoundedIcon fontSize="small" />
+          </IconButton>
+
+          <IconButton onClick={handleReplies}>
+            <ExpandMoreIcon> {handleReplyButton()}</ExpandMoreIcon>
+          </IconButton>
+        </CardActions>
+        {DisplayReplies()}
+      </Card>
+      <Modal className="modalWindow" open={showModal} onClose={closeModal}>
+        <Canvas canvasCall={canvasCall} user={postUser} visible={showModal} />
       </Modal>
-    </>
+    </ThemeProvider>
   );
 }
 export default Post;
