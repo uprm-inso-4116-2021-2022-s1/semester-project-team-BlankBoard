@@ -19,6 +19,18 @@ import Canvas from "../../components/Canvas/Canvas";
 import axios from "axios";
 import Divider from "@mui/material/Divider";
 
+const theme = createTheme({
+  breakpoints: {
+    values: {
+      xs: 300,
+      sm: 500,
+      md: 700,
+      lg: 1000,
+      xl: 1200,
+    },
+  },
+});
+
 function Profile(props) {
   const [showModal, setShowModal] = useState(false);
   const openModal = () => setShowModal(true);
@@ -40,13 +52,7 @@ function Profile(props) {
     return (
       <ImageList cols={3} gap={32}>
         {props.posts.map((post, i) => (
-          <ImageListItem
-            key={i}
-            sx={{
-              height: "10rem",
-              width: "10rem",
-            }}
-          >
+          <ImageListItem key={i}>
             <img
               className="prf_post"
               alt=""
@@ -59,18 +65,6 @@ function Profile(props) {
     );
   };
 
-  const theme = createTheme({
-    breakpoints: {
-      values: {
-        xs: 300,
-        sm: 500,
-        md: 700,
-        lg: 1000,
-        xl: 1200,
-      },
-    },
-  });
-
   // render() {
   return (
     <React.Fragment>
@@ -80,17 +74,19 @@ function Profile(props) {
             mt: "4rem",
             width: "fit-content",
             height: "fit-content",
+            alignItems: "center",
+            justifyContent: "center",
             [theme.breakpoints.up("sm")]: {
-              ml: "20%",
+              ml: "1%",
             },
             [theme.breakpoints.up("md")]: {
-              ml: "25%",
+              ml: "3%",
             },
             [theme.breakpoints.up("lg")]: {
-              ml: "30%",
+              ml: "3%",
             },
             [theme.breakpoints.up("xl")]: {
-              ml: "35%",
+              ml: "10%",
             },
           }}
         >
@@ -135,21 +131,32 @@ function Profile(props) {
           />
           <CardContent>
             <Stack
-              spacing={3}
+              spacing={5}
               direction="row"
-              divider={<Divider orientation="vertical" flexItem />}
+              sx={{
+                width: "fit-content",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
             >
-              <ListItem>
+              <ListItem
+                sx={{
+                  width: "fit-content",
+                }}
+              >
                 <Typography
                   sx={{
                     fontSize: "30px",
                     fontFamily: "Montserrat",
                     fontWeight: "700",
-                    m: "10px",
+                    [theme.breakpoints.up("lg")]: {
+                      pl: "10rem",
+                    },
                   }}
                 >
                   {props.posts.length}
                 </Typography>
+
                 <Typography
                   sx={{
                     fontSize: "30px",
@@ -161,13 +168,20 @@ function Profile(props) {
                   posts
                 </Typography>
               </ListItem>
-              <ListItem>
+              <Divider orientation="vertical" flexItem />
+              <ListItem
+                sx={{
+                  width: "fit-content",
+                }}
+              >
                 <Typography
                   sx={{
                     fontSize: "30px",
                     fontFamily: "Montserrat",
                     fontWeight: "700",
-                    m: "10px",
+                    [theme.breakpoints.up("lg")]: {
+                      pl: "2rem",
+                    },
                   }}
                 >
                   {props.replies.length}

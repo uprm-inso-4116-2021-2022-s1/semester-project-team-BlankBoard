@@ -21,6 +21,12 @@ import {
 import { createTheme } from "@mui/material";
 import ColorLensTwoToneIcon from "@mui/icons-material/ColorLensTwoTone";
 
+const styles = {
+  "&.Mui-focusVisible": {
+    backgroundColor: "pink",
+    width: "fit-content",
+  },
+};
 const theme = createTheme({
   breakpoints: {
     values: {
@@ -121,6 +127,7 @@ function Navbar(props) {
                 >
                   <AccountCircleIcon
                     sx={{
+                      ...styles,
                       color: "var(--sharedes-blueDark)",
                       fontSize: {
                         sm: "1em",

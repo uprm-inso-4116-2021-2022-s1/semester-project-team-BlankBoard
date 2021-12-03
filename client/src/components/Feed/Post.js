@@ -23,6 +23,18 @@ import { ExpandMore } from "@mui/icons-material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 //import "./Post.css";
 
+const theme = createTheme({
+  breakpoints: {
+    values: {
+      xs: 300,
+      sm: 500,
+      md: 700,
+      lg: 1000,
+      xl: 1200,
+    },
+  },
+});
+
 function Post(props) {
   const [postUser, setPostUser] = useState({});
   const [replies, setReplies] = useState([]);
@@ -105,18 +117,6 @@ function Post(props) {
     window.location.reload();
   };
 
-  const theme = createTheme({
-    breakpoints: {
-      values: {
-        xs: 300,
-        sm: 500,
-        md: 700,
-        lg: 1000,
-        xl: 1200,
-      },
-    },
-  });
-
   const handleReplyButton = () => {
     if (!showReplies) return <KeyboardArrowDownIcon fontSize="large" />;
     else return <KeyboardArrowUpIcon fontSize="large" />;
@@ -175,15 +175,19 @@ function Post(props) {
         <CardMedia>
           <img className="post_picture" src={props.post.post_content} alt="" />
         </CardMedia>
-        <CardActions>
+        <CardActions
+          sx={{
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
           <IconButton onClick={openModal}>
             <ChatBubbleOutlineRoundedIcon fontSize="small" />
           </IconButton>
 
-          <ExpandMore onClick={handleReplies}>
-            {" "}
-            {handleReplyButton()}
-          </ExpandMore>
+          <IconButton onClick={handleReplies}>
+            <ExpandMoreIcon> {handleReplyButton()}</ExpandMoreIcon>
+          </IconButton>
         </CardActions>
         {DisplayReplies()}
       </Card>
